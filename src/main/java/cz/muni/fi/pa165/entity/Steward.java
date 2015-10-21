@@ -26,7 +26,6 @@ import java.util.Set;
 @EqualsAndHashCode(of = {"firstName", "lastName"})
 //@EqualsAndHashCode(exclude = {"id", "flights"}) // druha moznost
 
-
 @Entity
 public class Steward {
 
