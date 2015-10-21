@@ -1,4 +1,4 @@
 package cz.muni.fi.pa165.entity;
 
-public class Flight {
+public class Airplane {
 }

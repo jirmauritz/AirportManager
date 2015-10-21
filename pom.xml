@@ -39,7 +39,9 @@
 
         <!-- dependencies compile -->
         <slf4j.version>1.7.12</slf4j.version>
-        <lombok.version>1.12.4</lombok.version>
+        <lombok.version>1.16.6</lombok.version>
+        <hibernate-jpa.version>1.0.0.Final</hibernate-jpa.version>
+        <javax-validation.version>1.1.0.Final</javax-validation.version>
 
         <!-- dependencies test -->
         <assertj.version>3.0.0</assertj.version>
@@ -62,13 +64,13 @@
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <version>1.0.0.Final</version>
+            <version>${hibernate-jpa.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>1.1.0.Final</version>
+            <version>${javax-validation.version}</version>
             <type>jar</type>
         </dependency>
 
