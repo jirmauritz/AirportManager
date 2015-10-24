@@ -1,11 +1,15 @@
 package cz.muni.fi.pa165.entity;
 
-import lombok.*;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -13,18 +17,9 @@ import java.util.Set;
  * @author 422718@mail.muni.cz
  */
 
-//lombok
-//vytvareni
-@NoArgsConstructor
-@RequiredArgsConstructor
-@AllArgsConstructor
-@Builder
-//gettery settery
 @Getter
 @Setter
-//dalsi
 @EqualsAndHashCode(of = {"firstName", "lastName"})
-//@EqualsAndHashCode(exclude = {"id", "flights"}) // druha moznost
 
 @Entity
 public class Steward {
@@ -34,51 +29,55 @@ public class Steward {
     private Long id;
 
     @NotNull
-    @lombok.NonNull // builder a konstruktory konrtoluji nullabilitu
     private String firstName;
 
     @NotNull
-    @lombok.NonNull // builder a konstruktory konrtoluji nullabilitu
     private String lastName;
 
     @ManyToMany
-    @lombok.Singular() // builder obsahuje metodu na pridani do kolekce
     private Set<Flight> flights = new HashSet<>();
 
-    // tohle bohuzel lombok neumi
-    public void addFlight(Flight flight) {
+    /**
+     * Constructs new entity Steward. Setting id at construction time is prohibited. Id should be set only by the
+     * database. All flights are copied into a new collection, same flights are used.
+     *
+     * @param firstName first name of this steward
+     * @param lastName last name of this steward
+     * @param flights set of flights steward is assigned to
+     */
+    public Steward(
+            final String firstName,
+            final String lastName,
+            final Set<Flight> flights
+    ) {
+        this.id = null;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.flights = new HashSet<>(flights);
+    }
+
+    /**
+     * Adds flight to this steward.
+     *
+     * @param flight flight to assign
+     */
+    public final void addFlight(final Flight flight) {
+        Objects.requireNonNull(flight);
         this.flights.add(flight);
     }
 
-    public void removeFlight(Flight flight) {
+    /**
+     * Removes assighed flight from this steward.
+     *
+     * @param flight flight to remove
+     * @throws NoSuchElementException if the flight is not present
+     */
+    public final void removeFlight(final Flight flight) throws NoSuchElementException {
+        Objects.requireNonNull(flight);
+        if (!this.flights.contains(flight)) {
+            throw new NoSuchElementException("No such element: " + flight);
+        }
         this.flights.remove(flight);
     }
 
 }
-
-class StewardUsage {
-
-    public static void main(String[] args) {
-
-        // vyuziti builderu
-        Steward steward = Steward.builder()
-                .id(0L)
-                .firstName("Jan")
-                .lastName("Novak")
-                .flight(new Flight())
-                .build();
-
-        Steward anotherSteward = new Steward(1L, "Jan", "Novak", Collections.<Flight>emptySet());
-
-        if (steward.equals(anotherSteward)) {
-            System.out.println("Objekty jsou si businesslogicky rovny");
-        }
-
-        if (steward.hashCode() == anotherSteward.hashCode()) {
-            System.out.println("a produkuji stejny hashcode");
-        }
-
-    }
-
-}
-

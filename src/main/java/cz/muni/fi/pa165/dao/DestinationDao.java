@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public interface DestinationDao {
 
-    void create();
+    void create(Destination destination);
 
     Destination findById(Long id);
 
@@ -19,7 +19,7 @@ public interface DestinationDao {
      *
      * @return list of destination identifiers
      */
-    List<Long> findByCountry(String country);
+    Set<Destination> findByCountry(String country);
 
     Set<Destination> findAll();
 

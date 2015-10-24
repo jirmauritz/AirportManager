@@ -19,8 +19,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
-                        <source>${project.source}</source>
-                        <target>${project.target}</target>
+                        <source>1.7</source>
+                        <target>1.7</target>
                     </configuration>
                 </plugin>
             </plugins>
@@ -40,8 +40,10 @@
         <!-- dependencies compile -->
         <slf4j.version>1.7.12</slf4j.version>
         <lombok.version>1.16.6</lombok.version>
-        <hibernate-jpa.version>1.0.0.Final</hibernate-jpa.version>
         <javax-validation.version>1.1.0.Final</javax-validation.version>
+        <javax.inject.version>1</javax.inject.version>
+        <persistence-api.version>1.0.2</persistence-api.version>
+        <spring-data-jpa.version>1.9.0.RELEASE</spring-data-jpa.version>
 
         <!-- dependencies test -->
         <assertj.version>3.0.0</assertj.version>
@@ -50,6 +52,7 @@
     </properties>
 
     <dependencies>
+
         <!-- compile -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -62,16 +65,25 @@
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <version>${hibernate-jpa.version}</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>${javax-validation.version}</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>${persistence-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>${javax.inject.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
         </dependency>
 
         <!-- test -->
