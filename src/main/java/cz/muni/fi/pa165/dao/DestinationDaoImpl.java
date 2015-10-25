@@ -12,6 +12,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * Implementation of the Dao layer for Destination entities. All methods run in transaction.
+ *
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */

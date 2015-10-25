@@ -1,18 +1,17 @@
 package cz.muni.fi.pa165.entity;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Set;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 /**
+ * Entity Steward for storing into database. Steward is distinguishable by its first and last name.
+ *
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */
@@ -20,6 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"firstName", "lastName"})
+@ToString
 
 @Entity
 public class Steward {
@@ -55,8 +55,6 @@ public class Steward {
         this.lastName = lastName;
         this.flights = new HashSet<>(flights);
     }
-    
-    
 
     /**
      * Adds flight to this steward.
@@ -82,10 +80,9 @@ public class Steward {
         this.flights.remove(flight);
     }
 
-	@Override
-	public String toString() {
-		return "Steward [id=" + id + ", firstName=" + firstName + ", lastName="
-				+ lastName + "]";
-	}
+    // lombok override for unmodifiability
+    public final Set<Flight> getFlights() {
+        return Collections.unmodifiableSet(flights);
+    }
 
 }
