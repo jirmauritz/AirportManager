@@ -12,6 +12,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
 
 /**
  * Class represents location of an airport, characterized by its code, city and country.
@@ -34,6 +36,12 @@ public class Destination {
 	
 	private String country;
 
+	public Destination(String name, String city, String country) {
+		this.name = name;
+		this.city = city;
+		this.country = country;
+	}
+	
 	@Override
 	public int hashCode() {
 		int hash = 3;
