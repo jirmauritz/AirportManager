@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Destination;
-import java.util.List;
 import java.util.Set;
 
 /**

@@ -55,6 +55,8 @@ public class Steward {
         this.lastName = lastName;
         this.flights = new HashSet<>(flights);
     }
+    
+    
 
     /**
      * Adds flight to this steward.
@@ -79,5 +81,11 @@ public class Steward {
         }
         this.flights.remove(flight);
     }
+
+	@Override
+	public String toString() {
+		return "Steward [id=" + id + ", firstName=" + firstName + ", lastName="
+				+ lastName + "]";
+	}
 
 }
