@@ -2,10 +2,14 @@ package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Destination;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -19,11 +23,12 @@ import java.util.Set;
  */
 @Slf4j
 @Transactional
+@Named
 public class DestinationDaoImpl implements DestinationDao {
 
     //TODO projit znovu vsechny metody az bude hotovy JavaDoc interfacu, aby metody splnovaly kontrakt
 
-    @PersistenceContext
+    @Inject
     private EntityManager entityManager;
 
     @Override

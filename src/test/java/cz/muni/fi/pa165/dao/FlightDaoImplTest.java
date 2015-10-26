@@ -1,28 +1,30 @@
 package cz.muni.fi.pa165.dao;
 
+import cz.muni.fi.pa165.EmbeddedPersistenceContext;
 import cz.muni.fi.pa165.entity.Airplane;
 import cz.muni.fi.pa165.entity.Destination;
 import cz.muni.fi.pa165.entity.Flight;
 import cz.muni.fi.pa165.entity.Steward;
-import org.junit.Before;
-import org.junit.After;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
-import javax.validation.constraints.Null;
 import java.util.Collections;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = EmbeddedPersistenceContext.class)
 public class FlightDaoImplTest {
 
     // 2015-01-01T00:00Z[UTC]
@@ -34,23 +36,14 @@ public class FlightDaoImplTest {
     // 2015-02-03T03:00Z[UTC]
     private static final long time4 = 1422932400000L;
 
-    @PersistenceUnit
-    private EntityManagerFactory emf;
-    @Inject
-    private FlightDaoImpl flightDao;
+//    @Inject
+//    private FlightDaoImpl flightDao;
 
+    @Inject
     private EntityManager em;
 
-    @Before
-    public void setUp() {
-        em = emf.createEntityManager();
-        em.getTransaction().begin();
-    }
-
-    @After
-    public void tearDown() {
-        em.getTransaction().commit();
-        em.close();
+    @Test
+    public void test() {
     }
 
 //    @Test
@@ -64,7 +57,7 @@ public class FlightDaoImplTest {
 //                .isNotNull()
 //                .isEqualTo(newFlight);
 //    }
-
+//
 //    @Test(expected = NullPointerException.class)
 //    public void testCreateNullFlight() {
 //        flightDao.create(null);

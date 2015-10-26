@@ -10,22 +10,6 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>AirportManager</name>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
-                    <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
     
     <properties>
         <!-- project -->
@@ -36,20 +20,47 @@
 
         <!-- plugin -->
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+        <maven.compiler.source>${project.source}</maven.compiler.source>
+        <maven.compiler.target>${project.target}</maven.compiler.target>
+        <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
 
         <!-- dependencies compile -->
         <slf4j.version>1.7.12</slf4j.version>
         <lombok.version>1.16.6</lombok.version>
         <javax-validation.version>1.1.0.Final</javax-validation.version>
         <javax.inject.version>1</javax.inject.version>
-        <persistence-api.version>1.0.2</persistence-api.version>
-        <spring-data-jpa.version>1.9.0.RELEASE</spring-data-jpa.version>
+        <javax.el-api.version>3.0.0</javax.el-api.version>
+        <spring.version>4.2.2.RELEASE</spring.version>
+        <hibernate-entitymanager.version>5.0.2.Final</hibernate-entitymanager.version>
+        <hibernate-jpa.version>1.0.1.Final</hibernate-jpa.version>
 
         <!-- dependencies test -->
-        <assertj.version>3.0.0</assertj.version>
+        <assertj.version>3.2.0</assertj.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
+        <spring-test.version>4.2.2.RELEASE</spring-test.version>
+        <derby.version>10.10.2.0</derby.version>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19</version>
+                <configuration>
+                    <includes>
+                        <include>${basedir}/src/test/*.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -65,38 +76,58 @@
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>${javax-validation.version}</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>${persistence-api.version}</version>
-        </dependency>
-        <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>${javax.inject.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>${spring-data-jpa.version}</version>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax-validation.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>${javax.el-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.0.6.RELEASE</version>
-            <type>jar</type>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- TODO decide spring data usage and then delete/not underlying dependency -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.9.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate-entitymanager.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>${hibernate-jpa.version}</version>
         </dependency>
 
         <!-- test -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -110,6 +141,19 @@
             <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>${derby.version}</version>
+            <scope>test</scope>
+            <type>jar</type>
         </dependency>
     </dependencies>
 

@@ -5,8 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.*;
 
 /**
@@ -16,6 +14,7 @@ import java.util.*;
  * @author 422718@mail.muni.cz
  */
 
+@NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"firstName", "lastName"})
