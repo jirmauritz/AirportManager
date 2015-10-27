@@ -1,17 +1,12 @@
 package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Destination;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,7 +16,6 @@ import java.util.Set;
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */
-@Slf4j
 @Transactional
 @Named
 public class DestinationDaoImpl implements DestinationDao {

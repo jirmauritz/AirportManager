@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class StewardDaoImpl implements StewardDao {
+public class StewardDaoImpl implements StewardDao{
 
 	@PersistenceContext
 	private EntityManager em;
