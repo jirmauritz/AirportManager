@@ -7,11 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 
 /**
  * Class defines general airplane
@@ -30,10 +25,89 @@ public class Airplane {
     @Column(nullable = false, unique = true)
     private String name;
 
-    private String type; //TODO, airplane classification
+    @NotNull
+    private String type;
 
+    @NotNull
     private int capacity;
 
+    /**
+     * Get id
+     *
+     * @return id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param id
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set name
+     *
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Get type
+     *
+     * @return type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Set type
+     *
+     * @param type
+     */
+    public void setCapacity(String type) {
+        this.type = type;
+    }
+
+    /**
+     * Get capacity
+     *
+     * @return capacity
+     */
+    public int getCapacity() {
+        return capacity;
+    }
+
+    /**
+     * Set capacity
+     *
+     * @param capacity
+     */
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    /**
+     * Hash code
+     *
+     * @return hash code
+     */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -45,6 +119,11 @@ public class Airplane {
         return hash;
     }
 
+    /**
+     * Equals code
+     *
+     * @return true if objects are equal, otherwise false
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -64,6 +143,17 @@ public class Airplane {
             return false;
         }
         return true;
+    }
+
+    /**
+     * toString
+     *
+     * @return informations about class
+     */
+    @Override
+    public String toString() {
+        return "Airplane [id=" + id + ", name=" + name + ", type=" + type
+                + ",capacity=" + capacity + "]";
     }
 
 }
