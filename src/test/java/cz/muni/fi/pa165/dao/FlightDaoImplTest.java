@@ -63,17 +63,17 @@ public class FlightDaoImplTest {
 //        flightDao.create(null);
 //    }
 
-    private Flight createFlight(final long departure, final long arrival) {
-        return new Flight(
-                null,
-                false,
-                new Date(departure),
-                new Date(arrival),
-                Collections.<Steward>emptyList(),
-                new Airplane(),
-                new Destination(),
-                new Destination()
-        );
-    }
+//    private Flight createFlight(final long departure, final long arrival) {
+//        return new Flight(
+//                null,
+//                false,
+//                new Date(departure),
+//                new Date(arrival),
+//                Collections.<Steward>emptyList(),
+//                new Airplane(),
+//                new Destination(),
+//                new Destination()
+//        );
+//    }
 
 }
