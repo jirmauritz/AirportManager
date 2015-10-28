@@ -31,6 +31,14 @@ public class Airplane {
     @NotNull
     private int capacity;
 
+    public Airplane() {};
+    
+    public Airplane(String name, String type, int capacity) {
+        this.name = name;
+        this.type = type;
+        this.capacity = capacity;
+    }
+
     /**
      * Get id
      *
