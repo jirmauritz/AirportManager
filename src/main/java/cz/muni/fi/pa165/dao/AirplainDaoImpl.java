@@ -5,8 +5,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +23,7 @@ import cz.muni.fi.pa165.entity.Airplane;
 public class AirplainDaoImpl implements  AirplaneDao {
 
 	
-	@Autowired
+	@PersistenceContext
 	private EntityManager em;
 	
 	@Override
