@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.dao;
 
+import cz.muni.fi.pa165.entity.Destination;
 import cz.muni.fi.pa165.entity.Flight;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -62,5 +64,30 @@ public class FlightDaoImpl implements FlightDao {
         Objects.requireNonNull(flight);
         em.remove(flight);
     }
+
+	@Override
+	public Set<Flight> findAllInternational() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public Set<Flight> findByDeparture(Date departure) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public Set<Flight> findByArrival(Date arrival) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public Set<Flight> findForDepartureDestination(Destination dest) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public Set<Flight> findForArrivalDestination(Destination dest) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
 
 }
