@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-
 /**
  * Implementation of DAO layer for Flight
  *
@@ -44,7 +43,8 @@ public class FlightDaoImpl implements FlightDao {
      */
     @Override
     public Set<Flight> findAll() {
-        return new HashSet<>(em.createQuery("SELECT d FROM Destination d").getResultList());
+        return new HashSet<>(em.createQuery("SELECT d FROM Destination d")
+                .getResultList());
     }
 
     /**
@@ -65,29 +65,58 @@ public class FlightDaoImpl implements FlightDao {
         em.remove(flight);
     }
 
-	@Override
-	public Set<Flight> findAllInternational() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Flight> findAllInternational() {
+        return new HashSet<Flight>(
+                em.createQuery("SELECT f FROM Flight f WHERE f.international = 1")
+                .getResultList());
+    }
 
-	@Override
-	public Set<Flight> findByDeparture(Date departure) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Flight> findByDeparture(Date departure) {
+        Objects.requireNonNull(departure);
+        return new HashSet<Flight>(
+                em.createQuery("SELECT f FROM Flight f WHERE f.departure= :departure")
+                .setParameter("departure", departure).getResultList());
+    }
 
-	@Override
-	public Set<Flight> findByArrival(Date arrival) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Flight> findByArrival(Date arrival) {
+        Objects.requireNonNull(arrival);
+        return new HashSet<Flight>(
+                em.createQuery("SELECT f FROM Flight f WHERE f.arrival= :arrival")
+                .setParameter("arrival", arrival).getResultList());
+    }
 
-	@Override
-	public Set<Flight> findForDepartureDestination(Destination dest) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Flight> findAllFromDestination(Destination dest) {
+        Objects.requireNonNull(dest);
+        return new HashSet<Flight>(
+                em.createQuery("SELECT f FROM Flight f WHERE f.from= :destination")
+                .setParameter("destination", dest).getResultList());
+    }
 
-	@Override
-	public Set<Flight> findForArrivalDestination(Destination dest) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Flight> findAllToDestination(Destination dest) {
+        Objects.requireNonNull(dest);
+        return new HashSet<Flight>(
+                em.createQuery("SELECT f FROM Flight f WHERE f.to= :destination")
+                .setParameter("destination", dest).getResultList());
+    }
 
 }
