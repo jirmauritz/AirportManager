@@ -110,12 +110,12 @@ public class Flight {
 		if (arrival == null) {
 			if (other.getArrival() != null)
 				return false;
-		} else if (!arrival.equals(other.getArrival()))
+		} else if (! (arrival.getTime() == other.getArrival().getTime())) //override for Timestamp's violation of equals
 			return false;
 		if (departure == null) {
 			if (other.getDeparture() != null)
 				return false;
-		} else if (!departure.equals(other.getDeparture()))
+		} else if (! (departure.getTime() == other.getDeparture().getTime())) //override for Timestamp's violation of equals
 			return false;
 		if (from == null) {
 			if (other.getFrom() != null)
