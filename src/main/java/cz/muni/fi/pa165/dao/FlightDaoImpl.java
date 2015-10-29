@@ -6,8 +6,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of DAO layer for Flight
@@ -15,9 +17,11 @@ import javax.persistence.EntityManager;
  * @author Dušan Lago
  * @author 396336@mail.muni.cz
  */
+@Transactional
+@Repository
 public class FlightDaoImpl implements FlightDao {
 
-    @Inject
+    @PersistenceContext
     private EntityManager em;
 
     /**
