@@ -3,10 +3,12 @@ package cz.muni.fi.pa165.dao;
 import cz.muni.fi.pa165.EmbeddedPersistenceContext;
 import cz.muni.fi.pa165.entity.Steward;
 import cz.muni.fi.pa165.entity.Flight;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -24,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @ContextConfiguration(classes = EmbeddedPersistenceContext.class)
 public class StewardDaoImplTest {
 
-    @Autowired
+    @PersistenceContext
     private EntityManager em;
 
     @Autowired
@@ -40,24 +42,22 @@ public class StewardDaoImplTest {
         peter.setLastName("Pan");
         peter.setBusinessId(Long.MAX_VALUE);
 
-        wendy = new Steward(Long.MIN_VALUE, "Wendy", "Darling", new HashSet<Flight>());
+        wendy = new Steward(Long.MIN_VALUE, "Wendy", "Darling", Collections.<Flight>emptySet());
 
         stewardDaoTest = new StewardDaoImpl();
     }
 
     @Test
     public void testCreateFindAll() {
-
         stewardDaoTest.create(peter);
         stewardDaoTest.create(wendy);
-
         List<Steward> crew = stewardDaoTest.findAll();
-
         Assert.assertTrue(crew.size() == 2);
     }
 
     @Test
     public void testFindByFirstName() {
+        em.persist(peter);
         List<Steward> foundPeters = stewardDaoTest.findByFirstName("Peter");
 
         Assert.assertTrue(foundPeters.size() == 1);
@@ -67,6 +67,7 @@ public class StewardDaoImplTest {
 
     @Test
     public void testFindByLastName() {
+        em.persist(wendy);
         List<Steward> foundWendys = stewardDaoTest.findByLastName("Darling");
 
         Assert.assertTrue(foundWendys.size() == 1);
@@ -76,6 +77,7 @@ public class StewardDaoImplTest {
 
     @Test
     public void testFindById() {
+        em.persist(peter);
         List<Steward> foundPeters = stewardDaoTest.findByFirstName("Peter");
 
         Assert.assertTrue(foundPeters.size() == 1);
@@ -87,17 +89,18 @@ public class StewardDaoImplTest {
 
     @Test
     public void testUpdate() {
+        em.persist(peter);
         peter.setLastName("Parker");
         stewardDaoTest.update(peter);
 
-        List<Steward> foundPeters = stewardDaoTest.findByLastName("Pan");
-        Assert.assertTrue(foundPeters.isEmpty());
+        List<Steward> foundPeters = stewardDaoTest.findByLastName("Parker");
+        Assert.assertTrue(foundPeters.size() == 1);
     }
 
     @Test
     public void testDelete() {
+        em.persist(wendy);
         stewardDaoTest.delete(wendy);
-
         List<Steward> foundWendys = stewardDaoTest.findByFirstName("Wendy");
         Assert.assertTrue(foundWendys.isEmpty());
     }
