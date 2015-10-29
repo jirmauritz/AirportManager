@@ -20,7 +20,7 @@ import cz.muni.fi.pa165.entity.Airplane;
  */
 @Repository
 @Transactional
-public class AirplainDaoImpl implements  AirplaneDao {
+public class AirplaneDaoImpl implements  AirplaneDao {
 
 	
 	@PersistenceContext

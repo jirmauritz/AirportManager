@@ -50,6 +50,7 @@ public class StewardDaoImpl implements StewardDao{
 		return em.find(Steward.class, id);
 	}
 	
+	@Override
 	public final Steward findByBusinessId(Long bId) {
 		Objects.requireNonNull(bId);
 		return (Steward) em.createQuery("SELECT s FROM Steward s WHERE s.businessId = :bId")
@@ -57,46 +58,27 @@ public class StewardDaoImpl implements StewardDao{
 				.getSingleResult();
 	}
 
-	
-	public final Set<Steward> findByFirstNameWithSet(String firstName) {
+	@Override
+	public final Set<Steward> findByFirstName(String firstName) {
 		Objects.requireNonNull(firstName);
 		return new HashSet<>(em
 				.createQuery("SELECT s FROM Steward s WHERE s.firstName = :name")
 				.setParameter("name", firstName).getResultList());
 	}
 
-	
-	public final Set<Steward> findByLastNameWithSet(String lastName) {
+	@Override
+	public final Set<Steward> findByLastName(String lastName) {
 		Objects.requireNonNull(lastName);
 		return new HashSet<>(em
 				.createQuery("SELECT s FROM Steward s WHERE s.lastName = :name")
 				.setParameter("name", lastName).getResultList());
 	}
 
-	
-	public Set<Steward> findAllWithSet() {
+	@Override
+	public Set<Steward> findAll() {
 		return new HashSet<>(em.createQuery("SELECT s FROM Steward s")
 				.getResultList());
 	}
 	
-	@Override
-	public List<Steward> findByFirstName(String firstName) {
-		// delete this method after edit of the interface and rename the right method
-		return new ArrayList<>(findByFirstNameWithSet(firstName));
-	}
-
-	@Override
-	public List<Steward> findByLastName(String lastName) {
-		// delete this method after edit of the interface and rename the right method
-		return new ArrayList<>(findByLastNameWithSet(lastName));
-	}
-
-	@Override
-	public List<Steward> findAll() {
-		// delete this method after edit of the interface and rename the right method
-		return new ArrayList<>(findAllWithSet());
-	}
-
-
 
 }

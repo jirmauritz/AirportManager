@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.dao;
 
-import java.util.List;
+import java.util.Set;
 
 import cz.muni.fi.pa165.entity.Steward;
 
@@ -19,7 +19,7 @@ public interface StewardDao {
 	 * @param firstName
 	 * @return list of stewards
 	 */
-	List<Steward> findByFirstName(String firstName);
+	Set<Steward> findByFirstName(String firstName);
 
 	/**
 	 * Finds list of stewards with given last name
@@ -27,13 +27,21 @@ public interface StewardDao {
 	 * @param lastName
 	 * @return list of stewards
 	 */
-	List<Steward> findByLastName(String lastName);
+	Set<Steward> findByLastName(String lastName);
+	
+	/**
+	 * Finds stewards with given business id.
+	 * 
+	 * @param businessId
+	 * @return steward
+	 */
+	Steward findByBusinessId(Long businessId);
 
 	void create(Steward steward);
 
 	Steward findById(Long id);
 
-	List<Steward> findAll();
+	Set<Steward> findAll();
 
 	void update(Steward steward);
 
