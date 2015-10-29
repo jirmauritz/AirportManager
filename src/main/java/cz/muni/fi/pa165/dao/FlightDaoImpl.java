@@ -101,7 +101,7 @@ public class FlightDaoImpl implements FlightDao {
      * {@inheritDoc}
      */
     @Override
-    public Set<Flight> findForDepartureDestination(Destination dest) {
+    public Set<Flight> findAllFromDestination(Destination dest) {
         Objects.requireNonNull(dest);
         return new HashSet<Flight>(
                 em.createQuery("SELECT f FROM Flight f WHERE f.from= :destination")
@@ -112,7 +112,7 @@ public class FlightDaoImpl implements FlightDao {
      * {@inheritDoc}
      */
     @Override
-    public Set<Flight> findForArrivalDestination(Destination dest) {
+    public Set<Flight> findAllToDestination(Destination dest) {
         Objects.requireNonNull(dest);
         return new HashSet<Flight>(
                 em.createQuery("SELECT f FROM Flight f WHERE f.to= :destination")

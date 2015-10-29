@@ -83,7 +83,7 @@ public interface FlightDao {
 	 * @param dest destination
 	 * @return set of all flights departing from dest
 	 */
-	Set<Flight> findForDepartureDestination(Destination dest);
+	Set<Flight> findAllFromDestination(Destination dest);
 	
 	/**
 	 * Finds and returns all flights that arrive to specified destination. If there are no such flights, empty collection is returned.
@@ -91,6 +91,6 @@ public interface FlightDao {
 	 * @param dest destination
 	 * @return set of all flights arriving to dest
 	 */
-	Set<Flight> findForArrivalDestination(Destination dest);
+	Set<Flight> findAllToDestination(Destination dest);
 
 }
