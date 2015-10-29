@@ -20,8 +20,7 @@ import java.util.Set;
 @Repository
 public class DestinationDaoImpl implements DestinationDao {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    private @PersistenceContext EntityManager entityManager;
 
     @Override
     public final void create(final Destination destination) {

@@ -24,13 +24,11 @@
 
         <!-- dependencies compile -->
         <slf4j.version>1.7.12</slf4j.version>
-        <lombok.version>1.16.6</lombok.version>
-        <javax-validation.version>1.1.0.Final</javax-validation.version>
         <javax.inject.version>1</javax.inject.version>
-        <javax.el-api.version>3.0.0</javax.el-api.version>
-        <spring.version>4.2.2.RELEASE</spring.version>
-        <spring-data-jpa.version>1.9.0.RELEASE</spring-data-jpa.version>
-        <hibernate-entitymanager.version>5.0.2.Final</hibernate-entitymanager.version>
+        <spring.version>4.0.6.RELEASE</spring.version>
+        <spring-data-jpa.version>1.6.1.RELEASE</spring-data-jpa.version>
+        <hibernate-entitymanager.version>4.3.5.Final</hibernate-entitymanager.version>
+        <hibernate-validator.version>5.0.3.Final</hibernate-validator.version>
         <hibernate-jpa.version>1.0.1.Final</hibernate-jpa.version>
 
         <!-- dependencies test -->
@@ -38,7 +36,7 @@
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
         <spring-test.version>4.2.2.RELEASE</spring-test.version>
-        <derby.version>10.10.2.0</derby.version>
+        <derby.version>10.12.1.1</derby.version>
     </properties>
 
     <dependencyManagement>
@@ -47,7 +45,6 @@
     </dependencyManagement>
 
     <dependencies>
-
         <!-- compile -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -55,33 +52,8 @@
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>${javax.inject.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>${javax-validation.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>${javax.el-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>
@@ -90,14 +62,19 @@
             <version>${spring-data-jpa.version}</version>
         </dependency>
         <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>${javax.inject.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate-entitymanager.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>${hibernate-jpa.version}</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
         </dependency>
 
         <!-- test -->
@@ -117,12 +94,11 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${spring-test.version}</version>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
