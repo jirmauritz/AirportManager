@@ -29,6 +29,7 @@
         <javax.inject.version>1</javax.inject.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <spring.version>4.2.2.RELEASE</spring.version>
+        <spring-data-jpa.version>1.9.0.RELEASE</spring-data-jpa.version>
         <hibernate-entitymanager.version>5.0.2.Final</hibernate-entitymanager.version>
         <hibernate-jpa.version>1.0.1.Final</hibernate-jpa.version>
 
@@ -87,6 +88,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
