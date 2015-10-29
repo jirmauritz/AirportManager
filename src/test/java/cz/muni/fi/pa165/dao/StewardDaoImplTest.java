@@ -30,21 +30,19 @@ public class StewardDaoImplTest {
     private EntityManager em;
 
     @Autowired
-    private StewardDaoImpl stewardDaoTest;
+    private StewardDao stewardDaoTest;
 
-    private Steward peter;
-    private Steward wendy;
+    private Steward peter = new Steward();
+    private Steward wendy = new Steward(Long.MIN_VALUE, "Wendy", "Darling", Collections.<Flight>emptySet());;
 
     @Before
     public void setUp() {
-        peter = new Steward();
+        
         peter.setFirstName("Peter");
         peter.setLastName("Pan");
         peter.setBusinessId(Long.MAX_VALUE);
 
-        wendy = new Steward(Long.MIN_VALUE, "Wendy", "Darling", Collections.<Flight>emptySet());
-
-        stewardDaoTest = new StewardDaoImpl();
+        
     }
 
     @Test
