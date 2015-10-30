@@ -2,9 +2,6 @@ package cz.muni.fi.pa165.dao;
 
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,9 +42,6 @@ public class DestinationDaoImplTest {
 	@Autowired
 	private DestinationDao destinationDaoImpl;
 
-	@PersistenceContext
-	private EntityManager em;
-
 	private Destination newDestination = new Destination();
 	private Destination newDestination1 = new Destination();
 
@@ -60,8 +54,6 @@ public class DestinationDaoImplTest {
 		newDestination1.setCity(TEST_CITY1);
 		newDestination1.setCountry(TEST_COUNTRY1);
 		newDestination1.setName(TEST_NAME1);
-
-		em.createQuery("DELETE FROM Destination ").executeUpdate();
 	}
 
 	/**
@@ -79,7 +71,7 @@ public class DestinationDaoImplTest {
 
 		Destination destination = destinations.iterator().next();
 
-		if (destination.getId() == TEST_ID){
+		if (destination.getId().equals(TEST_ID)){
 		Assert.assertEquals(destination.getCity(), newDestination.getCity());
 		Assert.assertEquals(destination.getCountry(),newDestination.getCountry());
 		Assert.assertEquals(destination.getName(), newDestination.getName());
