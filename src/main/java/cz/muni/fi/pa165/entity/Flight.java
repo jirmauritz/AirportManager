@@ -44,7 +44,7 @@ public class Flight {
 	
 	@NotNull
 	@ManyToMany
-	private Set<Steward> stewards = new HashSet<Steward>();
+	private Set<Steward> stewards = new HashSet<>();
 	
 	@NotNull
 	@ManyToOne
@@ -64,9 +64,9 @@ public class Flight {
 		super();
 		this.id = id;
 		this.international = international;
-		this.departure = departure;
-		this.arrival = arrival;
-		this.stewards = stewards;
+		this.departure = new Date(departure.getTime());
+		this.arrival = new Date(arrival.getTime());
+		this.stewards.addAll(stewards);
 		this.airplane = airplane;
 		this.from = from;
 		this.to = to;
@@ -152,19 +152,19 @@ public class Flight {
 	}
 
 	public Date getDeparture() {
-		return departure;
+		return new Date(departure.getTime());
 	}
 
 	public void setDeparture(Date departure) {
-		this.departure = departure;
+		this.departure = new Date(departure.getTime());
 	}
 
 	public Date getArrival() {
-		return arrival;
+		return new Date(arrival.getTime());
 	}
 
 	public void setArrival(Date arrival) {
-		this.arrival = arrival;
+		this.arrival = new Date(arrival.getTime());
 	}
 
 	public Set<Steward> getStewards() {
