@@ -6,9 +6,11 @@ import cz.muni.fi.pa165.entity.Flight;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -17,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Dušan Lago
@@ -33,73 +36,84 @@ public class StewardDaoImplTest {
     private StewardDao stewardDaoTest;
 
     private Steward peter = new Steward();
-    private Steward wendy = new Steward(Long.MIN_VALUE, "Wendy", "Darling", Collections.<Flight>emptySet());;
+    private Steward wendy = new Steward(Long.MIN_VALUE, "Wendy", "Darling", Collections.<Flight>emptySet());
+
+    ;
 
     @Before
     public void setUp() {
-        
+
         peter.setFirstName("Peter");
         peter.setLastName("Pan");
         peter.setBusinessId(Long.MAX_VALUE);
 
-        
     }
 
     @Test
     public void testCreateFindAll() {
         stewardDaoTest.create(peter);
         stewardDaoTest.create(wendy);
-        List<Steward> crew = stewardDaoTest.findAll();
+        Set<Steward> crew = stewardDaoTest.findAll();
         Assert.assertTrue(crew.size() == 2);
     }
 
     @Test
     public void testFindByFirstName() {
-        em.persist(peter);
-        List<Steward> foundPeters = stewardDaoTest.findByFirstName("Peter");
+        stewardDaoTest.create(peter);
+        Set<Steward> foundPeters = stewardDaoTest.findByFirstName("Peter");
 
         Assert.assertTrue(foundPeters.size() == 1);
-        Assert.assertNotNull(foundPeters.get(0).getId());
-        Assert.assertEquals(foundPeters.get(0), peter);
+
+        Steward firstFound = foundPeters.iterator().next();
+        Assert.assertEquals(firstFound, peter);
     }
 
     @Test
     public void testFindByLastName() {
-        em.persist(wendy);
-        List<Steward> foundWendys = stewardDaoTest.findByLastName("Darling");
+        stewardDaoTest.create(wendy);
+        Set<Steward> foundWendys = stewardDaoTest.findByLastName("Darling");
 
         Assert.assertTrue(foundWendys.size() == 1);
-        Assert.assertNotNull(foundWendys.get(0).getId());
-        Assert.assertEquals(foundWendys.get(0), wendy);
+
+        Steward firstFound = foundWendys.iterator().next();
+        Assert.assertEquals(firstFound, wendy);
+
     }
 
     @Test
     public void testFindById() {
-        em.persist(peter);
-        List<Steward> foundPeters = stewardDaoTest.findByFirstName("Peter");
+        stewardDaoTest.create(peter);
+        Set<Steward> foundPeters = stewardDaoTest.findByFirstName("Peter");
 
         Assert.assertTrue(foundPeters.size() == 1);
-        Assert.assertNotNull(foundPeters.get(0).getId());
+        Steward firstFound = foundPeters.iterator().next();
 
-        Steward foundPeterId = stewardDaoTest.findById(foundPeters.get(0).getId());
+        Assert.assertNotNull(firstFound.getId());
+        Steward foundPeterId = stewardDaoTest.findById(firstFound.getId());
         Assert.assertEquals(foundPeterId, peter);
     }
 
     @Test
     public void testUpdate() {
-        em.persist(peter);
+        stewardDaoTest.create(peter);
         peter.setLastName("Parker");
         stewardDaoTest.update(peter);
 
-        List<Steward> foundPeters = stewardDaoTest.findByLastName("Parker");
+        Set<Steward> foundPeters = stewardDaoTest.findByLastName("Parker");
         Assert.assertTrue(foundPeters.size() == 1);
+
+        Steward firstFound = foundPeters.iterator().next();
+        Assert.assertEquals(firstFound, peter);
     }
 
     @Test
     public void testDelete() {
         em.persist(wendy);
+
         stewardDaoTest.delete(wendy);
-        List<Steward> foundWendys = stewardDaoTest.findByFirstName("Wendy");
-        Assert.assertTrue(foundWendys.isEmpty());
+
+        Steward foundWendy = em.find(Steward.class, wendy.getId());
+        Assert.assertNull(foundWendy);
     }
+
 }

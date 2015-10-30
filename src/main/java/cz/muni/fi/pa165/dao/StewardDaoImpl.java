@@ -41,7 +41,7 @@ public class StewardDaoImpl implements StewardDao{
 	@Override
 	public final void delete(final Steward steward) {
 		Objects.requireNonNull(steward);
-		em.remove(findById(steward.getId()));
+		em.remove(steward);
 	}
 
 	@Override
