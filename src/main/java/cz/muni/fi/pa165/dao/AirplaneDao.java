@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Airplane;
 
-import javax.validation.constraints.Null;
 import java.util.Set;
 
 /**

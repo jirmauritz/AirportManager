@@ -46,6 +46,7 @@ public class FlightDaoImpl implements FlightDao {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     public Set<Flight> findAll() {
         return new HashSet<>(em.createQuery("SELECT d FROM Destination d")
                 .getResultList());
@@ -73,8 +74,9 @@ public class FlightDaoImpl implements FlightDao {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     public Set<Flight> findAllInternational() {
-        return new HashSet<Flight>(
+        return new HashSet<>(
                 em.createQuery("SELECT f FROM Flight f WHERE f.international = 1")
                 .getResultList());
     }
@@ -83,9 +85,10 @@ public class FlightDaoImpl implements FlightDao {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     public Set<Flight> findByDeparture(Date departure) {
         Objects.requireNonNull(departure);
-        return new HashSet<Flight>(
+        return new HashSet<>(
                 em.createQuery("SELECT f FROM Flight f WHERE f.departure= :departure")
                 .setParameter("departure", departure).getResultList());
     }
@@ -94,9 +97,10 @@ public class FlightDaoImpl implements FlightDao {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     public Set<Flight> findByArrival(Date arrival) {
         Objects.requireNonNull(arrival);
-        return new HashSet<Flight>(
+        return new HashSet<>(
                 em.createQuery("SELECT f FROM Flight f WHERE f.arrival= :arrival")
                 .setParameter("arrival", arrival).getResultList());
     }
@@ -105,9 +109,10 @@ public class FlightDaoImpl implements FlightDao {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     public Set<Flight> findAllFromDestination(Destination dest) {
         Objects.requireNonNull(dest);
-        return new HashSet<Flight>(
+        return new HashSet<>(
                 em.createQuery("SELECT f FROM Flight f WHERE f.from= :destination")
                 .setParameter("destination", dest).getResultList());
     }
@@ -116,9 +121,10 @@ public class FlightDaoImpl implements FlightDao {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     public Set<Flight> findAllToDestination(Destination dest) {
         Objects.requireNonNull(dest);
-        return new HashSet<Flight>(
+        return new HashSet<>(
                 em.createQuery("SELECT f FROM Flight f WHERE f.to= :destination")
                 .setParameter("destination", dest).getResultList());
     }

@@ -58,6 +58,7 @@ public class StewardDaoImpl implements StewardDao{
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public final Set<Steward> findByFirstName(String firstName) {
 		Objects.requireNonNull(firstName);
 		return new HashSet<>(em
@@ -66,6 +67,7 @@ public class StewardDaoImpl implements StewardDao{
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public final Set<Steward> findByLastName(String lastName) {
 		Objects.requireNonNull(lastName);
 		return new HashSet<>(em
@@ -74,6 +76,7 @@ public class StewardDaoImpl implements StewardDao{
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public Set<Steward> findAll() {
 		return new HashSet<>(em.createQuery("SELECT s FROM Steward s")
 				.getResultList());

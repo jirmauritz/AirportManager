@@ -4,13 +4,10 @@ import cz.muni.fi.pa165.EmbeddedPersistenceContext;
 import cz.muni.fi.pa165.entity.Steward;
 import cz.muni.fi.pa165.entity.Flight;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -27,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = EmbeddedPersistenceContext.class)
+@Transactional
 public class StewardDaoImplTest {
 
     @PersistenceContext
@@ -37,8 +35,6 @@ public class StewardDaoImplTest {
 
     private Steward peter = new Steward();
     private Steward wendy = new Steward(Long.MIN_VALUE, "Wendy", "Darling", Collections.<Flight>emptySet());
-
-    ;
 
     @Before
     public void setUp() {
