@@ -71,8 +71,7 @@ public class AirplaneDaoImplTest {
 		airplane.setName(null);
 		airplaneDaoImpl.create(airplane);
 	}
-	
-	@Ignore
+
 	@Test(expected = ConstraintViolationException.class)
 	public void createAirplaneWithNullTypeTest() {
 		airplane.setType(null);
@@ -107,6 +106,7 @@ public class AirplaneDaoImplTest {
 	
 	// delete airplane
 	@Test
+	@SuppressWarnings("unchecked")
 	public void deleteAirplaneTest() {
 		entityManager.persist(airplane);
 		Airplane savedAirplane = entityManager.find(Airplane.class, airplane.getId());
