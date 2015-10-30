@@ -47,7 +47,7 @@ public class FlightDaoImpl implements FlightDao {
      */
     @Override
     public Set<Flight> findAll() {
-        return new HashSet<>(em.createQuery("SELECT d FROM Destination d")
+        return new HashSet<>(em.createQuery("SELECT d FROM Flight d")
                 .getResultList());
     }
 
@@ -66,7 +66,8 @@ public class FlightDaoImpl implements FlightDao {
     @Override
     public void delete(Flight flight) throws NullPointerException {
         Objects.requireNonNull(flight);
-        em.remove(flight);
+        Flight toDelete = em.merge(flight);
+        em.remove(toDelete);
     }
 
     /**
@@ -75,8 +76,8 @@ public class FlightDaoImpl implements FlightDao {
     @Override
     public Set<Flight> findAllInternational() {
         return new HashSet<Flight>(
-                em.createQuery("SELECT f FROM Flight f WHERE f.international = 1")
-                .getResultList());
+                em.createQuery("SELECT f FROM Flight f WHERE f.international = :true")
+                .setParameter("true", true).getResultList());
     }
 
     /**
