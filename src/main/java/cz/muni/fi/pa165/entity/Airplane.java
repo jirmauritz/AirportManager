@@ -31,7 +31,10 @@ public class Airplane {
     @NotNull
     private int capacity;
 
-    public Airplane() {};
+    public Airplane() {
+    }
+
+    ;
     
     public Airplane(String name, String type, int capacity) {
         this.name = name;
@@ -85,12 +88,12 @@ public class Airplane {
     }
 
     /**
-     * Set type
+     * Set capacity
      *
-     * @param type
+     * @param capacity
      */
-    public void setCapacity(String type) {
-        this.type = type;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     /**
@@ -100,15 +103,6 @@ public class Airplane {
      */
     public int getCapacity() {
         return capacity;
-    }
-
-    /**
-     * Set capacity
-     *
-     * @param capacity
-     */
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 
     /**
