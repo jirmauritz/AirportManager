@@ -46,7 +46,6 @@ public class DestinationDaoImplTest {
 	private Destination newDestination1 = new Destination();
 
 	@Before
-	@Transactional
 	public void setUp() {
 		newDestination.setCity(TEST_CITY);
 		newDestination.setCountry(TEST_COUNTRY);
