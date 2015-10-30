@@ -86,6 +86,15 @@ public class Airplane {
     public String getType() {
         return type;
     }
+	
+	/**
+     * Set type
+     *
+     * @return type
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
 
     /**
      * Set capacity

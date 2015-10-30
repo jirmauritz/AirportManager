@@ -1,10 +1,8 @@
 package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Steward;
-import java.util.ArrayList;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.Objects;
 
@@ -39,9 +37,10 @@ public class StewardDaoImpl implements StewardDao{
 	}
 
 	@Override
-	public final void delete(final Steward steward) {
+	public final void delete(Steward steward) {
 		Objects.requireNonNull(steward);
-		em.remove(steward);
+		final Steward s = em.merge(steward);
+		em.remove(s);
 	}
 
 	@Override
