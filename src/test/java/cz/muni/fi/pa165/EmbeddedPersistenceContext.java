@@ -9,6 +9,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
+ * Configuration of the application. Uses embedded, in-memory database.
+ *
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */

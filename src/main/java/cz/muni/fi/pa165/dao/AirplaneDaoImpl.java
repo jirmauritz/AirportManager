@@ -51,7 +51,6 @@ public class AirplaneDaoImpl implements  AirplaneDao {
 		Objects.requireNonNull(id);
 		return em.find(Airplane.class, id);
 	}
-
 	
 	@Override
 	@SuppressWarnings("unchecked")
@@ -61,7 +60,8 @@ public class AirplaneDaoImpl implements  AirplaneDao {
 	                        .getResultList()
 	        );
 	}
-	
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public Set<Airplane> findByCapacity(int capacity){
 		Objects.requireNonNull(capacity);
@@ -71,17 +71,16 @@ public class AirplaneDaoImpl implements  AirplaneDao {
                         .getResultList()
         );
 	}
-	
-	@SuppressWarnings("unchecked")
-	public Set<Airplane> findByName(String name){
+
+	@Override
+	public Airplane findByName(String name){
 		Objects.requireNonNull(name);
-        return new HashSet<>(
-                em.createQuery("SELECT a FROM Airplane a WHERE a.name = :name")
+        return (Airplane) em.createQuery("SELECT a FROM Airplane a WHERE a.name = :name")
                         .setParameter("name", name)
-                        .getResultList()
-        );
+                        .getSingleResult();
 	}
-	
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public Set<Airplane> findByType(String type){
 		Objects.requireNonNull(type);

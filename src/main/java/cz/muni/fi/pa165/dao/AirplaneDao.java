@@ -5,6 +5,8 @@ import cz.muni.fi.pa165.entity.Airplane;
 import java.util.Set;
 
 /**
+ * Manages the Airplanes in database.
+ *
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */
@@ -47,5 +49,29 @@ public interface AirplaneDao {
      * @param airplane entity to delete
      */
     void delete(Airplane airplane);
+
+    /**
+     * Finds and returns all Airplanes with specified capacity.
+     *
+     * @param capacity capacity of airplanes to find
+     * @return Set of airplanes
+     */
+    Set<Airplane> findByCapacity(int capacity);
+
+    /**
+     * Finds and returns Airplane with specified name.
+     *
+     * @param name name of airplanes to find
+     * @return an Airplane
+     */
+    Airplane findByName(String name);
+
+    /**
+     * Finds and returns all Airplanes with specified type.
+     *
+     * @param type type of airplanes to find
+     * @return set of airplanes
+     */
+    Set<Airplane> findByType(String type);
 
 }

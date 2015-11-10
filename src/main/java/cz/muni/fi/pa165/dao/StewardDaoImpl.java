@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * Repository for Steward entities for communication with the database.
  *
  * @author Jiri Mauritz
  * @author 4099972@mail.muni.cz
