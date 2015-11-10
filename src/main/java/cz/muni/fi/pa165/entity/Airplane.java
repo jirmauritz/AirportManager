@@ -31,11 +31,21 @@ public class Airplane {
     @NotNull
     private int capacity;
 
+	/**
+	 * Non parametric constructor to created empty entity Airplane.
+	 */
     public Airplane() {
     }
 
     ;
     
+	/**
+	 * Parametric constructor to create filled entity Airplane.
+	 * 
+	 * @param name - name of the plane
+	 * @param type - type of the plane
+	 * @param capacity - capacity of the plane
+	 */
     public Airplane(String name, String type, int capacity) {
         this.name = name;
         this.type = type;
@@ -114,11 +124,6 @@ public class Airplane {
         return capacity;
     }
 
-    /**
-     * Hash code
-     *
-     * @return hash code
-     */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -130,11 +135,6 @@ public class Airplane {
         return hash;
     }
 
-    /**
-     * Equals code
-     *
-     * @return true if objects are equal, otherwise false
-     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -156,11 +156,6 @@ public class Airplane {
         return true;
     }
 
-    /**
-     * toString
-     *
-     * @return informations about class
-     */
     @Override
     public String toString() {
         return "Airplane [id=" + id + ", name=" + name + ", type=" + type

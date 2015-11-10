@@ -58,11 +58,21 @@ public class Flight {
 	@ManyToOne
 	private Destination to;
 	
-	public Flight(Long id, Boolean international, Date departure, Date arrival,
+	/**
+	 * Parametric constructor to create filled entity Flight.
+	 * 
+	 * @param international - true if the flight is international
+	 * @param departure - time of departure
+	 * @param arrival - time of arrival
+	 * @param stewards - set of stewards serving the flight
+	 * @param airplane - airplane of the fligh
+	 * @param from - departure destination
+	 * @param to - arrival destination
+	 */
+	public Flight(Boolean international, Date departure, Date arrival,
 			Set<Steward> stewards, Airplane airplane, Destination from,
 			Destination to) {
 		super();
-		this.id = id;
 		this.international = international;
 		this.departure = new Date(departure.getTime());
 		this.arrival = new Date(arrival.getTime());
@@ -72,6 +82,9 @@ public class Flight {
 		this.to = to;
 	}
 	
+	/**
+	 * Non-parametric constructor to create empty entity Flight.
+	 */
 	public Flight() {
 		super();
 	}
@@ -123,9 +136,9 @@ public class Flight {
 		} else if (!from.equals(other.getFrom()))
 			return false;
 		if (international == null) {
-			if (other.getInternational() != null)
+			if (other.isInternational() != null)
 				return false;
-		} else if (!international.equals(other.getInternational()))
+		} else if (!international.equals(other.isInternational()))
 			return false;
 		if (to == null) {
 			if (other.getTo() != null)
@@ -135,6 +148,10 @@ public class Flight {
 		return true;
 	}
 
+	/**
+	 * Get id of the flight.
+	 * @return id
+	 */
 	public Long getId() {
 		return id;
 	}
@@ -143,58 +160,114 @@ public class Flight {
 		this.id = id;
 	}
 
-	public Boolean getInternational() {
+	/**
+	 * Is the flight international.
+	 * @return true if the flight is international
+	 */
+	public Boolean isInternational() {
 		return international;
 	}
 
+	/**
+	 * Set international flag of the flight.
+	 * @param international true if the flight is international
+	 */
 	public void setInternational(Boolean international) {
 		this.international = international;
 	}
 
+	/**
+	 * Get departure time of the flight.
+	 * @return time
+	 */
 	public Date getDeparture() {
 		return new Date(departure.getTime());
 	}
 
+	/**
+	 * Set departure time of the flight.
+	 * @param departure time
+	 */
 	public void setDeparture(Date departure) {
 		this.departure = new Date(departure.getTime());
 	}
 
+	/**
+	 * Get arrival time of the flight.
+	 * @return time
+	 */
 	public Date getArrival() {
 		return new Date(arrival.getTime());
 	}
 
+	/**
+	 * Set arrival time of the flight.
+	 * @param arrival time
+	 */
 	public void setArrival(Date arrival) {
 		this.arrival = new Date(arrival.getTime());
 	}
 
+	/**
+	 * Get set of Stewards of the flight.
+	 * @return set of stewards
+	 */
 	public Set<Steward> getStewards() {
 		return stewards;
 	}
 
+	/**
+	 * Set set of stewards of the flight.
+	 * @param stewards set of stewards
+	 */
 	public void setStewards(Set<Steward> stewards) {
 		this.stewards = stewards;
 	}
 
+	/**
+	 * Get airplane of the flight.
+	 * @return airplane
+	 */
 	public Airplane getAirplane() {
 		return airplane;
 	}
 
+	/**
+	 * Set airplane of the flight.
+	 * @param airplane
+	 */
 	public void setAirplane(Airplane airplane) {
 		this.airplane = airplane;
 	}
 
+	/**
+	 * Get departure destination of the flight.
+	 * @return destination
+	 */
 	public Destination getFrom() {
 		return from;
 	}
 
+	/**
+	 * Set departure destination of the flight.
+	 * @param from destination
+	 */
 	public void setFrom(Destination from) {
 		this.from = from;
 	}
 
+	/**
+	 * Get arrival destination of the flight.
+	 * @return destination
+	 */
 	public Destination getTo() {
 		return to;
 	}
 
+	/**
+	 * Set arrival destination of the flight.
+	 * @param to destination
+	 */
 	public void setTo(Destination to) {
 		this.to = to;
 	}

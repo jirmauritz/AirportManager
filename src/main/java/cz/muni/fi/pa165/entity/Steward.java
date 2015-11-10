@@ -78,42 +78,82 @@ public class Steward {
         this.flights.remove(flight);
     }
 
+	/**
+	 * Get business id of the Steward.
+	 * @return business id
+	 */
     public Long getBusinessId() {
         return businessId;
     }
 
+	/**
+	 * Get id of the Steward.
+	 * @return id
+	 */
     public Long getId() {
         return id;
     }
 
+	/**
+	 * Get first name of the Steward.
+	 * @return first name
+	 */
     public String getFirstName() {
         return firstName;
     }
 
+	/**
+	 * Get last name of the Steward.
+	 * @return last name
+	 */
     public String getLastName() {
         return lastName;
     }
 
+	/**
+	 * Get flights of the Steward.
+	 * @return set of flights
+	 */
     public final Set<Flight> getFlights() {
         return Collections.unmodifiableSet(flights);
     }
 
+	/**
+	 * Set id of the Steward.
+	 * @param id 
+	 */
     public void setId(Long id) {
         this.id = id;
     }
 
+	/**
+	 * Set business id of the Steward.
+	 * @param businessId 
+	 */
     public void setBusinessId(Long businessId) {
         this.businessId = businessId;
     }
 
+	/**
+	 * Set first name of the Steward.
+	 * @param firstName 
+	 */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+	/**
+	 * Set the last name of the Steward.
+	 * @param lastName 
+	 */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+	/**
+	 * Set the flight of the Steward.
+	 * @param flights 
+	 */
     public void setFlights(Set<Flight> flights) {
         this.flights = flights;
     }
