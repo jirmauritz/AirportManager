@@ -2,6 +2,9 @@ package cz.muni.fi.pa165.dao;
 
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,12 +44,14 @@ public class DestinationDaoImplTest {
 
 	@Autowired
 	private DestinationDao destinationDaoImpl;
+	
+	@PersistenceContext
+	private EntityManager em;
 
 	private Destination newDestination = new Destination();
 	private Destination newDestination1 = new Destination();
 
 	@Before
-	@Transactional
 	public void setUp() {
 		newDestination.setCity(TEST_CITY);
 		newDestination.setCountry(TEST_COUNTRY);
@@ -91,8 +96,8 @@ public class DestinationDaoImplTest {
 	@Test
 	@Transactional
 	public final void findByIdAndFindByCountryTest() {
-		destinationDaoImpl.create(newDestination);
-		destinationDaoImpl.create(newDestination1);
+		em.persist(newDestination);
+		em.persist(newDestination1);
 		
 		Set<Destination> destinations = destinationDaoImpl.findByCountry(TEST_COUNTRY);
 		Assert.assertFalse(destinations.isEmpty());
@@ -111,10 +116,12 @@ public class DestinationDaoImplTest {
 	@Test
 	@Transactional
 	public final void deleteTest() {
-		destinationDaoImpl.create(newDestination);
+		em.persist(newDestination);
 		
 		Set<Destination> destinations = destinationDaoImpl.findAll();
 		Assert.assertFalse(destinations.isEmpty());
+		
+		em.merge(destinations.iterator().next());
 		
 		destinationDaoImpl.delete(newDestination);
 		
@@ -128,7 +135,7 @@ public class DestinationDaoImplTest {
 	@Test
 	@Transactional
 	public final void updateTest() {
-		destinationDaoImpl.create(newDestination);
+		em.persist(newDestination);
 		
 		Set<Destination> destinations = destinationDaoImpl.findAll();
 		Destination destination = destinations.iterator().next();
@@ -136,9 +143,34 @@ public class DestinationDaoImplTest {
 		destination.setCountry(TEST_COUNTRY1);
 		destinationDaoImpl.update(destination);
 		
-		Destination updatedDestination = destinationDaoImpl.findById(destination.getId());
+		Destination updatedDestination = em.find(Destination.class, destination.getId());
 		Assert.assertEquals(updatedDestination.getCountry(), TEST_COUNTRY1);
 		
 	}
-
+	
+	@Test(expected = NullPointerException.class)
+    public void deleteNull() {
+		destinationDaoImpl.delete(null);
+    }
+	
+	@Test(expected = NullPointerException.class)
+    public void createNull() {
+		destinationDaoImpl.create(null);
+    }
+	
+	@Test(expected = NullPointerException.class)
+    public void updateNull() {
+		destinationDaoImpl.update(null);
+    }
+	
+	@Test(expected = NullPointerException.class)
+    public void findByIdNull() {
+		destinationDaoImpl.findById(null);
+    }
+	
+	@Test(expected = NullPointerException.class)
+    public void findByCountryNull() {
+		destinationDaoImpl.findByCountry(null);
+    }
+	
 }
