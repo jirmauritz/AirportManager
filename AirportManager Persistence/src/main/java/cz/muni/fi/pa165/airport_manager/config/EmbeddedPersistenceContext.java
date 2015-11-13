@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.airport_manager;
+package cz.muni.fi.pa165.airport_manager.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import cz.muni.fi.pa165.airport_manager.EmbeddedPersistenceContext;
+import cz.muni.fi.pa165.airport_manager.config.EmbeddedPersistenceContext;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import org.junit.Assert;
 import org.junit.Before;

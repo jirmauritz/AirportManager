@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.dao;
 
-import cz.muni.fi.pa165.airport_manager.EmbeddedPersistenceContext;
+import cz.muni.fi.pa165.airport_manager.config.EmbeddedPersistenceContext;
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;

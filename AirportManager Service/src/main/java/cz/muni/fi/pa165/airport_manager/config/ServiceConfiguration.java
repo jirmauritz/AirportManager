@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.airport_manager.config;
 
-import cz.muni.fi.pa165.airport_manager.EmbeddedPersistenceContext;
 import cz.muni.fi.pa165.airport_manager.service.DestinationService;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
