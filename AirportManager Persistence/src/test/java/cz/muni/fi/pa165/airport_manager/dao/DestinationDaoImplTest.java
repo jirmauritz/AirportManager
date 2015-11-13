@@ -90,11 +90,11 @@ public class DestinationDaoImplTest {
 	}
 
 	/**
-	 * Tests methods findById and FindByCountry
+	 * Tests methods findById, findByName and FindByCountry
 	 */
 	@Test
 	@Transactional
-	public final void findByIdAndFindByCountryTest() {
+	public final void findByIdFindByNameAndFindByCountryTest() {
 		em.persist(newDestination);
 		em.persist(newDestination1);
 		
@@ -102,6 +102,12 @@ public class DestinationDaoImplTest {
 		Assert.assertFalse(destinations.isEmpty());
 		
 		Destination destination = destinationDaoImpl.findById(destinations.iterator().next().getId());
+
+		Assert.assertEquals(destination.getCity(), newDestination.getCity());
+		Assert.assertEquals(destination.getCountry(),newDestination.getCountry());
+		Assert.assertEquals(destination.getName(), newDestination.getName());
+		
+		destination = destinationDaoImpl.findByName(TEST_NAME);
 
 		Assert.assertEquals(destination.getCity(), newDestination.getCity());
 		Assert.assertEquals(destination.getCountry(),newDestination.getCountry());

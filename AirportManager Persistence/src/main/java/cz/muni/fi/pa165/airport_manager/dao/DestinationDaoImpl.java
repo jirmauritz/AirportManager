@@ -34,6 +34,14 @@ public class DestinationDaoImpl implements DestinationDao {
         return entityManager.find(Destination.class, id);
     }
 
+	@Override
+    public final Destination findByName(final String name) {
+        Objects.requireNonNull(name);
+        return (Destination) entityManager.createQuery("SELECT d FROM Destination d WHERE d.name = :name")
+                        .setParameter("name", name)
+                        .getSingleResult();
+    }
+	
     @Override
     @SuppressWarnings("unchecked") //Returned List contains only Destination entities - table name in the query
     public final Set<Destination> findByCountry(final String country) {

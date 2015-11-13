@@ -22,13 +22,23 @@ public interface DestinationDao {
     /**
      * Find by id
      *
+	 * @param id
      * @return set of destinations
      */
     Destination findById(Long id);
+	
+	/**
+     * Find by airport code.
+     *
+	 * @param name airport code
+     * @return set of destinations
+     */
+    Destination findByName(String name);
 
     /**
      * Find all destinations in specified country
      *
+	 * @param country
      * @return set of destination identifiers
      */
     Set<Destination> findByCountry(String country);
