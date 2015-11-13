@@ -2,16 +2,14 @@ package cz.muni.fi.pa165.airport_manager.dto;
 
 
 import java.util.Date;
-import java.util.Set;
 
 /**
  * Data transfer object for the entity Flight.
- * DTO is used for showing the detail of flight.
+ * DTO is used for listing flights.
  * @author Lenka Heldova
  * @author 422578@mail.muni.cz
  */
-public class FlightDTO {
-
+public class FlightSimpleDto {
     private Long id;
 
     private Boolean international;
@@ -25,16 +23,6 @@ public class FlightDTO {
     private DestinationDTO from;
 
     private DestinationDTO to;
-
-    private Set<StewardDTO> stewards;
-
-    public Set<StewardDTO> getStewards() {
-        return stewards;
-    }
-
-    public void setStewards(Set<StewardDTO> stewards) {
-        this.stewards = stewards;
-    }
 
     public Long getId() {
         return id;
@@ -92,4 +80,3 @@ public class FlightDTO {
         this.to = to;
     }
 }
-
