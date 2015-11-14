@@ -4,13 +4,13 @@ import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import java.util.Objects;
 
 /**
- * Data transfer object for the entity Airplane.
+ * Data transfer object providing the creation of the Airplane.
  *
  * @author Dušan Lago
  * @author 396336@mail.muni.cz
  */
-public class AirplaneDTO {
-
+public class AirplaneCreateDTO {
+  
     private Long id;
 
     private String name;
@@ -20,24 +20,36 @@ public class AirplaneDTO {
     private int capacity;
     
     /**
-     * Non parametric constructor to create empty AirplaneDTO.
+     * Non parametric constructor to create empty AirplaneCreateDTO.
      */
-    public AirplaneDTO() {
+    public AirplaneCreateDTO() {
     }
     
     /**
-     * Parametric constructor to create filled AirplaneDTO.
+     * Parametric constructor to create filled AirplaneCreateDTO.
      *
      * @param id - database id
      * @param name - name of the plane
      * @param type - type of the plane
      * @param capacity - capacity of the plane
      */
-    public AirplaneDTO(Long id, String name, AirplaneType type, int capacity) {
+    public AirplaneCreateDTO(Long id, String name, AirplaneType type, int capacity) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.capacity = capacity;
+    }
+    
+    /**
+     * Create new AirplaneCreateDTO object
+     *
+     * @param id - database id
+     * @param name - name of the plane
+     * @param type - type of the plane
+     * @param capacity - capacity of the plane
+     */
+    public AirplaneCreateDTO create(Long id, String name, AirplaneType type, int capacity) {
+        return new AirplaneCreateDTO(id, name, type, capacity);
     }
 
     /**
@@ -50,15 +62,6 @@ public class AirplaneDTO {
     }
 
     /**
-     * Set id
-     *
-     * @param id database id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
      * Get name
      *
      * @return name
@@ -68,39 +71,12 @@ public class AirplaneDTO {
     }
 
     /**
-     * Set name
-     *
-     * @param name name of airplane
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * Get type
      *
      * @return type
      */
     public AirplaneType getType() {
         return type;
-    }
-
-    /**
-     * Set type
-     *
-     * @param type type of plane
-     */
-    public void setType(AirplaneType type) {
-        this.type = type;
-    }
-
-    /**
-     * Set capacity
-     *
-     * @param capacity capacity of plane
-     */
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 
     /**
@@ -150,4 +126,5 @@ public class AirplaneDTO {
                 type.toString() + ",capacity=" + capacity + "]";
     }
 
+	
 }
