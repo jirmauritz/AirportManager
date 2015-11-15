@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -39,11 +40,12 @@ public interface StewardService {
     Set<Steward> findAllStewards();
 
     /**
-     * Updates the steward in the database. Only change of the first and last name
+     * Updates the steward in the database. Only change of names and flights
      * is allowed, otherwise, throws IllegalStateException.
      *
      * @param steward steward with changed first or last name
      * @return new state of steward
+     * @throws IllegalStateException if anything else, than names or flights, has changed
      */
     Steward updateSteward(Steward steward) throws IllegalStateException;
 
@@ -54,5 +56,28 @@ public interface StewardService {
      * @return if the operation was successful
      */
     boolean deleteSteward(Steward steward);
+
+    /**
+     * <p>Checks, if the steward (recognized by id) is available within the specified interval.
+     * Steward is not available if any of the steward flights ends in the specified interval, starts
+     * in the specified interval or starts before and ends after the specified interval.
+     * More formally, steward is not available if:
+     *
+     * <p><code>
+     *      (end  .after (flight.getDeparture()) && end  .before(flight.getArrival())) ||
+     *      (start.after (flight.getDeparture()) && start.before(flight.getArrival())) ||
+     *      (start.before(flight.getDeparture()) && end  .after (flight.getArrival()))
+     * </code>
+     *
+     * @param id id of the steward steward to check availability for
+     * @param start start of the interval
+     * @param end endof the interval
+     * @return true if available, false if not
+     */
+    boolean isAvailable(
+            Long id,
+            final Date start,
+            final Date end
+    );
 
 }

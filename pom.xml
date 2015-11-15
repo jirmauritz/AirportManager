@@ -39,6 +39,7 @@
         <hibernate-entitymanager.version>4.3.5.Final</hibernate-entitymanager.version>
         <hibernate-validator.version>5.0.3.Final</hibernate-validator.version>
         <hibernate-jpa.version>1.0.1.Final</hibernate-jpa.version>
+        <dozer.version>5.4.0</dozer.version>
 
         <!-- dependencies test -->
         <assertj.version>2.2.0</assertj.version>
@@ -69,6 +70,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- compile -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -99,6 +101,13 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
             </dependency>
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <version>${dozer.version}</version>
+            </dependency>
+
+            <!-- test -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
