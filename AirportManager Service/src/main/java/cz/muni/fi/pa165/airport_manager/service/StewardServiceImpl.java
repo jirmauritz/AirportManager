@@ -99,13 +99,22 @@ public class StewardServiceImpl implements StewardService {
         Objects.requireNonNull(end);
         final Steward actualSteward = this.findSteward(id);
 
-        boolean notAvailable = actualSteward.getFlights().stream()
-                .anyMatch( (Flight flight) ->
-                        (end  .after (flight.getDeparture()) && end  .before(flight.getArrival())) ||
-                        (start.after (flight.getDeparture()) && start.before(flight.getArrival())) ||
-                        (start.before(flight.getDeparture()) && end  .after (flight.getArrival()))
-                );
+//        boolean notAvailable = actualSteward.getFlights().stream()
+//                .anyMatch( (Flight flight) ->
+//                        (end  .after (flight.getDeparture()) && end  .before(flight.getArrival())) ||
+//                        (start.after (flight.getDeparture()) && start.before(flight.getArrival())) ||
+//                        (start.before(flight.getDeparture()) && end  .after (flight.getArrival()))
+//                );
 
-        return !notAvailable;
+        for (Flight flight : actualSteward.getFlights()) {
+            if (
+                    (end  .after (flight.getDeparture()) && end  .before(flight.getArrival())) ||
+                    (start.after (flight.getDeparture()) && start.before(flight.getArrival())) ||
+                    (start.before(flight.getDeparture()) && end  .after (flight.getArrival()))
+            ) {
+                return false;
+            }
+        }
+        return true;
     }
 }
