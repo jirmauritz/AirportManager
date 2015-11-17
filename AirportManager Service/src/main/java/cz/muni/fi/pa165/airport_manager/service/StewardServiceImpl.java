@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Basic implementation of service
+ * Basic implementation of steward service
  *
  * @author Tomas Valka
  * @author 422718@mail.muni.cz

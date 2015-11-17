@@ -13,34 +13,8 @@ import java.util.Objects;
  */
 public class StewardDTO extends StewardCreateDTO implements Comparable<StewardDTO> {
 
+    private Long id;
     private Long businessId;
-
-    protected StewardDTO(
-            String firstName,
-            String lastName,
-            Long businessId
-    ) {
-        super(firstName, lastName);
-        this.businessId = businessId;
-    }
-
-    /**
-     * Creates new Steward
-     *
-     * @param firstName first name of the steward
-     * @param lastName last name of the steward
-     * @param businessId business Id of the steward
-     */
-    public static StewardDTO create(
-            String firstName,
-            String lastName,
-            Long businessId
-    ) {
-        Objects.requireNonNull(firstName);
-        Objects.requireNonNull(lastName);
-        Objects.requireNonNull(businessId);
-        return new StewardDTO(firstName, lastName, businessId);
-    }
 
     /**
      * Returns the business id of the steward
@@ -48,7 +22,35 @@ public class StewardDTO extends StewardCreateDTO implements Comparable<StewardDT
      * @return business id
      */
     public Long getBusinessId() {
-        return businessId;
+        return this.businessId;
+    }
+
+    /**
+     * Returns the database id of the steward
+     *
+     * @return database id
+     */
+    public Long getId() {
+        return this.id;
+    }
+
+    /**
+     * Sets the business id of this steward to the specified one.
+     *
+     * @param businessId new business id
+     */
+    public void setBusinessId(Long businessId) {
+        Objects.requireNonNull(businessId);
+        this.businessId = businessId;
+    }
+    /**
+     * Sets the database id of this steward to the specified one.
+     *
+     * @param id new database id
+     */
+    public void setId(Long id) {
+        Objects.requireNonNull(id);
+        this.id = id;
     }
 
     @Override
@@ -57,22 +59,30 @@ public class StewardDTO extends StewardCreateDTO implements Comparable<StewardDT
         if (!(o instanceof StewardDTO)) return false;
         if (!super.equals(o)) return false;
 
-        StewardDTO that = (StewardDTO) o;
+        final StewardDTO that = (StewardDTO) o;
 
-        return getBusinessId().equals(that.getBusinessId());
-
+        return this.getBusinessId().equals(that.getBusinessId());
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + getBusinessId().hashCode();
+        result = 31 * result + this.getBusinessId().hashCode();
         return result;
     }
 
     @Override
     public int compareTo(StewardDTO o) {
         Objects.requireNonNull(o);
-        return businessId.compareTo(o.getBusinessId());
+        return this.businessId.compareTo(o.getBusinessId());
+    }
+
+    @Override
+    public String toString() {
+        return "StewardDTO{" +
+                "firstName='" + this.getFirstName() + '\'' +
+                ", lastName='" + this.getLastName() + '\'' +
+                ", businessId=" + this.getBusinessId() +
+                '}';
     }
 }

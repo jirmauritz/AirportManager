@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import cz.muni.fi.pa165.airport_manager.config.EmbeddedPersistenceContext;
+import cz.muni.fi.pa165.airport_manager.config.EmbeddedPersistenceConfiguration;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = EmbeddedPersistenceContext.class)
+@ContextConfiguration(classes = EmbeddedPersistenceConfiguration.class)
 public class DestinationDaoImplTest {
 
 	private static final String TEST_CITY = "London";

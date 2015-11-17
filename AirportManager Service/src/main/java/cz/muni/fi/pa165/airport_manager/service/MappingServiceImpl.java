@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airport_manager.service;
 
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
@@ -11,7 +12,8 @@ import java.util.*;
  * @author Lenka Heldova
  * @author 422578@mail.muni.cz
  */
-public class MappingServiceImpl {
+@Service
+public class MappingServiceImpl implements MappingService {
     @Autowired
     private Mapper dozer;
 

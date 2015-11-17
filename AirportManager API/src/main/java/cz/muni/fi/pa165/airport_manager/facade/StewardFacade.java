@@ -20,7 +20,7 @@ public interface StewardFacade {
      *
      * @return all stewards
      */
-    SortedSet<StewardDTO> listAllStewards();
+    SortedSet<StewardDTO> getAllStewards();
 
     /**
      * Creates and saves new steward.
@@ -55,6 +55,14 @@ public interface StewardFacade {
      * @return newly updated steward
      */
     StewardRichDTO updateNames(StewardDTO steward, String firstName, String lastName);
+
+    /**
+     * This is just convenience method for {@link StewardFacade#getSteward(StewardDTO)}.getFlights()
+     *
+     * @param steward steward to find flights for
+     * @return sorted set of flights
+     */
+    SortedSet<FlightDTO> getAllFlightsForSteward(StewardDTO steward);
 
 //    /**
 //     * This is just convenience method for {@link StewardFacade#updateNames(StewardDTO, String, String)}.

@@ -53,7 +53,7 @@ public interface StewardService {
      * Deletes the steward from database.
      *
      * @param steward steward to be deleted
-     * @return if the operation was successful
+     * @return true if the operation was successful, otherwise false
      */
     boolean deleteSteward(Steward steward);
 

@@ -1,9 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.dto;
 
-import java.util.Collections;
-import java.util.Objects;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Class for showing Stewards. Main purpose of this class is for showing
@@ -14,46 +11,25 @@ import java.util.TreeSet;
  */
 public final class StewardRichDTO extends StewardDTO {
 
-    private SortedSet<FlightDTO> flights;
-
-    private StewardRichDTO(
-            String firstName,
-            String lastName,
-            Long businessId,
-            final SortedSet<FlightDTO> flights
-    ) {
-        super(firstName, lastName, businessId);
-        this.flights = flights;
-    }
+    private SortedSet<FlightDTO> flights = new TreeSet<>();
 
     /**
-     * Creates new Steward. Given collection of stewards is copied
-     *
-     * @param firstName first name of the steward
-     * @param lastName last name of the steward
-     * @param businessId business Id of the steward
-     * @param flights flights assigned to steward
-     */
-    public static StewardRichDTO create(
-            String firstName,
-            String lastName,
-            Long businessId,
-            final SortedSet<FlightDTO> flights
-    ) {
-        Objects.requireNonNull(firstName);
-        Objects.requireNonNull(lastName);
-        Objects.requireNonNull(businessId);
-        Objects.requireNonNull(flights);
-        return new StewardRichDTO(firstName, lastName, businessId, new TreeSet<>(flights));
-    }
-
-    /**
-     * Returns sorted set of the flights assigned to steward
+     * Returns a view of sorted set of the flights assigned to this steward
      *
      * @return set of flights
      */
     public SortedSet<FlightDTO> getFlights() {
         return Collections.unmodifiableSortedSet(flights);
+    }
+
+    /**
+     * Sets the flights of this steward to the specified ones. Given collection is copied.
+     *
+     * @param flights new flights
+     */
+    public void setFlights(final Set<FlightDTO> flights) {
+        Objects.requireNonNull(flights);
+        this.flights = new TreeSet<>(flights);
     }
 
     @Override
@@ -62,16 +38,26 @@ public final class StewardRichDTO extends StewardDTO {
         if (!(o instanceof StewardRichDTO)) return false;
         if (!super.equals(o)) return false;
 
-        StewardRichDTO that = (StewardRichDTO) o;
+        final StewardRichDTO that = (StewardRichDTO) o;
 
-        return getFlights().equals(that.getFlights());
+        return this.getFlights().equals(that.getFlights());
 
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + getFlights().hashCode();
+        result = 31 * result + this.getFlights().hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "StewardRichDTO{" +
+                "firstName='" + this.getFirstName() + '\'' +
+                ", lastName='" + this.getLastName() + '\'' +
+                ", businessId=" + this.getBusinessId() +
+                ", flights=" + this.getFlights() +
+                '}';
     }
 }

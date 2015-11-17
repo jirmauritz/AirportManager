@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.dao;
 
-import cz.muni.fi.pa165.airport_manager.config.EmbeddedPersistenceContext;
+import cz.muni.fi.pa165.airport_manager.config.EmbeddedPersistenceConfiguration;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 
@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author 396336@mail.muni.cz
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = EmbeddedPersistenceContext.class)
+@ContextConfiguration(classes = EmbeddedPersistenceConfiguration.class)
 @Transactional
 public class StewardDaoImplTest {
 

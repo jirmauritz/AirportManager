@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.dao;
 
-import cz.muni.fi.pa165.airport_manager.config.EmbeddedPersistenceContext;
+import cz.muni.fi.pa165.airport_manager.config.EmbeddedPersistenceConfiguration;
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = EmbeddedPersistenceContext.class)
+@ContextConfiguration(classes = EmbeddedPersistenceConfiguration.class)
 public class FlightDaoImplTest {
 
     private @Autowired FlightDao flightDao;

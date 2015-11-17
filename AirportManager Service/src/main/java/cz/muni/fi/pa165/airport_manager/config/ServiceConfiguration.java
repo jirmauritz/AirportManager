@@ -16,13 +16,12 @@ import org.springframework.context.annotation.Import;
  */
 
 @Configuration
-@Import(EmbeddedPersistenceContext.class)
-@ComponentScan(basePackages = "cz.muni.fi.pa165")
+@Import(EmbeddedPersistenceConfiguration.class)
+@ComponentScan(basePackages = "cz.muni.fi.pa165.airport_manager.service")
 public class ServiceConfiguration {
 
     @Bean
     public Mapper dozer(){
-        DozerBeanMapper dozer = new DozerBeanMapper();
-        return dozer;
+        return new DozerBeanMapper();
     }
 }

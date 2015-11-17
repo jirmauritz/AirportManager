@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author 422718@mail.muni.cz
  */
 @Configuration
-@ComponentScan(basePackages = "cz.muni.fi.pa165")
+@ComponentScan(basePackages = "cz.muni.fi.pa165.airport_manager.dao")
 @EnableTransactionManagement
 @EnableJpaRepositories
-public class EmbeddedPersistenceContext {
+public class EmbeddedPersistenceConfiguration {
 
     @Bean
     public JpaTransactionManager transactionManager() {
