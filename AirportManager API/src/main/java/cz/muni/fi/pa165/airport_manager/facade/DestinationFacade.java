@@ -18,6 +18,13 @@ public interface DestinationFacade {
      */
     void create(DestinationCreateDTO destination);
 
+	 /**
+     * Delete destination from database
+     *
+     * @param id id of the destination entity to delete
+     */
+    void delete(Long id);	
+	
     /**
      * Find by id
      *
