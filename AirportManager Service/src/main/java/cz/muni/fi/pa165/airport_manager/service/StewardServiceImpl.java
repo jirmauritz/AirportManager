@@ -31,7 +31,7 @@ public class StewardServiceImpl implements StewardService {
         if (steward.getBusinessId() != null) {
             throw new IllegalStateException("Steward must not have business id set.");
         }
-        if (!steward.getFlights().isEmpty()) {
+        if (steward.getFirstName() != null && !steward.getFlights().isEmpty()) {
             throw new IllegalStateException("Steward must not have any flight assigned.");
         }
         if (steward.getFirstName() == null || steward.getFirstName().isEmpty()) {
@@ -42,11 +42,10 @@ public class StewardServiceImpl implements StewardService {
         }
 
         stewardDao.create(steward);
+        steward.setBusinessId(steward.getId());
+        stewardDao.update(steward);
 
-        final Steward newSteward = this.findSteward(steward.getId());
-        newSteward.setBusinessId(newSteward.getId());
-
-        return this.findSteward(newSteward.getId());
+        return this.findSteward(steward.getId());
     }
 
     @Override

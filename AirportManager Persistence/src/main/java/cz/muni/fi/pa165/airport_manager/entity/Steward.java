@@ -47,8 +47,11 @@ public class Steward {
             final String lastName,
             final Set<Flight> flights
     ) {
-        this.businessId = businessId;
+        Objects.requireNonNull(firstName);
+        Objects.requireNonNull(lastName);
+        Objects.requireNonNull(flights);
         this.id = null;
+        this.businessId = businessId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.flights = new HashSet<>(flights);
