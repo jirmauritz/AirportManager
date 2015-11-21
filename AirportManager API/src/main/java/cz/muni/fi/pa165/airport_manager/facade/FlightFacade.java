@@ -1,7 +1,8 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
+import cz.muni.fi.pa165.airport_manager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
-import cz.muni.fi.pa165.airport_manager.dto.FlightSimpleDto;
+import cz.muni.fi.pa165.airport_manager.dto.FlightSimpleDTO;
 
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public interface FlightFacade {
      *
      * @param flight entity to create
      */
-    void create(FlightDTO flight);
+    void create(FlightCreateDTO flight);
 
     /**
      * Get flight by given id
@@ -29,6 +30,7 @@ public interface FlightFacade {
     FlightDTO getFlight(Long id);
 
     /**
+     *
      * Delete flight identified by id
      * @param id
      */
@@ -40,5 +42,13 @@ public interface FlightFacade {
      *
      * @return set of destinations
      */
-    Set<FlightSimpleDto> getFlights();
+    Set<FlightSimpleDTO> getFlights();
+
+    void addSteward (Long id);
+
+    void removeSteward (Long id);
+
+    void update(FlightSimpleDTO flight);
+
+
 }

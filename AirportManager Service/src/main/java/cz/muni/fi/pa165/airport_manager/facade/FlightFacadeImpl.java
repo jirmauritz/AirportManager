@@ -1,7 +1,8 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
+import cz.muni.fi.pa165.airport_manager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
-import cz.muni.fi.pa165.airport_manager.dto.FlightSimpleDto;
+import cz.muni.fi.pa165.airport_manager.dto.FlightSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.service.FlightService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
@@ -25,12 +26,8 @@ public class FlightFacadeImpl implements FlightFacade{
 
 
     @Override
-    public void create(FlightDTO flight) {
-    if (flight.getId() == null){
+    public void create(FlightCreateDTO flight) {
         flightService.create(mappingService.mapTo(flight, Flight.class));
-    } else {
-        flightService.update(mappingService.mapTo(flight, Flight.class));
-    }
     }
 
     @Override
@@ -44,8 +41,23 @@ public class FlightFacadeImpl implements FlightFacade{
     }
 
     @Override
-    public Set<FlightSimpleDto> getFlights() {
-        return mappingService.mapTo(flightService.findAll(),FlightSimpleDto.class);
+    public Set<FlightSimpleDTO> getFlights() {
+        return mappingService.mapTo(flightService.findAll(),FlightSimpleDTO.class);
 
+    }
+
+    @Override
+    public void addSteward(Long id) {
+        //TODO
+    }
+
+    @Override
+    public void removeSteward(Long id) {
+        //TODO
+    }
+
+    @Override
+    public void update(FlightSimpleDTO flight) {
+        //TODO
     }
 }
