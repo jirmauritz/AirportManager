@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
 import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
-import cz.muni.fi.pa165.airport_manager.dto.DestinationDTO;
+import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import cz.muni.fi.pa165.airport_manager.service.DestinationService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
@@ -44,7 +44,7 @@ public class DestinationFacadeTest {
 
     private Destination destination;
     private DestinationCreateDTO destinationCreateDTO;
-    private DestinationDTO destinationDTO;
+    private DestinationSimpleDTO destinationDTO;
 
     @Before
     public void setUp() {
@@ -55,7 +55,7 @@ public class DestinationFacadeTest {
         destinationCreateDTO.setName("Vaclav Havel Airport");
         destinationCreateDTO.setCity("Prague");
         destinationCreateDTO.setCountry("Czech Republic");
-        destinationDTO = new DestinationDTO();
+        destinationDTO = new DestinationSimpleDTO();
         destinationDTO.setId(1L);
         destinationDTO.setName("Vaclav Havel Airport");
         destinationDTO.setCity("Prague");
@@ -86,12 +86,12 @@ public class DestinationFacadeTest {
     public void findById() {
         destination.setId(1L);
         doReturn(destination).when(destinationService).findById(1L);
-        doReturn(destinationDTO).when(mappingService).mapTo(destination, DestinationDTO.class);
+        doReturn(destinationDTO).when(mappingService).mapTo(destination, DestinationSimpleDTO.class);
 
-        final DestinationDTO returnedDestination = destinationFacade.findById(1L);
+        final DestinationSimpleDTO returnedDestination = destinationFacade.findById(1L);
 
         verify(destinationService).findById(1L);
-        verify(mappingService).mapTo(destination, DestinationDTO.class);
+        verify(mappingService).mapTo(destination, DestinationSimpleDTO.class);
 
         assertThat(returnedDestination)
                 .isNotNull()
@@ -102,12 +102,12 @@ public class DestinationFacadeTest {
     public void findByAirportCode() {
         destination.setId(1L);
         doReturn(destination).when(destinationService).findByAirportCode("Vaclav Havel Airport");
-        doReturn(destinationDTO).when(mappingService).mapTo(destination, DestinationDTO.class);
+        doReturn(destinationDTO).when(mappingService).mapTo(destination, DestinationSimpleDTO.class);
 
-        final DestinationDTO returnedDestination = destinationFacade.findByAirportCode("Vaclav Havel Airport");
+        final DestinationSimpleDTO returnedDestination = destinationFacade.findByAirportCode("Vaclav Havel Airport");
 
         verify(destinationService).findByAirportCode("Vaclav Havel Airport");
-        verify(mappingService).mapTo(destination, DestinationDTO.class);
+        verify(mappingService).mapTo(destination, DestinationSimpleDTO.class);
 
         assertThat(returnedDestination)
                 .isNotNull()
@@ -125,29 +125,29 @@ public class DestinationFacadeTest {
         destinations.add(destination1);
         destinations.add(destination2);
 
-        final DestinationDTO destinationDTO1 = new DestinationDTO();
+        final DestinationSimpleDTO destinationDTO1 = new DestinationSimpleDTO();
         destinationDTO1.setId(1L);
         destinationDTO1.setName("Vaclav Havel Airport");
         destinationDTO1.setCity("Prague");
         destinationDTO1.setCountry("Czech Republic");
 
-        final DestinationDTO destinationDTO2 = new DestinationDTO();
+        final DestinationSimpleDTO destinationDTO2 = new DestinationSimpleDTO();
         destinationDTO2.setId(2L);
         destinationDTO2.setName("Some other Airport");
         destinationDTO2.setCity("Brno");
         destinationDTO2.setCountry("Czech Republic");
 
-        final Set<DestinationDTO> destinationDTOs = new HashSet<>();
+        final Set<DestinationSimpleDTO> destinationDTOs = new HashSet<>();
         destinationDTOs.add(destinationDTO1);
         destinationDTOs.add(destinationDTO2);
 
         doReturn(destinations).when(destinationService).findAll();
-        doReturn(destinationDTOs).when(mappingService).mapTo(destinations, DestinationDTO.class);
+        doReturn(destinationDTOs).when(mappingService).mapTo(destinations, DestinationSimpleDTO.class);
 
-        Set<DestinationDTO> returnedDestinations = destinationFacade.findAll();
+        Set<DestinationSimpleDTO> returnedDestinations = destinationFacade.findAll();
 
         verify(destinationService).findAll();
-        verify(mappingService).mapTo(destinations, DestinationDTO.class);
+        verify(mappingService).mapTo(destinations, DestinationSimpleDTO.class);
 
         assertThat(returnedDestinations)
                 .isNotNull()
@@ -165,29 +165,29 @@ public class DestinationFacadeTest {
         destinations.add(destination1);
         destinations.add(destination2);
 
-        final DestinationDTO destinationDTO1 = new DestinationDTO();
+        final DestinationSimpleDTO destinationDTO1 = new DestinationSimpleDTO();
         destinationDTO1.setId(1L);
         destinationDTO1.setName("Vaclav Havel Airport");
         destinationDTO1.setCity("Prague");
         destinationDTO1.setCountry("Czech Republic");
 
-        final DestinationDTO destinationDTO2 = new DestinationDTO();
+        final DestinationSimpleDTO destinationDTO2 = new DestinationSimpleDTO();
         destinationDTO2.setId(2L);
         destinationDTO2.setName("Some other Airport");
         destinationDTO2.setCity("Brno");
         destinationDTO2.setCountry("Czech Republic");
 
-        final Set<DestinationDTO> destinationDTOs = new HashSet<>();
+        final Set<DestinationSimpleDTO> destinationDTOs = new HashSet<>();
         destinationDTOs.add(destinationDTO1);
         destinationDTOs.add(destinationDTO2);
 
         doReturn(destinations).when(destinationService).findByCountry("Czech Republic");
-        doReturn(destinationDTOs).when(mappingService).mapTo(destinations, DestinationDTO.class);
+        doReturn(destinationDTOs).when(mappingService).mapTo(destinations, DestinationSimpleDTO.class);
 
-        Set<DestinationDTO> returnedDestinations = destinationFacade.findByCountry("Czech Republic");
+        Set<DestinationSimpleDTO> returnedDestinations = destinationFacade.findByCountry("Czech Republic");
 
         verify(destinationService).findByCountry("Czech Republic");
-        verify(mappingService).mapTo(destinations, DestinationDTO.class);
+        verify(mappingService).mapTo(destinations, DestinationSimpleDTO.class);
 
         assertThat(returnedDestinations)
                 .isNotNull()

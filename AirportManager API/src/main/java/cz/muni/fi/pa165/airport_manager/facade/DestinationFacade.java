@@ -1,11 +1,11 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
 import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
-import cz.muni.fi.pa165.airport_manager.dto.DestinationDTO;
+import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
 import java.util.Set;
 
 /**
- * Facade for the methods over the {@link Destination} entity.
+ * Facade for the methods over the Destination entity.
  * 
  * @author Jiri Mauritz
  * @author 409972@mail.muni.cz
@@ -31,7 +31,7 @@ public interface DestinationFacade {
 	 * @param id
      * @return set of destinations
      */
-    DestinationDTO findById(Long id);
+    DestinationSimpleDTO findById(Long id);
 
 	 /**
      * Find by airport code
@@ -39,7 +39,7 @@ public interface DestinationFacade {
 	 * @param code - airport code
      * @return set of destinations
      */
-    DestinationDTO findByAirportCode(String code);
+    DestinationSimpleDTO findByAirportCode(String code);
 	
     /**
      * Find all destinations in specified country
@@ -47,12 +47,12 @@ public interface DestinationFacade {
 	 * @param country
      * @return set of destination identifiers
      */
-    Set<DestinationDTO> findByCountry(String country);
+    Set<DestinationSimpleDTO> findByCountry(String country);
 
     /**
      * Find all
      *
      * @return set of destinations
      */
-    Set<DestinationDTO> findAll();
+    Set<DestinationSimpleDTO> findAll();
 }

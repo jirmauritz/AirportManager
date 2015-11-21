@@ -11,11 +11,11 @@ import java.util.Objects;
  */
 public class DestinationCreateDTO {
 	
-	private String name; // airport code
+	protected String name; // airport code
 	
-	private String city;
+	protected String city;
 	
-	private String country;
+	protected String country;
 
 	/**
 	 * Get code of the airport

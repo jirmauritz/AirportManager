@@ -22,9 +22,9 @@ public class FlightDTO {
 
     private AirplaneDTO airplane;
 
-    private DestinationDTO from;
+    private DestinationSimpleDTO from;
 
-    private DestinationDTO to;
+    private DestinationSimpleDTO to;
 
     private Set<StewardDTO> stewards;
 
@@ -76,19 +76,19 @@ public class FlightDTO {
         this.airplane = airplane;
     }
 
-    public DestinationDTO getFrom() {
+    public DestinationSimpleDTO getFrom() {
         return from;
     }
 
-    public void setFrom(DestinationDTO from) {
+    public void setFrom(DestinationSimpleDTO from) {
         this.from = from;
     }
 
-    public DestinationDTO getTo() {
+    public DestinationSimpleDTO getTo() {
         return to;
     }
 
-    public void setTo(DestinationDTO to) {
+    public void setTo(DestinationSimpleDTO to) {
         this.to = to;
     }
 }
