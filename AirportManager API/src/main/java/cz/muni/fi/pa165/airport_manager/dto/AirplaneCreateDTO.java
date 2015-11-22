@@ -11,8 +11,6 @@ import java.util.Objects;
  */
 public class AirplaneCreateDTO {
   
-    private Long id;
-
     private String name;
 
     private AirplaneType type;
@@ -28,13 +26,11 @@ public class AirplaneCreateDTO {
     /**
      * Parametric constructor to create filled AirplaneCreateDTO.
      *
-     * @param id - database id
      * @param name - name of the plane
      * @param type - type of the plane
      * @param capacity - capacity of the plane
      */
-    public AirplaneCreateDTO(Long id, String name, AirplaneType type, int capacity) {
-        this.id = id;
+    public AirplaneCreateDTO(String name, AirplaneType type, int capacity) {
         this.name = name;
         this.type = type;
         this.capacity = capacity;
@@ -43,22 +39,12 @@ public class AirplaneCreateDTO {
     /**
      * Create new AirplaneCreateDTO object
      *
-     * @param id - database id
      * @param name - name of the plane
      * @param type - type of the plane
      * @param capacity - capacity of the plane
      */
-    public AirplaneCreateDTO create(Long id, String name, AirplaneType type, int capacity) {
-        return new AirplaneCreateDTO(id, name, type, capacity);
-    }
-
-    /**
-     * Get id
-     *
-     * @return id
-     */
-    public Long getId() {
-        return id;
+    public AirplaneCreateDTO create(String name, AirplaneType type, int capacity) {
+        return new AirplaneCreateDTO(name, type, capacity);
     }
 
     /**
@@ -122,7 +108,7 @@ public class AirplaneCreateDTO {
 
     @Override
     public String toString() {
-        return "AirplaneDTO [id=" + id + ", name=" + name + ", type=" + 
+        return "AirplaneDTO [name=" + name + ", type=" + 
                 type.toString() + ",capacity=" + capacity + "]";
     }
 

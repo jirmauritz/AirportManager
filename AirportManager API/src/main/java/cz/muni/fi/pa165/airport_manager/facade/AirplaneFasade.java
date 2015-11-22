@@ -54,4 +54,5 @@ public interface AirplaneFasade {
      * @return sorted set of airplane DTOs
      */
     SortedSet<AirplaneDTO> findByMinCapacity(int minCapacity);
+
 }
