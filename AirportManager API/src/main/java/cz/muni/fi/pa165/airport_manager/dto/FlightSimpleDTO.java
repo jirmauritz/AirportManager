@@ -4,6 +4,7 @@ package cz.muni.fi.pa165.airport_manager.dto;
 /**
  * Data transfer object for the entity Flight.
  * DTO is used for listing flights.
+ *
  * @author Lenka Heldova
  * @author 422578@mail.muni.cz
  */

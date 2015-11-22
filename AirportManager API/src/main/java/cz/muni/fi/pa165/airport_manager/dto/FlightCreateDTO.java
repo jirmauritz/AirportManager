@@ -3,7 +3,11 @@ package cz.muni.fi.pa165.airport_manager.dto;
 import java.util.Date;
 
 /**
- * Created by User on 21. 11. 2015.
+ * Data transfer object for the entity Flight.
+ * DTO is used for creating the flight.
+ *
+ * @author Lenka Heldova
+ * @author 422578@mail.muni.cz
  */
 public class FlightCreateDTO {
 
