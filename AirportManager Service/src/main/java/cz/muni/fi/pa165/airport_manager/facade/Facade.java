@@ -7,6 +7,9 @@ import java.lang.annotation.*;
 
 /**
  * Annotation to annotate facade implementations with {@link Service} and {@link Transactional}
+ *
+ * @author Tomas Valka
+ * @author 422718@mail.muni.cz
  */
 
 @Target(ElementType.TYPE)
