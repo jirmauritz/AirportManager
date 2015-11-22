@@ -3,12 +3,11 @@ package cz.muni.fi.pa165.airport_manager.facade;
 import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardRichDTO;
+import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import cz.muni.fi.pa165.airport_manager.service.StewardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
@@ -25,30 +24,30 @@ public class StewardFacadeImpl implements StewardFacade {
     private @Autowired MappingService mappingService;
 
     @Override
-    public Set<StewardDTO> getAllStewards() {
+    public Set<StewardSimpleDTO> getAllStewards() {
         Set<Steward> stewards = stewardService.findAllStewards();
-        return new HashSet<>(mappingService.mapTo(stewards, StewardDTO.class));
+        return new HashSet<>(mappingService.mapTo(stewards, StewardSimpleDTO.class));
     }
 
     @Override
-    public StewardRichDTO createSteward(final StewardCreateDTO steward) {
+    public StewardDTO createSteward(final StewardCreateDTO steward) {
         Objects.requireNonNull(steward);
 
         return mappingService.mapTo(
                 stewardService.createSteward(
                         mappingService.mapTo(steward, Steward.class)
                 ),
-                StewardRichDTO.class
+                StewardDTO.class
         );
     }
 
     @Override
-    public StewardRichDTO getSteward(Long id) {
+    public StewardDTO getSteward(Long id) {
         Objects.requireNonNull(id);
 
         return mappingService.mapTo(
                 stewardService.findSteward(id),
-                StewardRichDTO.class
+                StewardDTO.class
         );
     }
 
@@ -60,7 +59,7 @@ public class StewardFacadeImpl implements StewardFacade {
     }
 
     @Override
-    public StewardRichDTO updateNames(
+    public StewardDTO updateNames(
             Long id,
             String firstName,
             String lastName
@@ -69,7 +68,7 @@ public class StewardFacadeImpl implements StewardFacade {
         Objects.requireNonNull(firstName);
         Objects.requireNonNull(lastName);
 
-        final StewardDTO steward = this.getSteward(id);
+        final StewardSimpleDTO steward = this.getSteward(id);
 
         steward.setFirstName(firstName);
         steward.setLastName(lastName);
@@ -78,7 +77,7 @@ public class StewardFacadeImpl implements StewardFacade {
                 stewardService.updateSteward(
                     mappingService.mapTo(steward, Steward.class)
                 ),
-                StewardRichDTO.class
+                StewardDTO.class
         );
     }
 

@@ -2,9 +2,8 @@ package cz.muni.fi.pa165.airport_manager.facade;
 
 import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
+import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardRichDTO;
-import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import cz.muni.fi.pa165.airport_manager.service.StewardService;
@@ -19,10 +18,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.mockito.ArgumentCaptor;
+
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.verify;
@@ -44,10 +42,10 @@ public class StewardFacadeTest {
 
     private Steward steward;
 	private Steward updatedSteward;
-	private StewardDTO stewardDTO;
+	private StewardSimpleDTO stewardDTO;
 	private StewardCreateDTO stewardCreateDTO;
-	private StewardRichDTO stewardRichDTO;
-	private StewardRichDTO updatedRichSteward;
+	private StewardDTO stewardRichDTO;
+	private StewardDTO updatedRichSteward;
 	
 	private Set<Steward> set;
 	private FlightDTO flight = new FlightDTO();
@@ -69,7 +67,7 @@ public class StewardFacadeTest {
 		set = new HashSet<>();
 		set.add(steward);
 
-		stewardDTO = new StewardDTO();
+		stewardDTO = new StewardSimpleDTO();
 		stewardDTO.setBusinessId(B_ID);
 		stewardDTO.setFirstName(NAME);
 		stewardDTO.setLastName(SURNAME);
@@ -78,14 +76,14 @@ public class StewardFacadeTest {
 		stewardCreateDTO.setFirstName(NAME);
 		stewardCreateDTO.setLastName(SURNAME);
 		
-		stewardRichDTO = new StewardRichDTO();
+		stewardRichDTO = new StewardDTO();
 		stewardRichDTO.setBusinessId(B_ID);
 		stewardRichDTO.setFirstName(NAME);
 		stewardRichDTO.setLastName(SURNAME);
 		Set<FlightDTO> flights = new HashSet<>(Arrays.asList(flight));
 		stewardRichDTO.setFlights(flights);
 		
-		updatedRichSteward = new StewardRichDTO();
+		updatedRichSteward = new StewardDTO();
 		updatedRichSteward.setBusinessId(1l);
 		updatedRichSteward.setFirstName("Vasek");
 		updatedRichSteward.setLastName("Havel");
@@ -98,7 +96,7 @@ public class StewardFacadeTest {
 	@Test
 	public void getAllStewards() {
 		// fire 
-		Set<StewardDTO> returned = stewardFacade.getAllStewards();
+		Set<StewardSimpleDTO> returned = stewardFacade.getAllStewards();
 		
 		// assert
 		assertThat(returned).containsExactly(stewardDTO);
@@ -110,7 +108,7 @@ public class StewardFacadeTest {
     @Test
     public void createSteward() {
 		// fire
-		StewardRichDTO returnedSteward = stewardFacade.createSteward(stewardCreateDTO);
+		StewardDTO returnedSteward = stewardFacade.createSteward(stewardCreateDTO);
 		
 		// assert
 		assertThat(returnedSteward).isEqualTo(stewardRichDTO);
@@ -122,7 +120,7 @@ public class StewardFacadeTest {
 	@Test
 	public void getSteward() {
 		// fire
-		StewardRichDTO returned = stewardFacade.getSteward(1l);
+		StewardDTO returned = stewardFacade.getSteward(1l);
 		
 		// assert
 		assertThat(returned).isEqualTo(stewardRichDTO);
@@ -145,11 +143,11 @@ public class StewardFacadeTest {
 		// mock mapping
 		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(Steward.class)))
 				.thenReturn(updatedSteward);
-		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(StewardRichDTO.class)))
+		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(StewardDTO.class)))
 				.thenReturn(updatedRichSteward);
 		
 		// fire
-		StewardRichDTO returned = stewardFacade.updateNames(1l, "Vasek", SURNAME);
+		StewardDTO returned = stewardFacade.updateNames(1l, "Vasek", SURNAME);
 		
 		// verify correct updated steward is sent to the persistence layer
 		verify(stewardService).updateSteward(updatedSteward);
@@ -184,13 +182,13 @@ public class StewardFacadeTest {
 		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(Steward.class)))
 				.thenReturn(steward);
 		// mock mapping stewardDTO
-		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(StewardDTO.class)))
+		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(StewardSimpleDTO.class)))
 				.thenReturn(stewardDTO);
 		// mock mapping StewardCreateDTO
-		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(StewardRichDTO.class)))
+		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(StewardDTO.class)))
 				.thenReturn(stewardRichDTO);
 		// mock collection of stewardsDTO
-		Mockito.when(mappingService.mapTo(Matchers.anyCollection(), Matchers.eq(StewardDTO.class)))
+		Mockito.when(mappingService.mapTo(Matchers.anyCollection(), Matchers.eq(StewardSimpleDTO.class)))
 				.thenReturn(new HashSet<>(Arrays.asList(stewardDTO)));
 	}
    

@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */
-public class StewardDTO extends StewardCreateDTO implements Comparable<StewardDTO> {
+public class StewardSimpleDTO extends StewardCreateDTO implements Comparable<StewardSimpleDTO> {
 
     private Long id;
     private Long businessId;
@@ -56,10 +56,10 @@ public class StewardDTO extends StewardCreateDTO implements Comparable<StewardDT
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof StewardDTO)) return false;
+        if (!(o instanceof StewardSimpleDTO)) return false;
         if (!super.equals(o)) return false;
 
-        final StewardDTO that = (StewardDTO) o;
+        final StewardSimpleDTO that = (StewardSimpleDTO) o;
 
         return this.getBusinessId().equals(that.getBusinessId());
     }
@@ -72,14 +72,14 @@ public class StewardDTO extends StewardCreateDTO implements Comparable<StewardDT
     }
 
     @Override
-    public int compareTo(StewardDTO o) {
+    public int compareTo(StewardSimpleDTO o) {
         Objects.requireNonNull(o);
         return this.businessId.compareTo(o.getBusinessId());
     }
 
     @Override
     public String toString() {
-        return "StewardDTO{" +
+        return "StewardSimpleDTO{" +
                 "firstName='" + this.getFirstName() + '\'' +
                 ", lastName='" + this.getLastName() + '\'' +
                 ", businessId=" + this.getBusinessId() +

@@ -3,10 +3,9 @@ package cz.muni.fi.pa165.airport_manager.facade;
 import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardRichDTO;
+import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
 
 import java.util.Set;
-import java.util.SortedSet;
 
 /**
  * Facade for the operations with Stewards.
@@ -21,7 +20,7 @@ public interface StewardFacade {
      *
      * @return all stewards
      */
-    Set<StewardDTO> getAllStewards();
+    Set<StewardSimpleDTO> getAllStewards();
 
     /**
      * Creates and saves new steward.
@@ -29,7 +28,7 @@ public interface StewardFacade {
      * @param steward steward to be created
      * @return created steward
      */
-    StewardRichDTO createSteward(StewardCreateDTO steward);
+    StewardDTO createSteward(StewardCreateDTO steward);
 
     /**
      * Returns the specified steward with more detail.
@@ -37,7 +36,7 @@ public interface StewardFacade {
      * @param id id of steward to get detail for
      * @return Steward with all details
      */
-    StewardRichDTO getSteward(Long id);
+    StewardDTO getSteward(Long id);
 
     /**
      * Deletes specified steward.
@@ -54,7 +53,7 @@ public interface StewardFacade {
      * @param lastName new last name of the steward
      * @return newly updated steward
      */
-    StewardRichDTO updateNames(Long id, String firstName, String lastName);
+    StewardDTO updateNames(Long id, String firstName, String lastName);
 
     /**
      * This is just convenience method for {@link StewardFacade#getSteward(Long)}.getFlights()
@@ -65,26 +64,26 @@ public interface StewardFacade {
     Set<FlightDTO> getAllFlightsForSteward(Long id);
 
 //    /**
-//     * This is just convenience method for {@link StewardFacade#updateNames(StewardDTO, String, String)}.
+//     * This is just convenience method for {@link StewardFacade#updateNames(StewardSimpleDTO, String, String)}.
 //     * Last name is without change.
 //     *
 //     * @param steward Steward to get updated names
 //     * @param firstName new first name of the steward
 //     * @return newly updated steward
 //     */
-//    default StewardRichDTO updateFirstName(StewardDTO steward, String firstName) {
+//    default StewardDTO updateFirstName(StewardSimpleDTO steward, String firstName) {
 //        return updateNames(steward, firstName, steward.getLastName());
 //    }
 //
 //    /**
-//     * This is just convenience method for {@link StewardFacade#updateNames(StewardDTO, String, String)}.
+//     * This is just convenience method for {@link StewardFacade#updateNames(StewardSimpleDTO, String, String)}.
 //     * First name is without change.
 //     *
 //     * @param steward Steward to get updated names
 //     * @param lastName new last name of the steward
 //     * @return newly updated steward
 //     */
-//    default StewardRichDTO updateLastName(StewardDTO steward, String lastName) {
+//    default StewardDTO updateLastName(StewardSimpleDTO steward, String lastName) {
 //        return updateNames(steward, steward.getFirstName(), lastName);
 //    }
 
