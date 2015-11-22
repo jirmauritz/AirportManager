@@ -68,7 +68,7 @@ public class Steward {
     }
 
     /**
-     * Removes assighed flight from this steward.
+     * Removes assigned flight from this steward.
      *
      * @param flight flight to remove
      * @throws NoSuchElementException if the flight is not present
