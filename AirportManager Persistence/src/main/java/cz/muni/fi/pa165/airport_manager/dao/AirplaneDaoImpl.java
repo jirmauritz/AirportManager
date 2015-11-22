@@ -63,10 +63,10 @@ public class AirplaneDaoImpl implements  AirplaneDao {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public Set<Airplane> findByCapacity(int capacity){
+	public Set<Airplane> findByMinCapacity(int capacity){
 		Objects.requireNonNull(capacity);
         return new HashSet<>(
-                em.createQuery("SELECT a FROM Airplane a WHERE a.capacity = :capacity")
+                em.createQuery("SELECT a FROM Airplane a WHERE a.capacity >= :capacity")
                         .setParameter("capacity", capacity)
                         .getResultList()
         );

@@ -21,6 +21,13 @@ public enum AirplaneType {
     FIRST {
         public String toString() {
             return "First"; }
-    }
-
+    };
+    
+    static public boolean isMember(String checkedType) {
+       AirplaneType[] definedTypes = AirplaneType.values();
+       for (AirplaneType type : definedTypes)
+           if (type.toString().equals(checkedType))
+               return true;
+       return false;
+   }
 }

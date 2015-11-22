@@ -51,12 +51,12 @@ public interface AirplaneDao {
     void delete(Airplane airplane);
 
     /**
-     * Finds and returns all Airplanes with specified capacity.
+     * Finds and returns all Airplanes with at least specified capacity.
      *
      * @param capacity capacity of airplanes to find
-     * @return Set of airplanes
+     * @return set of airplanes
      */
-    Set<Airplane> findByCapacity(int capacity);
+    Set<Airplane> findByMinCapacity(int capacity);
 
     /**
      * Finds and returns Airplane with specified name.

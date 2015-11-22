@@ -1,20 +1,23 @@
 package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
+import cz.muni.fi.pa165.airport_manager.dao.AirplaneDao;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import java.util.Date;
-import org.springframework.stereotype.Service;
-
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
- * Service for Airplane
+ * Implementation of Airplane service
  *
  * @author Dušan Lago
  * @author 396336@mail.muni.cz
  */
-@Service
-public interface AirplaneService {
+public class AirplaneServiceImpl implements AirplaneService {
+    
+    @Autowired
+    private AirplaneDao airplaneDao;
     
     /**
      * Create new persisted entity.
