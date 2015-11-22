@@ -81,10 +81,9 @@ public class StewardServiceImpl implements StewardService {
     }
 
     @Override
-    public boolean deleteSteward(Steward steward) {
-        Objects.requireNonNull(steward);
-        stewardDao.delete(steward);
-        return true;
+    public void deleteSteward(Long id) {
+        Objects.requireNonNull(id);
+        stewardDao.delete(this.findSteward(id));
     }
 
     @Override

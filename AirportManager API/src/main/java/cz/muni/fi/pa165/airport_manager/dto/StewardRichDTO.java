@@ -11,15 +11,15 @@ import java.util.*;
  */
 public final class StewardRichDTO extends StewardDTO {
 
-    private SortedSet<FlightDTO> flights = new TreeSet<>();
+    private Set<FlightDTO> flights = new HashSet<>();
 
     /**
      * Returns a view of sorted set of the flights assigned to this steward
      *
      * @return set of flights
      */
-    public SortedSet<FlightDTO> getFlights() {
-        return Collections.unmodifiableSortedSet(flights);
+    public Set<FlightDTO> getFlights() {
+        return Collections.unmodifiableSet(flights);
     }
 
     /**
@@ -29,7 +29,7 @@ public final class StewardRichDTO extends StewardDTO {
      */
     public void setFlights(final Set<FlightDTO> flights) {
         Objects.requireNonNull(flights);
-        this.flights = new TreeSet<>(flights);
+        this.flights = new HashSet<>(flights);
     }
 
     @Override

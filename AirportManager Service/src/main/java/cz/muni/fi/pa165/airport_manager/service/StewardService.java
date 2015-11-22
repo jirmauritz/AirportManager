@@ -52,10 +52,9 @@ public interface StewardService {
     /**
      * Deletes the steward from database.
      *
-     * @param steward steward to be deleted
-     * @return true if the operation was successful, otherwise false
+     * @param id id of steward to be deleted
      */
-    boolean deleteSteward(Steward steward);
+    void deleteSteward(Long id);
 
     /**
      * <p>Checks, if the steward (recognized by id) is available within the specified interval.

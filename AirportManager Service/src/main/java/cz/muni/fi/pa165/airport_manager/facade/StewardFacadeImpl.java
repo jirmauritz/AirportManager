@@ -10,10 +10,7 @@ import cz.muni.fi.pa165.airport_manager.service.StewardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Basic implementation of steward facade.
@@ -28,9 +25,9 @@ public class StewardFacadeImpl implements StewardFacade {
     private @Autowired MappingService mappingService;
 
     @Override
-    public SortedSet<StewardDTO> getAllStewards() {
+    public Set<StewardDTO> getAllStewards() {
         Set<Steward> stewards = stewardService.findAllStewards();
-        return new TreeSet<>(mappingService.mapTo(stewards, StewardDTO.class));
+        return new HashSet<>(mappingService.mapTo(stewards, StewardDTO.class));
     }
 
     @Override
@@ -46,37 +43,33 @@ public class StewardFacadeImpl implements StewardFacade {
     }
 
     @Override
-    public StewardRichDTO getSteward(final StewardDTO steward) {
-        Objects.requireNonNull(steward);
-
-        if (steward instanceof StewardRichDTO) {
-            return (StewardRichDTO) steward;
-        }
+    public StewardRichDTO getSteward(Long id) {
+        Objects.requireNonNull(id);
 
         return mappingService.mapTo(
-                stewardService.findSteward(steward.getId()),
+                stewardService.findSteward(id),
                 StewardRichDTO.class
         );
     }
 
     @Override
-    public boolean deleteSteward(final StewardDTO steward) {
-        Objects.requireNonNull(steward);
+    public void deleteSteward(Long id) {
+        Objects.requireNonNull(id);
 
-        return stewardService.deleteSteward(
-                mappingService.mapTo(steward, Steward.class)
-        );
+        stewardService.deleteSteward(id);
     }
 
     @Override
     public StewardRichDTO updateNames(
-            final StewardDTO steward,
+            Long id,
             String firstName,
             String lastName
     ) {
-        Objects.requireNonNull(steward);
+        Objects.requireNonNull(id);
         Objects.requireNonNull(firstName);
         Objects.requireNonNull(lastName);
+
+        final StewardDTO steward = this.getSteward(id);
 
         steward.setFirstName(firstName);
         steward.setLastName(lastName);
@@ -90,7 +83,7 @@ public class StewardFacadeImpl implements StewardFacade {
     }
 
     @Override
-    public SortedSet<FlightDTO> getAllFlightsForSteward(final StewardDTO steward) {
-        return this.getSteward(steward).getFlights();
+    public Set<FlightDTO> getAllFlightsForSteward(Long id) {
+        return this.getSteward(id).getFlights();
     }
 }
