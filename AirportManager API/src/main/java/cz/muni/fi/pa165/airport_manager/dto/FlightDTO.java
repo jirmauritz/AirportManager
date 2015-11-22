@@ -26,13 +26,13 @@ public class FlightDTO {
 
     private DestinationSimpleDTO to;
 
-    private Set<StewardDTO> stewards;
+    private Set<StewardSimpleDTO> stewards;
 
-    public Set<StewardDTO> getStewards() {
+    public Set<StewardSimpleDTO> getStewards() {
         return stewards;
     }
 
-    public void setStewards(Set<StewardDTO> stewards) {
+    public void setStewards(Set<StewardSimpleDTO> stewards) {
         this.stewards = stewards;
     }
 

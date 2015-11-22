@@ -9,7 +9,7 @@ import java.util.*;
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */
-public final class StewardRichDTO extends StewardDTO {
+public final class StewardDTO extends StewardSimpleDTO {
 
     private Set<FlightDTO> flights = new HashSet<>();
 
@@ -35,10 +35,10 @@ public final class StewardRichDTO extends StewardDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof StewardRichDTO)) return false;
+        if (!(o instanceof StewardDTO)) return false;
         if (!super.equals(o)) return false;
 
-        final StewardRichDTO that = (StewardRichDTO) o;
+        final StewardDTO that = (StewardDTO) o;
 
         return this.getFlights().equals(that.getFlights());
 
@@ -53,7 +53,7 @@ public final class StewardRichDTO extends StewardDTO {
 
     @Override
     public String toString() {
-        return "StewardRichDTO{" +
+        return "StewardDTO{" +
                 "firstName='" + this.getFirstName() + '\'' +
                 ", lastName='" + this.getLastName() + '\'' +
                 ", businessId=" + this.getBusinessId() +
