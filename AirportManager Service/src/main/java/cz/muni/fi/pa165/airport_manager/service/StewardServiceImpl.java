@@ -1,14 +1,13 @@
 package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.dao.StewardDao;
+import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Basic implementation of steward service
@@ -89,30 +88,57 @@ public class StewardServiceImpl implements StewardService {
     @Override
     public boolean isAvailable(
             Long id,
-            final Date start,
-            final Date end
+            final Date from,
+            final Date to
     ) {
         Objects.requireNonNull(id);
-        Objects.requireNonNull(start);
-        Objects.requireNonNull(end);
-        final Steward actualSteward = this.findSteward(id);
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
 
-//        boolean notAvailable = actualSteward.getFlights().stream()
-//                .anyMatch( (Flight flight) ->
-//                        (end  .after (flight.getDeparture()) && end  .before(flight.getArrival())) ||
-//                        (start.after (flight.getDeparture()) && start.before(flight.getArrival())) ||
-//                        (start.before(flight.getDeparture()) && end  .after (flight.getArrival()))
-//                );
+        if (!to.after(from)) {
+            throw new IllegalArgumentException("Invalid time range.");
+        }
 
-        for (Flight flight : actualSteward.getFlights()) {
+        return isAvailable(this.findSteward(id), from, to);
+    }
+
+    @Override
+    public Set<Steward> getAllAvailable(final Date from, final Date to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
+
+        if (!to.after(from)) {
+            throw new IllegalArgumentException("Invalid time range.");
+        }
+
+        final Set<Steward> allStewards = new HashSet<>(this.findAllStewards());
+
+        final Iterator<Steward> i = allStewards.iterator();
+        while (i.hasNext()) {
+            Steward s = i.next();
+            if (!this.isAvailable(s, from, to)){
+                i.remove();
+            }
+        }
+
+        return allStewards;
+    }
+
+    private boolean isAvailable(
+            final Steward steward,
+            final Date from,
+            final Date to
+    ) {
+        for (Flight flight : steward.getFlights()) {
             if (
-                    (end  .after (flight.getDeparture()) && end  .before(flight.getArrival())) ||
-                    (start.after (flight.getDeparture()) && start.before(flight.getArrival())) ||
-                    (start.before(flight.getDeparture()) && end  .after (flight.getArrival()))
-            ) {
+                    (to.after (flight.getDeparture()) && to.before(flight.getArrival())) ||
+                            (from.after (flight.getDeparture()) && from.before(flight.getArrival())) ||
+                            (from.before(flight.getDeparture()) && to.after (flight.getArrival()))
+                    ) {
                 return false;
             }
         }
         return true;
     }
+
 }

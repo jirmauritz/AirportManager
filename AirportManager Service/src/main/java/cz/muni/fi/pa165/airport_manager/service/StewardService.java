@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.service;
 
+import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 
 import java.util.Date;
@@ -69,14 +70,24 @@ public interface StewardService {
      * </code>
      *
      * @param id id of the steward steward to check availability for
-     * @param start start of the interval
-     * @param end endof the interval
+     * @param from start of the interval
+     * @param to end of the interval
      * @return true if available, false if not
      */
     boolean isAvailable(
             Long id,
-            final Date start,
-            final Date end
+            Date from,
+            Date to
     );
+
+    /**
+     * Returns all available stewards in the specified time-range. See {@link #isAvailable(Long, Date, Date)}
+     * for more details of availability.
+     *
+     * @param from start of the interval
+     * @param to end of the interval
+     * @return collection of all available stewards
+     */
+    Set<Steward> getAllAvailable(Date from, Date to);
 
 }

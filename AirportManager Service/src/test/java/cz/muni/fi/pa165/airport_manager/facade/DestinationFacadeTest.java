@@ -31,7 +31,6 @@ import static org.mockito.Mockito.verify;
  * @author 422718@mail.muni.cz
  */
 
-@Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class DestinationFacadeTest {
 

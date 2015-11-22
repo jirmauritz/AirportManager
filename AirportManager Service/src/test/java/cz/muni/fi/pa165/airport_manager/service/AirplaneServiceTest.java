@@ -2,27 +2,34 @@ package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.config.ServiceConfiguration;
 import cz.muni.fi.pa165.airport_manager.dao.AirplaneDao;
+import cz.muni.fi.pa165.airport_manager.dao.FlightDao;
+import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
+import cz.muni.fi.pa165.airport_manager.entity.Flight;
+import cz.muni.fi.pa165.airport_manager.entity.Steward;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import org.assertj.core.api.Condition;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.*;
+import org.mockito.internal.matchers.Null;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.SystemProfileValueSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.hibernate.validator.internal.util.CollectionHelper.asSet;
 import static org.mockito.Mockito.*;
 
 /**
@@ -30,16 +37,15 @@ import static org.mockito.Mockito.*;
  * @author 422718@mail.muni.cz
  */
 
-@Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class AirplaneServiceTest {
-/*
     private @Mock AirplaneDao airplaneDao;
+    private @Mock FlightService flightService;
 
     @InjectMocks
     private AirplaneService airplaneService = new AirplaneServiceImpl();
 
-    private @Rule ExpectedException expected;
+    public @Rule ExpectedException expected = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -58,8 +64,6 @@ public class AirplaneServiceTest {
     @Test(expected = NullPointerException.class)
     public void createNullAirplane() {
         airplaneService.create(null);
-
-        verify(airplaneService, never()).create(any(Airplane.class));
     }
 
     @Test
@@ -67,10 +71,8 @@ public class AirplaneServiceTest {
         final Airplane airplane = newAirplane();
         airplane.setCapacity(-1);
 
-        expected.expect(IllegalArgumentException.class);
+        expected.expect(IllegalStateException.class);
         airplaneService.create(airplane);
-
-        verify(airplaneDao, never()).create(airplane);
     }
 
     @Test
@@ -78,21 +80,17 @@ public class AirplaneServiceTest {
         final Airplane airplane = newAirplane();
         airplane.setName(null);
 
-        expected.expect(IllegalArgumentException.class);
+        expected.expect(IllegalStateException.class);
         airplaneService.create(airplane);
-
-        verify(airplaneDao, never()).create(airplane);
     }
 
-    @Test
+    @Test()
     public void createEmptyName() {
         final Airplane airplane = newAirplane();
         airplane.setName("");
 
-        expected.expect(IllegalArgumentException.class);
+        expected.expect(IllegalStateException.class);
         airplaneService.create(airplane);
-
-        verify(airplaneDao, never()).create(airplane);
     }
 
     @Test
@@ -100,10 +98,8 @@ public class AirplaneServiceTest {
         final Airplane airplane = newAirplane();
         airplane.setType(null);
 
-        expected.expect(IllegalArgumentException.class);
+        expected.expect(IllegalStateException.class);
         airplaneService.create(airplane);
-
-        verify(airplaneDao, never()).create(airplane);
     }
 
     @Test
@@ -111,10 +107,8 @@ public class AirplaneServiceTest {
         final Airplane airplane = newAirplane();
         airplane.setType("");
 
-        expected.expect(IllegalArgumentException.class);
+        expected.expect(IllegalStateException.class);
         airplaneService.create(airplane);
-
-        verify(airplaneDao, never()).create(airplane);
     }
 
     @Test
@@ -133,8 +127,6 @@ public class AirplaneServiceTest {
     @Test(expected = NullPointerException.class)
     public void updateNullAirplane() {
         airplaneService.update(null);
-
-        verify(airplaneDao, never()).update(any(Airplane.class));
     }
 
     @Test
@@ -142,61 +134,56 @@ public class AirplaneServiceTest {
         final Airplane airplane = newAirplane();
         airplane.setCapacity(-1);
 
-        expected.expect(IllegalArgumentException.class);
+        expected.expect(IllegalStateException.class);
         airplaneService.update(airplane);
-
-        verify(airplaneDao, never()).update(airplane);
     }
 
     @Test
     public void updateNullName() {
         final Airplane airplane = newAirplane();
+        airplane.setId(1L);
         airplane.setName(null);
 
-        expected.expect(IllegalArgumentException.class);
+        expected.expect(IllegalStateException.class);
         airplaneService.update(airplane);
-
-        verify(airplaneDao, never()).update(airplane);
     }
 
     @Test
     public void updateEmptyName() {
         final Airplane airplane = newAirplane();
+        airplane.setId(1L);
         airplane.setName("");
 
-        expected.expect(IllegalArgumentException.class);
+        expected.expect(IllegalStateException.class);
         airplaneService.update(airplane);
-
-        verify(airplaneDao, never()).update(airplane);
     }
 
     @Test
     public void updateNullType() {
         final Airplane airplane = newAirplane();
+        airplane.setId(1L);
         airplane.setType(null);
 
-        expected.expect(IllegalArgumentException.class);
+        expected.expect(IllegalStateException.class);
         airplaneService.update(airplane);
-
-        verify(airplaneDao, never()).update(airplane);
     }
 
     @Test
     public void updateEmptyType() {
         final Airplane airplane = newAirplane();
+        airplane.setId(1L);
         airplane.setType("");
 
-        expected.expect(IllegalArgumentException.class);
+        expected.expect(IllegalStateException.class);
         airplaneService.update(airplane);
-
-        verify(airplaneDao, never()).update(airplane);
     }
 
     @Test
     public void delete() {
         final Airplane airplane = newAirplane();
+        airplane.setId(1L);
 
-        doReturn(airplane).when(airplaneDao).findById(airplane.getId());
+        doReturn(airplane).when(airplaneDao).findById(1L);
 
         airplaneService.delete(airplane.getId());
 
@@ -217,13 +204,12 @@ public class AirplaneServiceTest {
     @Test(expected = NullPointerException.class)
     public void deleteNull() {
         airplaneService.delete(null);
-
-        verify(airplaneDao, never()).delete(any(Airplane.class));
     }
 
     @Test
     public void findById() {
         final Airplane airplane = newAirplane();
+        airplane.setId(1L);
 
         doReturn(airplane).when(airplaneDao).findById(1L);
 
@@ -238,8 +224,6 @@ public class AirplaneServiceTest {
     @Test(expected = NullPointerException.class)
     public void findByIdNull() {
         airplaneService.findById(null);
-
-        verify(airplaneDao, never()).findById(any(Long.class));
     }
 
     @Test
@@ -259,7 +243,7 @@ public class AirplaneServiceTest {
 
         doReturn(allPlanes).when(airplaneDao).findAll();
 
-        final SortedSet<Airplane> returnedAirplanes = airplaneService.findAll();
+        final Set<Airplane> returnedAirplanes = airplaneService.findAll();
 
         assertThat(returnedAirplanes)
                 .isNotNull()
@@ -270,7 +254,7 @@ public class AirplaneServiceTest {
     public void findAllEmptyCollection() {
         doReturn(Collections.EMPTY_SET).when(airplaneDao).findAll();
 
-        final SortedSet<Airplane> returnedAirplanes = airplaneService.findAll();
+        final Set<Airplane> returnedAirplanes = airplaneService.findAll();
 
         verify(airplaneDao).findAll();
 
@@ -298,7 +282,7 @@ public class AirplaneServiceTest {
         doReturn(allPlanesEconomy) .when(airplaneDao).findByType("Economy");
         doReturn(allPlanesBusiness).when(airplaneDao).findByType("Business");
 
-        SortedSet<Airplane> returnedAirplanes = airplaneService.findByType(AirplaneType.ECONOMY);
+        Set<Airplane> returnedAirplanes = airplaneService.findByType(AirplaneType.ECONOMY);
 
         verify(airplaneDao).findByType("Economy");
 
@@ -310,15 +294,13 @@ public class AirplaneServiceTest {
     @Test(expected = NullPointerException.class)
     public void findByTypeNull() {
         airplaneService.findByType(null);
-
-        verify(airplaneDao, never()).findByType(any(String.class));
     }
 
     @Test
     public void findByTypeEmptyCollection() {
         doReturn(Collections.EMPTY_SET).when(airplaneDao).findByType(any(String.class));
 
-        final SortedSet<Airplane> returnedAirplanes = airplaneService.findByType(AirplaneType.BUSINESS);
+        final Set<Airplane> returnedAirplanes = airplaneService.findByType(AirplaneType.BUSINESS);
 
         verify(airplaneDao).findByType("Business");
 
@@ -339,21 +321,15 @@ public class AirplaneServiceTest {
         airplane3.setName("Plane3");
         airplane1.setCapacity(250);
 
-        Set<Airplane> allPlanes = new HashSet<>();
-        allPlanes.add(airplane1);
-        allPlanes.add(airplane2);
-        allPlanes.add(airplane3);
+        doReturn(asSet(airplane1, airplane2, airplane3)).when(airplaneDao).findByMinCapacity(50);
+        doReturn(asSet(airplane3)).when(airplaneDao).findByMinCapacity(200);
 
-        doReturn(allPlanes).when(airplaneDao).findAll();
+        Set<Airplane> returnedAirplanes50  = airplaneService.findByMinCapacity(50);
+        Set<Airplane> returnedAirplanes200 = airplaneService.findByMinCapacity(200);
 
-        SortedSet<Airplane> returnedAirplanes100 = airplaneService.findByMinCapacity(100);
-        SortedSet<Airplane> returnedAirplanes200 = airplaneService.findByMinCapacity(200);
-
-        verify(airplaneDao, times(2)).findAll();
-
-        assertThat(returnedAirplanes100)
+        assertThat(returnedAirplanes50)
                 .isNotNull()
-                .contains(airplane2, airplane3);
+                .contains(airplane1, airplane2, airplane3);
 
         assertThat(returnedAirplanes200)
                 .isNotNull()
@@ -364,13 +340,169 @@ public class AirplaneServiceTest {
     public void findByMinCapacityEmptyCollection() {
         doReturn(Collections.EMPTY_SET).when(airplaneDao).findAll();
 
-        final SortedSet<Airplane> returnedAirplanes = airplaneService.findAll();
+        final Set<Airplane> returnedAirplanes = airplaneService.findAll();
 
         verify(airplaneDao).findAll();
 
         assertThat(returnedAirplanes)
                 .isNotNull()
                 .isEmpty();
+    }
+
+    @Test
+    public void isAvailableTrueNoFlights() {
+        final Airplane airplane = newAirplane();
+        airplane.setId(1L);
+
+        final Date date1 = new Date(1420070400000L); // 2015-01-01 UTC
+        final Date date2 = new Date(1422748800000L); // 2015-02-01 UTC
+
+        doReturn(airplane).when(airplaneDao).findById(1L);
+        doReturn(Collections.emptySet()).when(flightService).findFlightsInInterval(date1, date2);
+
+        final Boolean isAvailable = airplaneService.isAvailable(1L, date1, date2);
+
+        assertThat(isAvailable)
+                .isNotNull()
+                .isTrue();
+    }
+
+    @Test
+    public void isAvailableTrueSomeFlights() {
+        final Airplane airplane1 = newAirplane();
+        airplane1.setId(1L);
+        airplane1.setName("Plane1");
+        final Airplane airplane2 = newAirplane();
+        airplane2.setId(2L);
+        airplane2.setName("Plane2");
+
+        final Date date1 = new Date(1420070400000L); // 2015-01-01 UTC
+        final Date date2 = new Date(1422748800000L); // 2015-02-01 UTC
+
+        final Flight flight = new Flight(true, date1, date2, Collections.<Steward>emptySet(), airplane1, null, null);
+
+        doReturn(airplane2).when(airplaneDao).findById(2L);
+        doReturn(asSet(flight)).when(flightService).findFlightsInInterval(date1, date2);
+
+        final Boolean isAvailable = airplaneService.isAvailable(2L, date1, date2);
+
+        assertThat(isAvailable)
+                .isNotNull()
+                .isTrue();
+    }
+
+    @Test
+    public void isAvailableFalse() {
+        final Airplane airplane = newAirplane();
+        airplane.setId(1L);
+
+        final Date date1 = new Date(1420070400000L); // 2015-01-01 UTC
+        final Date date2 = new Date(1422748800000L); // 2015-02-01 UTC
+        final Date date2_1 = new Date(1422748800000L + 1000L); // after  2015-02-01 UTC
+        final Date date2_2 = new Date(1425168000000L - 1000L); // before 2015-03-01 UTC
+        final Date date3 = new Date(1425168000000L); // 2015-03-01 UTC
+        final Date date4 = new Date(1427846400000L); // 2015-04-01 UTC
+
+        final Flight flight1 = new Flight(true, date1, date2_1, Collections.<Steward>emptySet(), airplane, null, null);
+        final Flight flight2 = new Flight(true, date2_2, date4, Collections.<Steward>emptySet(), airplane, null, null);
+
+        doReturn(airplane).when(airplaneDao).findById(1L);
+        doReturn(asSet(flight1, flight2)).when(flightService).findFlightsInInterval(date2, date3);
+
+        final Boolean isAvailable = airplaneService.isAvailable(1L, date2, date3);
+
+        assertThat(isAvailable)
+                .isNotNull()
+                .isFalse();
+
+        verify(airplaneDao).findById(1L);
+        verify(flightService).findFlightsInInterval(date2, date3);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void isAvailableNull() {
+        airplaneService.isAvailable(null, new Date(), new Date());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void isAvailableWrongTimes() {
+        airplaneService.isAvailable(
+                1L,
+                new Date(System.currentTimeMillis() + 10000L),
+                new Date(System.currentTimeMillis())
+        );
+    }
+
+    @Test
+    public void getAllAvailable() {
+        final Airplane airplane1 = newAirplane();
+        airplane1.setId(1L);
+        airplane1.setName("Plane1");
+        final Airplane airplane2 = newAirplane();
+        airplane2.setId(2L);
+        airplane2.setName("Plane2");
+        final Airplane airplane3 = newAirplane();
+        airplane3.setId(3L);
+        airplane3.setName("Plane3");
+        final Airplane airplane4 = newAirplane();
+        airplane4.setId(4L);
+        airplane4.setName("Plane4");
+
+        final Date date1 = new Date(1420070400000L); // 2015-01-01 UTC
+        final Date date2 = new Date(1422748800000L); // 2015-02-01 UTC
+        final Date date2_1 = new Date(1422748800000L + 1000L); // after  2015-02-01 UTC
+        final Date date2_2 = new Date(1425168000000L - 1000L); // before 2015-03-01 UTC
+        final Date date3 = new Date(1425168000000L); // 2015-03-01 UTC
+        final Date date4 = new Date(1427846400000L); // 2015-04-01 UTC
+
+        final Flight flight1 = new Flight(true, date1, date2_1, Collections.<Steward>emptySet(), airplane1, null, null);
+        final Flight flight2 = new Flight(true, date3, date4, Collections.<Steward>emptySet(), airplane2, null, null);
+        final Flight flight3 = new Flight(true, date1, date3, Collections.<Steward>emptySet(), airplane3, null, null);
+
+        doReturn(asSet(flight1, flight2, flight3)).when(flightService).findFlightsInInterval(date2, date2_2);
+        doReturn(asSet(airplane1, airplane2, airplane3, airplane4)).when(airplaneDao).findAll();
+
+        final Set<Airplane> returnedAirplanes = airplaneService.getAllAvailable(date2, date2_2);
+
+        assertThat(returnedAirplanes)
+                .isNotNull()
+                .isNotEmpty()
+                .contains(airplane2, airplane4);
+
+        verify(flightService).findFlightsInInterval(date2, date2_2);
+        verify(airplaneDao).findAll();
+    }
+
+    @Test
+    public void getAllAvailableNoFlights() {
+        final Airplane airplane1 = newAirplane();
+        airplane1.setId(1L);
+        airplane1.setName("Plane1");
+        final Airplane airplane2 = newAirplane();
+        airplane2.setId(2L);
+        airplane2.setName("Plane2");
+
+        doReturn(asSet(airplane1, airplane2)).when(airplaneDao).findAll();
+        doReturn(Collections.emptySet()).when(flightService).findFlightsInInterval(any(Date.class), any(Date.class));
+
+        final Set<Airplane> returnedAirplanes = airplaneService.getAllAvailable(new Date(), new Date());
+
+        assertThat(returnedAirplanes)
+                .isNotNull()
+                .isNotEmpty()
+                .contains(airplane1, airplane2);
+
+        verify(airplaneDao).findAll();
+        verify(flightService).findFlightsInInterval(any(Date.class), any(Date.class));
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getAllAvailableWrongTimes() {
+        airplaneService.getAllAvailable(
+                new Date(System.currentTimeMillis() + 10000L),
+                new Date(System.currentTimeMillis())
+        );
     }
 
     private void callCreateAirplaneOnAirplaneService(Airplane airplane) {
@@ -388,5 +520,4 @@ public class AirplaneServiceTest {
     private static Airplane newAirplane() {
         return new Airplane("Airplane1", "Economy", 300);
     }
-*/
 }
