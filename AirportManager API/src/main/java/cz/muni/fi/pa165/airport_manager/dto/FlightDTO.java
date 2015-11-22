@@ -7,6 +7,7 @@ import java.util.Set;
 /**
  * Data transfer object for the entity Flight.
  * DTO is used for showing the detail of flight.
+ *
  * @author Lenka Heldova
  * @author 422578@mail.muni.cz
  */
