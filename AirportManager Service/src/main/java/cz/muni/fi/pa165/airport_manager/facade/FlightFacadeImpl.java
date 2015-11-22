@@ -4,8 +4,10 @@ import cz.muni.fi.pa165.airport_manager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
 import cz.muni.fi.pa165.airport_manager.dto.FlightSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
+import cz.muni.fi.pa165.airport_manager.entity.Steward;
 import cz.muni.fi.pa165.airport_manager.service.FlightService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
+import cz.muni.fi.pa165.airport_manager.service.StewardService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
@@ -16,6 +18,8 @@ import java.util.Set;
  * @author Lenka Heldova
  * @author 422578@mail.muni.cz
  */
+@Facade
+
 public class FlightFacadeImpl implements FlightFacade{
 
     @Autowired
@@ -23,6 +27,9 @@ public class FlightFacadeImpl implements FlightFacade{
 
     @Autowired
     private MappingService mappingService;
+
+    @Autowired
+    private StewardService stewardService;
 
 
     @Override
@@ -47,17 +54,33 @@ public class FlightFacadeImpl implements FlightFacade{
     }
 
     @Override
-    public void addSteward(Long id) {
-        //TODO
+    public void addSteward(Long stewardId, Long flightId) {
+        if (stewardId == null || flightId == null){
+            return;
+        }
+        Flight flight = flightService.findById(flightId);
+        Steward steward = stewardService.findSteward(stewardId);
+        if (!flight.getStewards().contains(steward)) {
+            flight.addSteward(steward);
+        }
+        flightService.update(flight);
     }
 
     @Override
-    public void removeSteward(Long id) {
-        //TODO
+    public void removeSteward(Long stewardId, Long flightId) {
+        if (stewardId == null || flightId == null){
+            return;
+        }
+        Flight flight = flightService.findById(flightId);
+        Steward steward = stewardService.findSteward(stewardId);
+        if ( flight.getStewards().contains(steward)) {
+            flight.removeSteward(steward);
+        }
+        flightService.update(flight);
     }
 
     @Override
     public void update(FlightSimpleDTO flight) {
-        //TODO
+        flightService.update(mappingService.mapTo(flight, Flight.class));
     }
 }
