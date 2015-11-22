@@ -114,4 +114,34 @@ public class StewardDaoImplTest {
         Assert.assertNull(foundWendy);
     }
 
+    @Test(expected = NullPointerException.class)
+    public void createNullSteward() {
+        stewardDaoTest.create(null);
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void updateNullSteward() {
+        stewardDaoTest.update(null);
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void deleteNullSteward() {
+        stewardDaoTest.delete(null);
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void findByIdNullSteward() {
+        stewardDaoTest.findByBusinessId(null);
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void findByFirstNameNullSteward() {
+        stewardDaoTest.findByFirstName(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void findByLastNameNullSteward() {
+        stewardDaoTest.findByLastName(null);
+    }
+    
 }
