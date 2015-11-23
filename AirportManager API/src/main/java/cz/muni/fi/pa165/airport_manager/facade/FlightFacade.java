@@ -44,10 +44,27 @@ public interface FlightFacade {
      */
     Set<FlightSimpleDTO> getFlights();
 
+    /**
+     * Add steward to the Flight.
+     *
+     * @param stewardId id of steward to be added.
+     * @param flightId id of flight
+     */
     void addSteward (Long stewardId, Long flightId);
 
+    /**
+     * Remove steward from the flight.
+     *
+     * @param stewardId id of steward to be removed.
+     * @param flightId id of flight
+     */
     void removeSteward (Long stewardId, Long flightId);
 
+    /**
+     * Update Flight.
+     *
+     * @param flight Flight to be updated.
+     */
     void update(FlightSimpleDTO flight);
 
 

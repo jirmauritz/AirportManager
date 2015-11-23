@@ -19,7 +19,6 @@ import java.util.Set;
  * @author 422578@mail.muni.cz
  */
 @Facade
-
 public class FlightFacadeImpl implements FlightFacade{
 
     @Autowired

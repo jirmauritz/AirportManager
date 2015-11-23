@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.dto;
 
 
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -11,86 +10,27 @@ import java.util.Set;
  * @author Lenka Heldova
  * @author 422578@mail.muni.cz
  */
-public class FlightDTO {
-
-    private Long id;
-
-    private Boolean international;
-
-    private Date departure;
-
-    private Date arrival;
-
-    private AirplaneDTO airplane;
-
-    private DestinationSimpleDTO from;
-
-    private DestinationSimpleDTO to;
+public class FlightDTO extends FlightSimpleDTO {
 
     private Set<StewardSimpleDTO> stewards;
 
+    /**
+     * Gets Stewards of the Flight.
+     *
+     * @return set of stewards
+     */
     public Set<StewardSimpleDTO> getStewards() {
         return stewards;
     }
 
+    /**
+     * Sets Stewards to the Flight.
+     *
+     * @param stewards
+     */
     public void setStewards(Set<StewardSimpleDTO> stewards) {
         this.stewards = stewards;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Boolean getInternational() {
-        return international;
-    }
-
-    public void setInternational(Boolean international) {
-        this.international = international;
-    }
-
-    public Date getDeparture() {
-        return departure;
-    }
-
-    public void setDeparture(Date departure) {
-        this.departure = departure;
-    }
-
-    public Date getArrival() {
-        return arrival;
-    }
-
-    public void setArrival(Date arrival) {
-        this.arrival = arrival;
-    }
-
-    public AirplaneDTO getAirplane() {
-        return airplane;
-    }
-
-    public void setAirplane(AirplaneDTO airplane) {
-        this.airplane = airplane;
-    }
-
-    public DestinationSimpleDTO getFrom() {
-        return from;
-    }
-
-    public void setFrom(DestinationSimpleDTO from) {
-        this.from = from;
-    }
-
-    public DestinationSimpleDTO getTo() {
-        return to;
-    }
-
-    public void setTo(DestinationSimpleDTO to) {
-        this.to = to;
-    }
 }
 
