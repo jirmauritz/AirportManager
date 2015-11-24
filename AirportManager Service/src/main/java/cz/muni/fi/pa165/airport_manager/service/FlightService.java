@@ -52,13 +52,6 @@ public interface FlightService {
     Set<Flight> findAll();
 
     /**
-     * Finds and returns all international flights from the database.
-     *
-     * @return set of all the international flights
-     */
-    Set<Flight> findByInternational();
-
-    /**
      * Finds and returns all flights that departure from specified destination.
      *
      * @param dest destination
@@ -74,6 +67,13 @@ public interface FlightService {
      */
     Set<Flight> findByToDestination(Destination dest);
 
+    /**
+     * Finds and returns all flights that are between given interval or anyhow interfere with interval.
+     *
+     * @param from starting date of the interval.
+     * @param to   ending date of the interval.
+     * @return set of flight.
+     */
     Set<Flight> findFlightsInInterval (Date from, Date to);
 
 }

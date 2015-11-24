@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.airport_manager.facade;
 
 import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
@@ -14,9 +9,13 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- *
- * @author xmauritz
+ * Implementation of the DestinationFacade.
+ * 
+ * @author Jiri Mauritz
+ * @author 409972@mail.muni.cz
  */
+
+@Facade
 public class DestinationFacadeImpl implements DestinationFacade {
 	
 	@Autowired
