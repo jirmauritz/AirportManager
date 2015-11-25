@@ -2,46 +2,50 @@ package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.dao.DestinationDao;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
+import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
 import java.util.Objects;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Implementation of the (@link DestinationService}.
- * This class uses destinationDao to access the persistence.
- * 
+ * Implementation of the (@link DestinationService}. This class uses
+ * destinationDao to access the persistence.
+ *
  * @author Jiri Mauritz
  * @author 409972@mail.muni.cz
  */
-
 @Service
 public class DestinationServiceImpl implements DestinationService {
-	
+
 	@Autowired
 	private DestinationDao destinationDao;
 
 	@Override
 	public Long create(Destination destination) {
 		Objects.requireNonNull(destination);
-		
+
 		if (destination.getId() != null) {
 			throw new IllegalStateException("Destination must not have id set.");
 		}
-		
+
 		if (destination.getName() == null) {
 			throw new IllegalStateException("Destination must have name set.");
 		}
-		
+
 		if (destination.getCity() == null) {
 			throw new IllegalStateException("Destination must have city set.");
 		}
-		
+
 		if (destination.getCountry() == null) {
 			throw new IllegalStateException("Destination must have country set.");
 		}
-		
-		destinationDao.create(destination);
+
+		try {
+			destinationDao.create(destination);
+		} catch (Exception e) {
+			throw new DataAccessException("Exception in persistence layer", e);
+		}
 		return destination.getId();
 	}
 
@@ -49,40 +53,61 @@ public class DestinationServiceImpl implements DestinationService {
 	public void update(Destination destination) {
 		Objects.requireNonNull(destination);
 		Objects.requireNonNull(destination.getId());
-		
-		destinationDao.update(destination);
+		try {
+			destinationDao.update(destination);
+		} catch (Exception e) {
+			throw new DataAccessException("Exception in persistence layer", e);
+		}
 	}
 
 	@Override
 	public void delete(Destination destination) {
 		Objects.requireNonNull(destination);
 		Objects.requireNonNull(destination.getId());
-		
-		destinationDao.delete(destination);
+		try {
+			destinationDao.delete(destination);
+		} catch (Exception e) {
+			throw new DataAccessException("Exception in persistence layer", e);
+		}
 	}
 
 	@Override
 	public Destination findById(Long id) {
 		Objects.requireNonNull(id);
-		
-		return destinationDao.findById(id);
+		try {
+			return destinationDao.findById(id);
+		} catch (Exception e) {
+			throw new DataAccessException("Exception in persistence layer", e);
+		}
 	}
-	
+
 	@Override
 	public Destination findByAirportCode(String code) {
 		Objects.requireNonNull(code);
-		return destinationDao.findByName(code);
+		try {
+			return destinationDao.findByName(code);
+		} catch (Exception e) {
+			throw new DataAccessException("Exception in persistence layer", e);
+		}
 	}
 
 	@Override
 	public Set<Destination> findByCountry(String country) {
 		Objects.requireNonNull(country);
-		return destinationDao.findByCountry(country);
+		try {
+			return destinationDao.findByCountry(country);
+		} catch (Exception e) {
+			throw new DataAccessException("Exception in persistence layer", e);
+		}
 	}
 
 	@Override
 	public Set<Destination> findAll() {
-		return destinationDao.findAll();
+		try {
+			return destinationDao.findAll();
+		} catch (Exception e) {
+			throw new DataAccessException("Exception in persistence layer", e);
+		}
 	}
-	
+
 }
