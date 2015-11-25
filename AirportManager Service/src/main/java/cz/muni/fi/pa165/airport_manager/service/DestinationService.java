@@ -14,8 +14,9 @@ public interface DestinationService {
      * Create new entity and persist it
      *
      * @param destination destination entity to create
+	 * @return id
      */
-    void create(Destination destination);
+    Long create(Destination destination);
 	
 	  /**
      * Update destination in database

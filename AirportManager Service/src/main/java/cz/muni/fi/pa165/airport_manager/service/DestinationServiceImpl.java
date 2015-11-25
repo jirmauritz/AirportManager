@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import java.util.Objects;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of the (@link DestinationService}.
@@ -13,13 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Jiri Mauritz
  * @author 409972@mail.muni.cz
  */
+
+@Service
 public class DestinationServiceImpl implements DestinationService {
 	
 	@Autowired
 	private DestinationDao destinationDao;
 
 	@Override
-	public void create(Destination destination) {
+	public Long create(Destination destination) {
 		Objects.requireNonNull(destination);
 		
 		if (destination.getId() != null) {
@@ -39,6 +42,7 @@ public class DestinationServiceImpl implements DestinationService {
 		}
 		
 		destinationDao.create(destination);
+		return destination.getId();
 	}
 
 	@Override

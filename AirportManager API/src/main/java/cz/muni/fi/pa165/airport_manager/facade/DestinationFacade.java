@@ -15,8 +15,9 @@ public interface DestinationFacade {
      * Create new entity and persist it
      *
      * @param destination destination entity to create
+	 * @return id
      */
-    void create(DestinationCreateDTO destination);
+    Long create(DestinationCreateDTO destination);
 
 	 /**
      * Delete destination from database

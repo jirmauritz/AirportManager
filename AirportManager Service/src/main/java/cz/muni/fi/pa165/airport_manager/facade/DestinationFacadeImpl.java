@@ -25,8 +25,8 @@ public class DestinationFacadeImpl implements DestinationFacade {
     private MappingService mappingService;
 	
 	@Override
-	public void create(DestinationCreateDTO destination) {
-		destinationService.create(mappingService.mapTo(destination, Destination.class));
+	public Long create(DestinationCreateDTO destination) {
+		return destinationService.create(mappingService.mapTo(destination, Destination.class));
 	}
 
 	@Override
