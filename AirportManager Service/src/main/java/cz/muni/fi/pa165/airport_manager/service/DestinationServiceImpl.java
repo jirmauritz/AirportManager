@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.dao.DestinationDao;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
+import java.util.Objects;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,31 +20,59 @@ public class DestinationServiceImpl implements DestinationService {
 
 	@Override
 	public void create(Destination destination) {
+		Objects.requireNonNull(destination);
+		
+		if (destination.getId() != null) {
+			throw new IllegalStateException("Destination must not have id set.");
+		}
+		
+		if (destination.getName() == null) {
+			throw new IllegalStateException("Destination must have name set.");
+		}
+		
+		if (destination.getCity() == null) {
+			throw new IllegalStateException("Destination must have city set.");
+		}
+		
+		if (destination.getCountry() == null) {
+			throw new IllegalStateException("Destination must have country set.");
+		}
+		
 		destinationDao.create(destination);
 	}
 
 	@Override
 	public void update(Destination destination) {
+		Objects.requireNonNull(destination);
+		Objects.requireNonNull(destination.getId());
+		
 		destinationDao.update(destination);
 	}
 
 	@Override
 	public void delete(Destination destination) {
+		Objects.requireNonNull(destination);
+		Objects.requireNonNull(destination.getId());
+		
 		destinationDao.delete(destination);
 	}
 
 	@Override
 	public Destination findById(Long id) {
+		Objects.requireNonNull(id);
+		
 		return destinationDao.findById(id);
 	}
 	
 	@Override
 	public Destination findByAirportCode(String code) {
+		Objects.requireNonNull(code);
 		return destinationDao.findByName(code);
 	}
 
 	@Override
 	public Set<Destination> findByCountry(String country) {
+		Objects.requireNonNull(country);
 		return destinationDao.findByCountry(country);
 	}
 
