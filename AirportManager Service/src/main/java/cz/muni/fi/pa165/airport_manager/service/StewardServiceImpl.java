@@ -4,9 +4,12 @@ import cz.muni.fi.pa165.airport_manager.dao.StewardDao;
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
+import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.PersistenceException;
 import java.util.*;
 
 /**
@@ -40,9 +43,13 @@ public class StewardServiceImpl implements StewardService {
             throw new IllegalStateException("Steward must have last name set.");
         }
 
-        stewardDao.create(steward);
-        steward.setBusinessId(steward.getId());
-        stewardDao.update(steward);
+        try {
+            stewardDao.create(steward);
+            steward.setBusinessId(steward.getId());
+            stewardDao.update(steward);
+        } catch (EntityExistsException e) {
+            throw new DataAccessException("Entity " + steward + " already exists", e);
+        }
 
         return this.findSteward(steward.getId());
     }
@@ -74,7 +81,11 @@ public class StewardServiceImpl implements StewardService {
             throw new IllegalStateException("Steward must have last name set.");
         }
 
-        stewardDao.update(steward);
+        try {
+            stewardDao.update(steward);
+        } catch (EntityExistsException e) {
+            throw new DataAccessException("Entity " + steward + " does not exist.", e);
+        }
 
         return this.findSteward(steward.getId());
     }
@@ -82,7 +93,11 @@ public class StewardServiceImpl implements StewardService {
     @Override
     public void deleteSteward(Long id) {
         Objects.requireNonNull(id);
-        stewardDao.delete(this.findSteward(id));
+        try {
+            stewardDao.delete(this.findSteward(id));
+        } catch (EntityExistsException e) {
+            throw new DataAccessException("Entity with id " + id + " does not exist.", e);
+        }
     }
 
     @Override
