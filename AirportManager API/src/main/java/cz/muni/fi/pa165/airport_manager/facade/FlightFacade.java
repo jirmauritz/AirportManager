@@ -18,8 +18,9 @@ public interface FlightFacade {
      * Create new entity and persist it
      *
      * @param flight entity to create
+	 * @return id
      */
-    void create(FlightCreateDTO flight);
+    Long create(FlightCreateDTO flight);
 
     /**
      * Get flight by given id

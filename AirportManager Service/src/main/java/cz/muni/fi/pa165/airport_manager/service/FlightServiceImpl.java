@@ -26,7 +26,7 @@ public class FlightServiceImpl implements FlightService {
     private FlightDao flightDao;
 
     @Override
-    public void create(Flight flight) {
+    public Long create(Flight flight) {
         Objects.requireNonNull(flight);
         if (flight.getId() != null) {
             throw new IllegalArgumentException("Id cannot be set");
@@ -36,6 +36,7 @@ public class FlightServiceImpl implements FlightService {
         } catch (Exception e) {
             throw new DataAccessException("This exception was thrown while creating flight.", e);
         }
+		return flight.getId();
     }
 
     @Override

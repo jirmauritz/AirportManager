@@ -19,8 +19,9 @@ public interface FlightService {
      * Creates new entity.
      *
      * @param flight entity
+	 * @return id
      */
-    void create(Flight flight);
+    Long create(Flight flight);
 
     /**
      * Updates existed entity.
