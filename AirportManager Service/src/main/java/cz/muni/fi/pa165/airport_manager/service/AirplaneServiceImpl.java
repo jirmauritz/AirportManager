@@ -195,9 +195,6 @@ public class AirplaneServiceImpl implements AirplaneService {
             }
         }
         
-        for (Flight flight : allFlights) {
-                System.out.println(flight.getAirplane().getName());
-        }
         return allAvailableAirplanes;
     }
 }
