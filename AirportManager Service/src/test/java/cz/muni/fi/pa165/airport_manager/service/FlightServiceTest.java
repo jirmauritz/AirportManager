@@ -444,6 +444,30 @@ public class FlightServiceTest {
 		verify(flightDao).findAll();
 	}
 	
+	@Test
+	/*
+	 * interval: |
+	 * flight:   &
+	 * relation: --|---&----&--|--
+	 */
+	public void findFlightsInInterval6() {
+		// flight interval: 1000 - 2000
+		// set interval
+		Date fromInt = new Date(500l);
+		Date toInt = new Date(2500l);
+
+		// fire
+		Set<Flight> returned = flightService.findFlightsInInterval(fromInt, toInt);
+
+		// assert flight was found
+		assertThat(returned)
+				.isNotNull()
+				.contains(flight);
+
+		// verify
+		verify(flightDao).findAll();
+	}
+	
 	@Test(expected = NullPointerException.class)
 	public void findFlightsInIntervalWithNullFrom() {
 		// set interval
