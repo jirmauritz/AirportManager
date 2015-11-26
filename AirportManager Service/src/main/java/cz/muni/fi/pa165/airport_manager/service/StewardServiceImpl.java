@@ -47,7 +47,7 @@ public class StewardServiceImpl implements StewardService {
             stewardDao.create(steward);
             steward.setBusinessId(steward.getId());
             stewardDao.update(steward);
-        } catch (EntityExistsException e) {
+        } catch (Exception e) {
             throw new DataAccessException("Entity " + steward + " already exists", e);
         }
 
@@ -101,7 +101,7 @@ public class StewardServiceImpl implements StewardService {
         Objects.requireNonNull(id);
         try {
             stewardDao.delete(this.findSteward(id));
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             throw new DataAccessException("Entity with id " + id + " does not exist.", e);
         }
     }
