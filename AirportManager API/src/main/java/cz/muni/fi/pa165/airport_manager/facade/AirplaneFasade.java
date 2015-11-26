@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
-import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneCreateDTO;
+import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import java.util.Set;
 
@@ -14,17 +14,18 @@ import java.util.Set;
 public interface AirplaneFasade {
 
     /**
-     * Create a new AirplaneDTO
+     * Create and persist a new airplane
      *
-     * @param AirplaneCreateDTO entity to create
+     * @param airplane entity to create
+     * @return id of newly created airplane
      */
-    AirplaneCreateDTO createAirplane(AirplaneCreateDTO airplane);
+    Long createAirplane(AirplaneCreateDTO airplane);
 
     /**
      * Get by id
      *
      * @param id database id
-     * @return sorted set of airplane DTOs
+     * @return Airplane with corresponding id
      */
     AirplaneDTO getAirplane(Long id);
 
@@ -44,6 +45,7 @@ public interface AirplaneFasade {
     /**
      * Find all by airplane type
      *
+     * @param type of airplane
      * @return set of airplane DTOs
      */
     Set<AirplaneDTO> findByType(AirplaneType type);
@@ -51,6 +53,7 @@ public interface AirplaneFasade {
     /**
      * Find all airplanes with minimal capacity
      *
+     * @param minCapacity minimal legal value
      * @return set of airplane DTOs
      */
     Set<AirplaneDTO> findByMinCapacity(int minCapacity);

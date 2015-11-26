@@ -25,9 +25,11 @@ public enum AirplaneType {
     
     static public boolean isMember(String checkedType) {
        AirplaneType[] definedTypes = AirplaneType.values();
-       for (AirplaneType type : definedTypes)
-           if (type.toString().equals(checkedType))
+       for (AirplaneType type : definedTypes) {
+           if (type.toString().equals(checkedType)) {
                return true;
+           }
+       }
        return false;
    }
 }

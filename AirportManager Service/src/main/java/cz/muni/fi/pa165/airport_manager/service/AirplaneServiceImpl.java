@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.dao.AirplaneDao;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
+import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
@@ -24,94 +25,119 @@ public class AirplaneServiceImpl implements AirplaneService {
     private FlightService flightService;
 
     @Override
-    public Airplane create(Airplane airplane) {
+    public Long create(Airplane airplane) {
         Objects.requireNonNull(airplane);
         
         if (airplane.getId() != null) {
             throw new IllegalStateException("Airplane cannot have id in it's "
                     + "current state.");
         }
-        if (airplane.getName() == null) {
+        if ((airplane.getName() == null) || (airplane.getName().equals(""))) {
             throw new IllegalStateException("Airplane has no name.");
         }
         if (airplane.getCapacity() < 0) {
-            throw new IllegalStateException("Airplane cannot have capacity less than 0");
+            throw new IllegalStateException("Airplane cannot have capacity less"
+                    + " than 0.");
         }
-        if (airplane.getType() == null) {
-            throw new IllegalStateException("Airplane has no type");
+        if ((airplane.getType() == null) || (!AirplaneType.isMember(airplane.getType()))) {
+            throw new IllegalStateException("Invalid airplane type.");
         }
        
-        airplaneDao.create(airplane);
-        airplane.setId(airplane.getId());
-        airplaneDao.update(airplane);
+        try {
+            airplaneDao.create(airplane);
+        } catch (Exception e) {
+            throw new DataAccessException("Error while persisting entity.", e);
+        }
 
-        return this.findById(airplane.getId());
+        return airplane.getId();
     }
 
     @Override
-    public Airplane update(Airplane airplane) {
+    public void update(Airplane airplane) {
         Objects.requireNonNull(airplane);
         Objects.requireNonNull(airplane.getId());
         
-        final Airplane persistedAirplane = airplaneDao.findById(airplane.getId());
-        
-        if (!airplane.equals(persistedAirplane)) {
-            throw new IllegalStateException("Airplanes id was changed.");
-        }
-        if (airplane.getName() == null) {
+        if ((airplane.getName() == null) || (airplane.getName().equals(""))) {
             throw new IllegalStateException("Airplane has no name.");
         }
         if (airplane.getCapacity() < 0) {
-            throw new IllegalStateException("Airplane cannot have capacity less than 0");
+            throw new IllegalStateException("Airplane cannot have capacity less "
+                    + "than 0.");
         }
-        if (airplane.getType() == null) {
-            throw new IllegalStateException("Airplane has no type");
+        if ((airplane.getType() == null) || (!AirplaneType.isMember(airplane.getType()))) {
+            throw new IllegalStateException("Invalid airplane type.");
         }
         
-        airplaneDao.update(airplane);
-        
-        return this.findById(airplane.getId());
+        try {
+            airplaneDao.update(airplane);
+        } catch (Exception e) {
+            throw new DataAccessException("Error while persisting entity.", e);
+        }
     }
 
     @Override
     public void delete(Long id) {
         Objects.requireNonNull(id);
-        Airplane toDelete = airplaneDao.findById(id);
-        if (toDelete == null) {
-            throw new IllegalArgumentException("Airplane with id : " + id + "not found.");
+        
+        try {
+            airplaneDao.delete(this.findById(id));
+        } catch (Exception e) {
+            throw new DataAccessException("Couldn't delete airplane with id " + id + ".", e);
         }
-        airplaneDao.delete(toDelete);
     }
     
+    @Override
     public Airplane findById(Long id) {
         Objects.requireNonNull(id);
-        return airplaneDao.findById(id);
+        try {
+            return airplaneDao.findById(id);
+        } catch (Exception e) {
+            throw new DataAccessException("Exception on persitence layer.", e);
+        }
     }
 
+    @Override
     public Set<Airplane> findAll() {
-        return airplaneDao.findAll();
+        try {
+            return airplaneDao.findAll();
+        } catch (Exception e) {
+            throw new DataAccessException("Exception on persitence layer.", e);
+        }
     }
 
+    @Override
     public Set<Airplane> findByType(AirplaneType type) {
         Objects.requireNonNull(type);
         if (!AirplaneType.isMember(type.toString())) {
             throw new IllegalArgumentException("No airplane of type : " +  type);  
         }
-        return airplaneDao.findByType(type.toString());
+        
+        try {
+            return airplaneDao.findByType(type.toString());
+        } catch (Exception e) {
+            throw new DataAccessException("Exception on persitence layer.", e);
+        }
     }
 
+    @Override
     public Set<Airplane> findByMinCapacity(int minCapacity) {
         Objects.requireNonNull(minCapacity);
         if (minCapacity < 0) {
             throw new IllegalArgumentException("Capacity cannot be less than 0.");
         }
-        return airplaneDao.findByMinCapacity(minCapacity);
+        
+        try {
+            return airplaneDao.findByMinCapacity(minCapacity);
+        } catch (Exception e) {
+            throw new DataAccessException("Exception on persitence layer.", e);
+        }
     }
 
+    @Override
     public boolean isAvailable(Long id, final Date from, final Date to) {
         Objects.requireNonNull(id);
         
-        // Chech if the time range is valid
+        // Check if the time range is valid
         if (!to.after(from)) {
             throw new IllegalArgumentException("Invalid time range.");
         }
@@ -140,6 +166,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         return true;     
     }
 
+    @Override
     public Set<Airplane> getAllAvailable(final Date from, final Date to) {
         // Chech if the time range is valid
         if (!to.after(from)) {
@@ -148,14 +175,15 @@ public class AirplaneServiceImpl implements AirplaneService {
 
         // Find all flights in time range
         Set<Flight> allFlights = flightService.findFlightsInInterval(from, to);
-
-        if (allFlights.isEmpty()) {
-            return Collections.<Airplane>emptySet();
-        }
         
         /* Set of all available airplanes contains all airplanes excluding
         those, which are in allFlights. */
         Set<Airplane> allAirplanes = airplaneDao.findAll();
+        
+        if (allFlights.isEmpty()) {
+            return allAirplanes;
+        }
+
         Set<Airplane> allAvailableAirplanes = Collections.<Airplane>emptySet();
         allAvailableAirplanes.addAll(allAirplanes);
         
@@ -167,6 +195,9 @@ public class AirplaneServiceImpl implements AirplaneService {
             }
         }
         
+        for (Flight flight : allFlights) {
+                System.out.println(flight.getAirplane().getName());
+        }
         return allAvailableAirplanes;
     }
 }

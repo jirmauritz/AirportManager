@@ -25,11 +25,10 @@ public class AirplaneFacadeImpl implements AirplaneFasade {
     private MappingService mappingService;
 
     @Override
-    public AirplaneCreateDTO createAirplane(AirplaneCreateDTO airplane) {
+    public Long createAirplane(AirplaneCreateDTO airplane) {
         Objects.requireNonNull(airplane);
 
-        return mappingService.mapTo(airplaneService.create(mappingService.mapTo(airplane, 
-                Airplane.class)), AirplaneCreateDTO.class);
+        return airplaneService.create(mappingService.mapTo(airplane, Airplane.class));
     }
     
     @Override

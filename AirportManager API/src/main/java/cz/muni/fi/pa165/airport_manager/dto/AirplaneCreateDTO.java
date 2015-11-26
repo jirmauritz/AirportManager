@@ -18,36 +18,6 @@ public class AirplaneCreateDTO {
     private int capacity;
     
     /**
-     * Non parametric constructor to create empty AirplaneCreateDTO.
-     */
-    public AirplaneCreateDTO() {
-    }
-    
-    /**
-     * Parametric constructor to create filled AirplaneCreateDTO.
-     *
-     * @param name - name of the plane
-     * @param type - type of the plane
-     * @param capacity - capacity of the plane
-     */
-    public AirplaneCreateDTO(String name, AirplaneType type, int capacity) {
-        this.name = name;
-        this.type = type;
-        this.capacity = capacity;
-    }
-    
-    /**
-     * Create new AirplaneCreateDTO object
-     *
-     * @param name - name of the plane
-     * @param type - type of the plane
-     * @param capacity - capacity of the plane
-     */
-    public AirplaneCreateDTO create(String name, AirplaneType type, int capacity) {
-        return new AirplaneCreateDTO(name, type, capacity);
-    }
-
-    /**
      * Get name
      *
      * @return name
@@ -90,10 +60,10 @@ public class AirplaneCreateDTO {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof AirplaneDTO)) {
+        if (!(obj instanceof AirplaneCreateDTO)) {
             return false;
         }
-        final AirplaneDTO other = (AirplaneDTO) obj;
+        final AirplaneCreateDTO other = (AirplaneCreateDTO) obj;
         if (!Objects.equals(this.name, other.getName())) {
             return false;
         }
@@ -106,11 +76,4 @@ public class AirplaneCreateDTO {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "AirplaneDTO [name=" + name + ", type=" + 
-                type.toString() + ",capacity=" + capacity + "]";
-    }
-
-	
 }

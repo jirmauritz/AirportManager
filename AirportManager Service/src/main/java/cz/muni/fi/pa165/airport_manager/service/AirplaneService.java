@@ -22,17 +22,19 @@ public interface AirplaneService {
      * @param airplane entity
      * @throws IllegalStateException in case of no name, type or invalid capacity
      * or existing id
+     * @return id of newly created airplane
      */
-    Airplane create(Airplane airplane);
+    Long create(Airplane airplane);
 
     /**
      * Updates entity.
      *
      * @param airplane updated airplane
-     * @throws IllegalStateException in case of no name, type or invalid capacity
-     * or changed id
+     * @throws IllegalStateException in case of no name or invalid type and
+     * capacity
      */
-    Airplane update(Airplane airplane);
+    void update(Airplane airplane)
+            throws IllegalStateException;
 
     /**
      * Delete entity by id.
@@ -60,14 +62,17 @@ public interface AirplaneService {
     /**
      * Find all by airplane type
      *
+     * @param type airplane type
      * @return set of Airplanes
      * @throws IllegalArgumentException in case of invalid type
      */
-    Set<Airplane> findByType(AirplaneType type) throws IllegalArgumentException;
+    Set<Airplane> findByType(AirplaneType type)
+            throws IllegalArgumentException;
     
     /**
      * Find all airplanes with minimal capacity.
      *
+     * @param minCapacity minimal legal value
      * @return set of Airplanes
      * @throws IllegalArgumentException in case of illegal value of capacity
      */
@@ -77,16 +82,20 @@ public interface AirplaneService {
     /**
      * Check if airplane is available in entered time range.
      *
+     * @param id airplanes id
+     * @param from star of the time range
+     * @param to end of the time range
      * @return boolean
      * @throws IllegalArgumentException in case of invalid id and time range
      */
     boolean isAvailable(Long id, final Date from, final Date to) 
             throws IllegalArgumentException;
-    
-    
+
     /**
      * Return all available airplanes in entered time range.
      *
+     * @param from star of the time range
+     * @param to end of the time range
      * @return set of Airplanes
      * @throws IllegalArgumentException in case of invalid time range
      */
