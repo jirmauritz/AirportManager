@@ -63,7 +63,11 @@ public class DestinationFacadeTest {
 
     @Test
     public void create() {
-        this.callCreateDestinationOnDestinationFacade();
+        final Long returnedDestinationId = this.callCreateDestinationOnDestinationFacade();
+
+        assertThat(returnedDestinationId)
+                .isNotNull()
+                .isEqualTo(1L);
 
         verify(mappingService).mapTo(destinationCreateDTO, Destination.class);
         verify(destinationService).create(destination);
@@ -193,7 +197,7 @@ public class DestinationFacadeTest {
                 .contains(destinationDTO1, destinationDTO2);
     }
 
-    private void callCreateDestinationOnDestinationFacade() {
+    private Long callCreateDestinationOnDestinationFacade() {
         doReturn(destination).when(mappingService).mapTo(destinationCreateDTO, Destination.class);
         doAnswer(new Answer() {
             @Override
@@ -203,7 +207,7 @@ public class DestinationFacadeTest {
             }
         }).when(destinationService).create(destination);
 
-        destinationFacade.create(destinationCreateDTO);
+        return destinationFacade.create(destinationCreateDTO);
     }
 
 }

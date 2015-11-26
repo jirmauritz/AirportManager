@@ -24,7 +24,7 @@ public class StewardServiceImpl implements StewardService {
     private @Autowired StewardDao stewardDao;
 
     @Override
-    public Steward createSteward(Steward steward) {
+    public Long createSteward(Steward steward) {
         Objects.requireNonNull(steward);
 
         if (steward.getId() != null) {
@@ -51,22 +51,30 @@ public class StewardServiceImpl implements StewardService {
             throw new DataAccessException("Entity " + steward + " already exists", e);
         }
 
-        return this.findSteward(steward.getId());
+        return steward.getId();
     }
 
     @Override
     public Steward findSteward(Long id) {
         Objects.requireNonNull(id);
-        return stewardDao.findById(id);
+        try {
+            return stewardDao.findById(id);
+        } catch (Exception e) {
+            throw new DataAccessException("Some error occurred.", e);
+        }
     }
 
     @Override
     public Set<Steward> findAllStewards() {
-        return stewardDao.findAll();
+        try {
+            return stewardDao.findAll();
+        } catch (Exception e) {
+            throw new DataAccessException("Some error occurred.", e);
+        }
     }
 
     @Override
-    public Steward updateSteward(Steward steward) throws IllegalStateException {
+    public void updateSteward(Steward steward) throws IllegalStateException {
         Objects.requireNonNull(steward);
         Objects.requireNonNull(steward.getId());
 
@@ -83,11 +91,9 @@ public class StewardServiceImpl implements StewardService {
 
         try {
             stewardDao.update(steward);
-        } catch (EntityExistsException e) {
-            throw new DataAccessException("Entity " + steward + " does not exist.", e);
+        } catch (Exception e) {
+            throw new DataAccessException("Some error occurred.", e);
         }
-
-        return this.findSteward(steward.getId());
     }
 
     @Override
@@ -95,7 +101,7 @@ public class StewardServiceImpl implements StewardService {
         Objects.requireNonNull(id);
         try {
             stewardDao.delete(this.findSteward(id));
-        } catch (EntityExistsException e) {
+        } catch (IllegalArgumentException e) {
             throw new DataAccessException("Entity with id " + id + " does not exist.", e);
         }
     }
@@ -145,11 +151,7 @@ public class StewardServiceImpl implements StewardService {
             final Date to
     ) {
         for (Flight flight : steward.getFlights()) {
-            if (
-                    (to.after (flight.getDeparture()) && to.before(flight.getArrival())) ||
-                            (from.after (flight.getDeparture()) && from.before(flight.getArrival())) ||
-                            (from.before(flight.getDeparture()) && to.after (flight.getArrival()))
-                    ) {
+            if (from.before(flight.getArrival()) && to.before(flight.getDeparture())) {
                 return false;
             }
         }

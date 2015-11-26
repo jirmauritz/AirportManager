@@ -30,14 +30,12 @@ public class StewardFacadeImpl implements StewardFacade {
     }
 
     @Override
-    public StewardDTO createSteward(final StewardCreateDTO steward) {
+    public Long createSteward(final StewardCreateDTO steward) {
         Objects.requireNonNull(steward);
 
-        return mappingService.mapTo(
-                stewardService.createSteward(
-                        mappingService.mapTo(steward, Steward.class)
-                ),
-                StewardDTO.class
+
+        return stewardService.createSteward(
+                mappingService.mapTo(steward, Steward.class)
         );
     }
 
@@ -59,7 +57,7 @@ public class StewardFacadeImpl implements StewardFacade {
     }
 
     @Override
-    public StewardDTO updateNames(
+    public void updateNames(
             Long id,
             String firstName,
             String lastName
@@ -68,16 +66,13 @@ public class StewardFacadeImpl implements StewardFacade {
         Objects.requireNonNull(firstName);
         Objects.requireNonNull(lastName);
 
-        final StewardSimpleDTO steward = this.getSteward(id);
+        final StewardDTO steward = this.getSteward(id);
 
         steward.setFirstName(firstName);
         steward.setLastName(lastName);
 
-        return mappingService.mapTo(
-                stewardService.updateSteward(
-                    mappingService.mapTo(steward, Steward.class)
-                ),
-                StewardDTO.class
+        stewardService.updateSteward(
+            mappingService.mapTo(steward, Steward.class)
         );
     }
 

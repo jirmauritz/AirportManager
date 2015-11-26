@@ -15,14 +15,14 @@ import java.util.Set;
 public interface StewardService {
 
     /**
-     * Creates new steward in the database. Steward must have not assigned id
+     * Creates new steward in the database. Steward must have not assigned id,
      * not have business id, must have empty Set of flights and must have
      * first and last name set.
      *
      * @param steward steward to be created
      * @return newly created steward with id and business id set
      */
-    Steward createSteward(Steward steward);
+    Long createSteward(Steward steward);
 
     /**
      * Looks up the steward id the database by given id. If the steward
@@ -45,10 +45,9 @@ public interface StewardService {
      * is allowed, otherwise, throws IllegalStateException.
      *
      * @param steward steward with changed first or last name
-     * @return new state of steward
      * @throws IllegalStateException if anything else, than names or flights, has changed
      */
-    Steward updateSteward(Steward steward) throws IllegalStateException;
+    void updateSteward(Steward steward) throws IllegalStateException;
 
     /**
      * Deletes the steward from database.
@@ -59,14 +58,12 @@ public interface StewardService {
 
     /**
      * <p>Checks, if the steward (recognized by id) is available within the specified interval.
-     * Steward is not available if any of the steward flights ends in the specified interval, starts
-     * in the specified interval or starts before and ends after the specified interval.
+     * Steward is not available if any of the steward flights ends after the start of the specified
+     * interval and starts before the end of the specified interval.
      * More formally, steward is not available if:
      *
      * <p><code>
-     *      (end  .after (flight.getDeparture()) && end  .before(flight.getArrival())) ||
-     *      (start.after (flight.getDeparture()) && start.before(flight.getArrival())) ||
-     *      (start.before(flight.getDeparture()) && end  .after (flight.getArrival()))
+     *      (from.before(flight.getArrival()) && to.before(flight.getDeparture()))
      * </code>
      *
      * @param id id of the steward steward to check availability for

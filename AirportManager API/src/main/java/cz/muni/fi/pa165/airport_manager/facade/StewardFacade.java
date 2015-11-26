@@ -26,9 +26,9 @@ public interface StewardFacade {
      * Creates and saves new steward.
      *
      * @param steward steward to be created
-     * @return created steward
+     * @return id of the created steward
      */
-    StewardDTO createSteward(StewardCreateDTO steward);
+    Long createSteward(StewardCreateDTO steward);
 
     /**
      * Returns the specified steward with more detail.
@@ -51,9 +51,8 @@ public interface StewardFacade {
      * @param id id of steward to get updated names
      * @param firstName new first name of the steward
      * @param lastName new last name of the steward
-     * @return newly updated steward
      */
-    StewardDTO updateNames(Long id, String firstName, String lastName);
+    void updateNames(Long id, String firstName, String lastName);
 
     /**
      * This is just convenience method for {@link StewardFacade#getSteward(Long)}.getFlights()
