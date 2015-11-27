@@ -67,7 +67,7 @@ public class DestinationServiceTest {
         destinationService.create(destination2);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NullPointerException.class)
     public void createWithNullName() {
         destination.setName(null);
         destinationService.create(destination);
@@ -79,7 +79,7 @@ public class DestinationServiceTest {
         destinationService.create(destination);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NullPointerException.class)
     public void createWithNullCity() {
         destination.setCity(null);
         destinationService.create(destination);
@@ -91,7 +91,7 @@ public class DestinationServiceTest {
         destinationService.create(destination);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NullPointerException.class)
     public void createWithNullCountry() {
         destination.setCountry(null);
         destinationService.create(destination);
@@ -133,7 +133,7 @@ public class DestinationServiceTest {
         destinationService.update(destination);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NullPointerException.class)
     public void updateWithNullName() {
         destination2.setName(null);
         destinationService.update(destination2);
@@ -145,7 +145,7 @@ public class DestinationServiceTest {
         destinationService.update(destination2);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NullPointerException.class)
     public void updateWithNullCity() {
         destination2.setCity(null);     
         destinationService.update(destination2);
@@ -157,7 +157,7 @@ public class DestinationServiceTest {
         destinationService.update(destination2);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NullPointerException.class)
     public void updateWithNullCountry() {
         destination2.setCountry(null);
         destinationService.update(destination2);
