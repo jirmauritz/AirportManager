@@ -31,10 +31,12 @@ public class FlightServiceImpl implements FlightService {
         if (flight.getId() != null) {
             throw new IllegalArgumentException("Id cannot be set");
         }
-        try {
-            flightDao.create(flight);
-        } catch (Exception e) {
-            throw new DataAccessException("This exception was thrown while creating flight.", e);
+        if (isValid(flight)) {
+            try {
+                flightDao.create(flight);
+            } catch (Exception e) {
+                throw new DataAccessException("This exception was thrown while creating flight.", e);
+            }
         }
 		return flight.getId();
     }
@@ -49,7 +51,7 @@ public class FlightServiceImpl implements FlightService {
         if (oldFlight == null) {
             throw new IllegalArgumentException("Flight with this id does not exist");
         }
-        if (!oldFlight.getStewards().equals(flight.getStewards())){
+        if (flight.getStewards().isEmpty() ){
             flight.setStewards(oldFlight.getStewards());
         }
         try {
@@ -130,5 +132,29 @@ public class FlightServiceImpl implements FlightService {
             }
         }
         return wantedFlights;
+    }
+
+        private boolean isValid (Flight flight){
+            if (flight.getAirplane() == null ) {
+                throw new IllegalArgumentException("Airplane cannot be null");
+            }
+            if (flight.getArrival() == null) {
+                throw new IllegalArgumentException("Arrival cannot be null");
+            }
+            if (flight.getDeparture() == null) {
+                throw new IllegalArgumentException("Departure cannot be null");
+            }
+            if (flight.getFrom() == null) {
+                throw new IllegalArgumentException("From cannot be null");
+            }
+            if (flight.getTo() == null) {
+                throw new IllegalArgumentException("To cannot be null");
+            }
+            if (flight.isInternational() == null) {
+                throw new IllegalArgumentException("International cannot be null");
+            }
+            return true;
+
+
     }
 }

@@ -1,15 +1,12 @@
 package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.dao.StewardDao;
-import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.PersistenceException;
 import java.util.*;
 
 /**
@@ -33,7 +30,7 @@ public class StewardServiceImpl implements StewardService {
         if (steward.getBusinessId() != null) {
             throw new IllegalStateException("Steward must not have business id set.");
         }
-        if (steward.getFirstName() != null && !steward.getFlights().isEmpty()) {
+        if (steward.getFlights() != null && !steward.getFlights().isEmpty()) {
             throw new IllegalStateException("Steward must not have any flight assigned.");
         }
         if (steward.getFirstName() == null || steward.getFirstName().isEmpty()) {
