@@ -1,9 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
-import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
+import cz.muni.fi.pa165.airport_manager.dto.*;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import cz.muni.fi.pa165.airport_manager.service.StewardService;
@@ -135,17 +132,12 @@ public class StewardFacadeTest {
 	
 	@Test
 	public void updateNames() {
-		// mock mapping
-		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(Steward.class)))
-				.thenReturn(updatedSteward);
-		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(StewardDTO.class)))
-				.thenReturn(updatedRichSteward);
-		
 		// fire
-		//StewardDTO returned = stewardFacade.updateNames(1l, "Vasek", SURNAME);
+		stewardFacade.updateNames(1l, "Vasek", SURNAME);
 		
-		// verify correct updated steward is sent to the persistence layer
-		verify(stewardService).updateSteward(updatedSteward);
+		//verify correct updated steward is sent to the persistence layer
+		verify(stewardService).updateSteward(Matchers.any(Steward.class));
+		verify(mappingService).mapTo(Matchers.any(Steward.class),Matchers.eq(Steward.class));
 	}
 	
 	@Test
