@@ -103,10 +103,10 @@ public class StewardFacadeTest {
     @Test
     public void createSteward() {
 		// fire
-//		StewardDTO returnedSteward = stewardFacade.createSteward(stewardCreateDTO);
+		Long returnedStewardId = stewardFacade.createSteward(stewardCreateDTO);
 		
 		// assert
-//		assertThat(returnedSteward).isEqualTo(stewardRichDTO);
+		assertThat(returnedStewardId).isEqualTo(1L);
 		
 		// verify mocks
 		verify(stewardService).createSteward(Matchers.any(Steward.class));
@@ -165,8 +165,8 @@ public class StewardFacadeTest {
 		Mockito.when(stewardService.findAllStewards())
 				.thenReturn(set);
 		// create
-		//Mockito.when(stewardService.createSteward(Matchers.any(Steward.class)))
-				//.thenReturn(steward);
+		Mockito.when(stewardService.createSteward(Matchers.any(Steward.class)))
+				.thenReturn(1L);
 		// get
 		Mockito.when(stewardService.findSteward(Matchers.anyLong()))
 				.thenReturn(steward);
