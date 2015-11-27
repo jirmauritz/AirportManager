@@ -149,7 +149,7 @@ public class StewardServiceImpl implements StewardService {
             final Date to
     ) {
         for (Flight flight : steward.getFlights()) {
-            if (from.before(flight.getArrival()) && to.before(flight.getDeparture())) {
+            if (from.before(flight.getArrival()) && to.after(flight.getDeparture())) {
                 return false;
             }
         }

@@ -58,12 +58,12 @@ public interface StewardService {
 
     /**
      * <p>Checks, if the steward (recognized by id) is available within the specified interval.
-     * Steward is not available if any of the steward flights ends after the start of the specified
-     * interval and starts before the end of the specified interval.
-     * More formally, steward is not available if:
+     * Steward is not available if any of the steward flights departures after the start of the
+     * specified interval and arrives before the end of the specified interval. More formally,
+     * steward is not available if:
      *
      * <p><code>
-     *      (from.before(flight.getArrival()) && to.before(flight.getDeparture()))
+     *      (from.before(flight.getArrival()) && to.after(flight.getDeparture()))
      * </code>
      *
      * @param id id of the steward steward to check availability for
