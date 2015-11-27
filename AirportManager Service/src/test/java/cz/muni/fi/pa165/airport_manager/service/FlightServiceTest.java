@@ -83,24 +83,6 @@ public class FlightServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void createWithNullDeparture() {
-		// null departure
-		flight.setDeparture(null);
-
-		// fire
-		flightService.create(flight);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void createWithNullArrival() {
-		// null arrival
-		flight.setArrival(null);
-
-		// fire
-		flightService.create(flight);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
 	public void createWithNullInternational() {
 		// null international
 		flight.setInternational(null);
@@ -145,24 +127,6 @@ public class FlightServiceTest {
 	public void updateWithNullId() {
 		// null id
 		flight.setId(null);
-
-		// fire
-		flightService.update(flight);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void updateWithNullDeparture() {
-		// null departure
-		flight.setDeparture(null);
-
-		// fire
-		flightService.update(flight);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void updateWithNullArrival() {
-		// null arrival
-		flight.setArrival(null);
 
 		// fire
 		flightService.update(flight);
