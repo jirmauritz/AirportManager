@@ -30,18 +30,6 @@ public class DestinationServiceImpl implements DestinationService {
 			throw new IllegalArgumentException("Destination must not have id set.");
 		}
 
-		if (destination.getName() == null) {
-			throw new IllegalArgumentException("Destination must have name set.");
-		}
-
-		if (destination.getCity() == null) {
-			throw new IllegalArgumentException("Destination must have city set.");
-		}
-
-		if (destination.getCountry() == null) {
-			throw new IllegalArgumentException("Destination must have country set.");
-		}
-
 		try {
 			destinationDao.create(destination);
 		} catch (Exception e) {
@@ -52,8 +40,11 @@ public class DestinationServiceImpl implements DestinationService {
 
 	@Override
 	public void update(Destination destination) {
-		Objects.requireNonNull(destination.getId());
 		verifyDestinationObject(destination);
+		
+		if (destination.getId() == null) {
+			throw new IllegalArgumentException("Destination must have id set.");
+		}
 
 		try {
 			destinationDao.update(destination);
@@ -113,19 +104,16 @@ public class DestinationServiceImpl implements DestinationService {
 
 	private void verifyDestinationObject(Destination destination) {
 		Objects.requireNonNull(destination);
-		Objects.requireNonNull(destination.getCity());
-		Objects.requireNonNull(destination.getCountry());
-		Objects.requireNonNull(destination.getName());
 
-		if (destination.getName().isEmpty()) {
+		if ((destination.getName() == null) || (destination.getName().isEmpty())) {
 			throw new IllegalArgumentException("Destination name cannot be empty.");
 		}
 
-		if (destination.getCity().isEmpty()) {
+		if ((destination.getCity() == null) || (destination.getCity().isEmpty())) {
 			throw new IllegalArgumentException("Destination city cannot be empty.");
 		}
 
-		if (destination.getCountry().isEmpty()) {
+		if ((destination.getCountry() == null) || (destination.getCountry().isEmpty())) {
 			throw new IllegalArgumentException("Destination country cannot be empty.");
 		}
 	}

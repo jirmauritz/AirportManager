@@ -128,7 +128,7 @@ public class DestinationServiceTest {
         destinationService.update(null);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateNullId() {
         destinationService.update(destination);
     }
