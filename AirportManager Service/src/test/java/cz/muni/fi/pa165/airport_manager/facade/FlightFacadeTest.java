@@ -22,7 +22,7 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.verify;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.Matchers;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
 
 /**
  * Test class for {@link FlightFacadeImpl}
@@ -58,9 +58,9 @@ public class FlightFacadeTest {
         to = new Destination("DUS", "Düsseldorf", "Deutschland");
 
         steward = new Steward(123l, "Peter", "Pan", new HashSet<Flight>());
+        steward.setId(testId);
 
         Set<Steward> stewards = new HashSet<>();
-        stewards.add(steward);
 
         Airplane airplane = new Airplane("Boing", AirplaneType.ECONOMY.name(), 150);
         flight = new Flight(Boolean.TRUE, new Date(10000l), new Date(20000l), stewards, airplane, from, to);
@@ -82,7 +82,7 @@ public class FlightFacadeTest {
         flightFacade.update(flightSimpleDTO);
 
         verify(mappingService).mapTo(flightSimpleDTO, Flight.class);
-        //verify(flightService).update(Matchers.any(Flight.class));
+        verify(flightService).update(Matchers.any(Flight.class));
     }
     
     @Test
@@ -111,6 +111,9 @@ public class FlightFacadeTest {
    
     @Test
     public void addSteward() {
+        when(flightService.findById(Matchers.anyLong())).thenReturn(flight);
+        when(stewardService.findSteward(Matchers.anyLong())).thenReturn(steward);
+        
         flightFacade.addSteward(steward.getId(), flight.getId());
         
         verify(flightService).update(flight);
@@ -118,6 +121,9 @@ public class FlightFacadeTest {
     
     @Test
     public void removeSteward() {
+        when(flightService.findById(Matchers.anyLong())).thenReturn(flight);
+        when(stewardService.findSteward(Matchers.anyLong())).thenReturn(steward);
+        
         flightFacade.removeSteward(steward.getId(), flight.getId());
         
         verify(flightService).update(flight);
