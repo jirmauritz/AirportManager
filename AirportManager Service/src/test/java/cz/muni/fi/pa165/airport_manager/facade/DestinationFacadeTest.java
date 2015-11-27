@@ -81,7 +81,6 @@ public class DestinationFacadeTest {
 
         destinationFacade.delete(1L);
 
-        verify(destinationService).findById(1L);
         verify(destinationService).delete(1L);
     }
 
