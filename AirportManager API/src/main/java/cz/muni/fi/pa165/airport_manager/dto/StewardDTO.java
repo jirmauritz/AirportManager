@@ -28,7 +28,6 @@ public final class StewardDTO extends StewardSimpleDTO {
      * @param flights new flights
      */
     public void setFlights(final Set<FlightDTO> flights) {
-        Objects.requireNonNull(flights);
         this.flights = new HashSet<>(flights);
     }
 

@@ -40,7 +40,6 @@ public class StewardSimpleDTO extends StewardCreateDTO implements Comparable<Ste
      * @param businessId new business id
      */
     public void setBusinessId(Long businessId) {
-        Objects.requireNonNull(businessId);
         this.businessId = businessId;
     }
     /**
@@ -49,7 +48,6 @@ public class StewardSimpleDTO extends StewardCreateDTO implements Comparable<Ste
      * @param id new database id
      */
     public void setId(Long id) {
-        Objects.requireNonNull(id);
         this.id = id;
     }
 

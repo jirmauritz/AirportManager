@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import cz.muni.fi.pa165.airport_manager.service.DestinationService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
+import java.util.Objects;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,26 +27,31 @@ public class DestinationFacadeImpl implements DestinationFacade {
 	
 	@Override
 	public Long create(DestinationCreateDTO destination) {
+		Objects.requireNonNull(destination);
 		return destinationService.create(mappingService.mapTo(destination, Destination.class));
 	}
 
 	@Override
 	public void delete(Long id) {
+		Objects.requireNonNull(id);
 		destinationService.delete(id);
 	}
 
 	@Override
 	public DestinationSimpleDTO findById(Long id) {
+		Objects.requireNonNull(id);
 		return mappingService.mapTo(destinationService.findById(id), DestinationSimpleDTO.class);
 	}
 
 	@Override
 	public DestinationSimpleDTO findByAirportCode(String code) {
+		Objects.requireNonNull(code);
 		return mappingService.mapTo(destinationService.findByAirportCode(code), DestinationSimpleDTO.class);
 	}
 
 	@Override
 	public Set<DestinationSimpleDTO> findByCountry(String country) {
+		Objects.requireNonNull(country);
 		return mappingService.mapTo(destinationService.findByCountry(country), DestinationSimpleDTO.class);
 	}
 

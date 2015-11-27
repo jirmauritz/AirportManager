@@ -30,8 +30,8 @@ public class StewardServiceImpl implements StewardService {
         if (steward.getBusinessId() != null) {
             throw new IllegalArgumentException("Steward must not have business id set.");
         }
-        if (steward.getFlights() != null && !steward.getFlights().isEmpty()) {
-            throw new IllegalArgumentException("Steward must not have any flight assigned.");
+        if (steward.getFlights() == null) {
+            throw new IllegalArgumentException("Steward must have flights set.");
         }
         if (steward.getFirstName() == null || steward.getFirstName().isEmpty()) {
             throw new IllegalArgumentException("Steward must have first name set.");
@@ -71,7 +71,10 @@ public class StewardServiceImpl implements StewardService {
     @Override
     public void updateSteward(Steward steward) throws IllegalArgumentException {
         Objects.requireNonNull(steward);
-        Objects.requireNonNull(steward.getId());
+		
+		if (steward.getId() == null) {
+			throw new IllegalArgumentException("Steward must have id set.");
+		}
 
         final Steward actualSteward = this.findSteward(steward.getId());
         if (!actualSteward.getBusinessId().equals(steward.getBusinessId())) {

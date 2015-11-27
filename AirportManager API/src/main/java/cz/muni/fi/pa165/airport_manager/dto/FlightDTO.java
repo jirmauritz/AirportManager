@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.airport_manager.dto;
 
 
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -20,7 +21,7 @@ public class FlightDTO extends FlightSimpleDTO {
      * @return set of stewards
      */
     public Set<StewardSimpleDTO> getStewards() {
-        return stewards;
+        return Collections.unmodifiableSet(stewards);
     }
 
     /**

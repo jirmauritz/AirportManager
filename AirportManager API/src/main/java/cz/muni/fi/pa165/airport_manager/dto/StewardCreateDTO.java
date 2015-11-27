@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.airport_manager.dto;
 
-import java.util.Objects;
-
 /**
  * Class for creating Stewards. Class is immutable.
  *
@@ -37,7 +35,6 @@ public class StewardCreateDTO {
      * @param firstName new first name
      */
     public void setFirstName(String firstName) {
-        Objects.requireNonNull(firstName);
         this.firstName = firstName;
     }
 
@@ -47,7 +44,6 @@ public class StewardCreateDTO {
      * @param lastName new last name
      */
     public void setLastName(String lastName) {
-        Objects.requireNonNull(lastName);
         this.lastName = lastName;
     }
 
