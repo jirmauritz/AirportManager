@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -175,7 +176,7 @@ public class AirplaneServiceImpl implements AirplaneService {
 
         // Find all flights in time range
         Set<Flight> allFlights = flightService.findFlightsInInterval(from, to);
-        
+
         /* Set of all available airplanes contains all airplanes excluding
         those, which are in allFlights. */
         Set<Airplane> allAirplanes = airplaneDao.findAll();
@@ -184,8 +185,7 @@ public class AirplaneServiceImpl implements AirplaneService {
             return allAirplanes;
         }
 
-        Set<Airplane> allAvailableAirplanes = Collections.<Airplane>emptySet();
-        allAvailableAirplanes.addAll(allAirplanes);
+        Set<Airplane> allAvailableAirplanes = new HashSet<Airplane>(allAirplanes);
         
         for (Airplane airplane : allAirplanes) {
             for (Flight flight : allFlights) {
