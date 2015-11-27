@@ -3,7 +3,7 @@ package cz.muni.fi.pa165.airport_manager.service;
 import cz.muni.fi.pa165.airport_manager.dao.FlightDao;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
-import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
+import cz.muni.fi.pa165.airport_manager.exception.AirportManagerDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class FlightServiceImpl implements FlightService {
             try {
                 flightDao.create(flight);
             } catch (Exception e) {
-                throw new DataAccessException("This exception was thrown while creating flight.", e);
+                throw new AirportManagerDataAccessException("This exception was thrown while creating flight.", e);
             }
         }
 		return flight.getId();
@@ -54,7 +54,7 @@ public class FlightServiceImpl implements FlightService {
         try {
             flightDao.update(flight);
         } catch (Exception e) {
-            throw new DataAccessException("This exception was thrown while updating flight.", e);
+            throw new AirportManagerDataAccessException("This exception was thrown while updating flight.", e);
         }
     }
 
@@ -64,7 +64,7 @@ public class FlightServiceImpl implements FlightService {
         try {
             flightDao.delete(flightDao.findById(id));
         } catch (Exception e) {
-            throw new DataAccessException("This exception was thrown while deleting flight.", e);
+            throw new AirportManagerDataAccessException("This exception was thrown while deleting flight.", e);
         }
     }
 
@@ -74,7 +74,7 @@ public class FlightServiceImpl implements FlightService {
         try {
             return flightDao.findById(id);
         } catch (Exception e) {
-            throw new DataAccessException("This exception was thrown while finding flight by given id.", e);
+            throw new AirportManagerDataAccessException("This exception was thrown while finding flight by given id.", e);
         }
     }
 
@@ -83,7 +83,7 @@ public class FlightServiceImpl implements FlightService {
         try {
             return flightDao.findAll();
         } catch (Exception e) {
-            throw new DataAccessException("This exception was thrown while finding all flights.", e);
+            throw new AirportManagerDataAccessException("This exception was thrown while finding all flights.", e);
         }
     }
 
@@ -94,7 +94,7 @@ public class FlightServiceImpl implements FlightService {
         try {
             return flightDao.findAllFromDestination(dest);
         } catch (Exception e) {
-            throw new DataAccessException("This exception was thrown while finding flight by given from-destination.", e);
+            throw new AirportManagerDataAccessException("This exception was thrown while finding flight by given from-destination.", e);
         }
     }
 
@@ -104,7 +104,7 @@ public class FlightServiceImpl implements FlightService {
         try {
             return flightDao.findAllToDestination(dest);
         } catch (Exception e) {
-            throw new DataAccessException("This exception was thrown while finding flight by given to-destination.", e);
+            throw new AirportManagerDataAccessException("This exception was thrown while finding flight by given to-destination.", e);
         }
     }
 
@@ -120,7 +120,7 @@ public class FlightServiceImpl implements FlightService {
         try {
             allFlights = flightDao.findAll();
         } catch (Exception e) {
-            throw new DataAccessException("This exception was thrown while finding all flights in findFlightsInInterval method.", e);
+            throw new AirportManagerDataAccessException("This exception was thrown while finding all flights in findFlightsInInterval method.", e);
         }
         Set<Flight> wantedFlights = new HashSet<Flight>();
         for (Flight flight : allFlights) {

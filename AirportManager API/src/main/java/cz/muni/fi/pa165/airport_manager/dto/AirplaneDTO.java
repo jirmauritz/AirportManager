@@ -36,5 +36,4 @@ public class AirplaneDTO extends AirplaneCreateDTO {
         return "AirplaneDTO [id=" + id + ", name=" + super.getName() + ", type=" + 
                 super.getType().toString() + ",capacity=" + super.getCapacity() + "]";
     }
-
 }

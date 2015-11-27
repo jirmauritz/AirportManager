@@ -3,7 +3,7 @@ package cz.muni.fi.pa165.airport_manager.service;
 import cz.muni.fi.pa165.airport_manager.dao.StewardDao;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
-import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
+import cz.muni.fi.pa165.airport_manager.exception.AirportManagerDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +43,7 @@ public class StewardServiceImpl implements StewardService {
         try {
             stewardDao.create(steward);
         } catch (Exception e) {
-            throw new DataAccessException("Entity " + steward + " already exists", e);
+            throw new AirportManagerDataAccessException("Entity " + steward + " already exists", e);
         }
 
         return steward.getId();
@@ -55,7 +55,7 @@ public class StewardServiceImpl implements StewardService {
         try {
             return stewardDao.findById(id);
         } catch (Exception e) {
-            throw new DataAccessException("Some error occurred.", e);
+            throw new AirportManagerDataAccessException("Some error occurred.", e);
         }
     }
 
@@ -64,7 +64,7 @@ public class StewardServiceImpl implements StewardService {
         try {
             return stewardDao.findAll();
         } catch (Exception e) {
-            throw new DataAccessException("Some error occurred.", e);
+            throw new AirportManagerDataAccessException("Some error occurred.", e);
         }
     }
 
@@ -90,7 +90,7 @@ public class StewardServiceImpl implements StewardService {
         try {
             stewardDao.update(steward);
         } catch (Exception e) {
-            throw new DataAccessException("Some error occurred.", e);
+            throw new AirportManagerDataAccessException("Some error occurred.", e);
         }
     }
 
@@ -100,7 +100,7 @@ public class StewardServiceImpl implements StewardService {
         try {
             stewardDao.delete(this.findSteward(id));
         } catch (Exception e) {
-            throw new DataAccessException("Entity with id " + id + " does not exist.", e);
+            throw new AirportManagerDataAccessException("Entity with id " + id + " does not exist.", e);
         }
     }
 

@@ -4,8 +4,8 @@ import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.dao.AirplaneDao;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
-import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
-import java.util.Collections;
+import cz.muni.fi.pa165.airport_manager.exception.AirportManagerDataAccessException;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -50,7 +50,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             airplaneDao.create(airplane);
         } catch (Exception e) {
-            throw new DataAccessException("Error while persisting entity.", e);
+            throw new AirportManagerDataAccessException("Error while persisting entity.", e);
         }
 
         return airplane.getId();
@@ -77,7 +77,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             airplaneDao.update(airplane);
         } catch (Exception e) {
-            throw new DataAccessException("Error while persisting entity.", e);
+            throw new AirportManagerDataAccessException("Error while persisting entity.", e);
         }
     }
 
@@ -88,7 +88,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             airplaneDao.delete(this.findById(id));
         } catch (Exception e) {
-            throw new DataAccessException("Couldn't delete airplane with id " + id + ".", e);
+            throw new AirportManagerDataAccessException("Couldn't delete airplane with id " + id + ".", e);
         }
     }
     
@@ -98,7 +98,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             return airplaneDao.findById(id);
         } catch (Exception e) {
-            throw new DataAccessException("Exception on persistence layer.", e);
+            throw new AirportManagerDataAccessException("Exception on persistence layer.", e);
         }
     }
 
@@ -107,7 +107,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             return airplaneDao.findAll();
         } catch (Exception e) {
-            throw new DataAccessException("Exception on persistence layer.", e);
+            throw new AirportManagerDataAccessException("Exception on persistence layer.", e);
         }
     }
 
@@ -118,7 +118,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             return airplaneDao.findByType(type.toString());
         } catch (Exception e) {
-            throw new DataAccessException("Exception on persitence layer.", e);
+            throw new AirportManagerDataAccessException("Exception on persitence layer.", e);
         }
     }
 
@@ -131,7 +131,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             return airplaneDao.findByMinCapacity(minCapacity);
         } catch (Exception e) {
-            throw new DataAccessException("Exception on persistence layer.", e);
+            throw new AirportManagerDataAccessException("Exception on persistence layer.", e);
         }
     }
 
@@ -149,7 +149,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             airplane = airplaneDao.findById(id);
         } catch (Exception e) {
-            throw new DataAccessException("Exception on persistence layer.", e);
+            throw new AirportManagerDataAccessException("Exception on persistence layer.", e);
         }
 
         if (airplane == null) {
@@ -189,7 +189,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             allAirplanes = airplaneDao.findAll();
         } catch (Exception e) {
-            throw new DataAccessException("Exception on persistence layer.", e);
+            throw new AirportManagerDataAccessException("Exception on persistence layer.", e);
         }
         
         if (allFlights.isEmpty()) {

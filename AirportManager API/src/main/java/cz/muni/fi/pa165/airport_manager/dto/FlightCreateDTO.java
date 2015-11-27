@@ -47,7 +47,7 @@ public class FlightCreateDTO {
      * @return the departure date
      */
     public Date getDeparture() {
-        return departure;
+        return new Date(departure.getTime());
     }
 
     /**
@@ -56,7 +56,7 @@ public class FlightCreateDTO {
      * @param departure
      */
     public void setDeparture(Date departure) {
-        this.departure = departure;
+        this.departure = new Date(departure.getTime());
     }
 
     /**
@@ -65,7 +65,7 @@ public class FlightCreateDTO {
      * @return the arrival date
      */
     public Date getArrival() {
-        return arrival;
+        return new Date(arrival.getTime());
     }
 
     /**
@@ -74,7 +74,7 @@ public class FlightCreateDTO {
      * @param arrival
      */
     public void setArrival(Date arrival) {
-        this.arrival = arrival;
+        this.arrival = new Date(arrival.getTime());
     }
 
     /**

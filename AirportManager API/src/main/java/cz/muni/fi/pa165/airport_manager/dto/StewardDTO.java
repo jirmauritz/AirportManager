@@ -32,25 +32,6 @@ public final class StewardDTO extends StewardSimpleDTO {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof StewardDTO)) return false;
-        if (!super.equals(o)) return false;
-
-        final StewardDTO that = (StewardDTO) o;
-
-        return this.getFlights().equals(that.getFlights());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + this.getFlights().hashCode();
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "StewardDTO{" +
                 "firstName='" + this.getFirstName() + '\'' +
