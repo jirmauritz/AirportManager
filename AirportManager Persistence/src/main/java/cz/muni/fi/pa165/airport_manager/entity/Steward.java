@@ -18,7 +18,8 @@ public class Steward {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotNull
+    @Column(unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long businessId;
 
     @NotNull

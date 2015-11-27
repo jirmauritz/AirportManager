@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */
-/*
+
 @RunWith(MockitoJUnitRunner.class)
 public class AirplaneServiceTest {
     private @Mock AirplaneDao airplaneDao;
@@ -122,7 +122,7 @@ public class AirplaneServiceTest {
         this.callCreateAirplaneOnAirplaneService(airplane);
 
         airplane.setName("Aeroplan2");
-        airplane.setType("Boeing 737");
+        airplane.setType("Business");
         airplaneService.update(airplane);
 
         verify(airplaneDao).update(airplane);
@@ -529,4 +529,3 @@ public class AirplaneServiceTest {
         return new Airplane("Airplane1", "Economy", 300);
     }
 }
-*/

@@ -45,8 +45,6 @@ public class StewardServiceImpl implements StewardService {
 
         try {
             stewardDao.create(steward);
-            steward.setBusinessId(steward.getId());
-            stewardDao.update(steward);
         } catch (Exception e) {
             throw new DataAccessException("Entity " + steward + " already exists", e);
         }
