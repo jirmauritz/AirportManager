@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Set;
 
 /**
- * Facade implementation for FlightFacade
+ * Facade implementation for FlightFacade.
  *
  * @author Lenka Heldova
  * @author 422578@mail.muni.cz
@@ -30,7 +30,6 @@ public class FlightFacadeImpl implements FlightFacade{
     @Autowired
     private StewardService stewardService;
 
-
     @Override
     public Long create(FlightCreateDTO flight) {
         return flightService.create(mappingService.mapTo(flight, Flight.class));
@@ -38,7 +37,7 @@ public class FlightFacadeImpl implements FlightFacade{
 
     @Override
     public FlightDTO getFlight(Long id) {
-        return mappingService.mapTo(flightService.findById(id),FlightDTO.class);
+        return mappingService.mapTo(flightService.findById(id), FlightDTO.class);
     }
 
     @Override
@@ -48,8 +47,7 @@ public class FlightFacadeImpl implements FlightFacade{
 
     @Override
     public Set<FlightSimpleDTO> getFlights() {
-        return mappingService.mapTo(flightService.findAll(),FlightSimpleDTO.class);
-
+        return mappingService.mapTo(flightService.findAll(), FlightSimpleDTO.class);
     }
 
     @Override
@@ -60,7 +58,7 @@ public class FlightFacadeImpl implements FlightFacade{
         Flight flight = flightService.findById(flightId);
         Steward steward = stewardService.findSteward(stewardId);
         if (!flight.getStewards().contains(steward) &&
-                stewardService.isAvailable(stewardId,flight.getDeparture(),flight.getArrival())) {
+                stewardService.isAvailable(stewardId,flight.getDeparture(), flight.getArrival())) {
             flight.addSteward(steward);
         }
 

@@ -29,7 +29,7 @@ public class FlightServiceImpl implements FlightService {
     public Long create(Flight flight) {
         Objects.requireNonNull(flight);
         if (flight.getId() != null) {
-            throw new IllegalArgumentException("Id cannot be set");
+            throw new IllegalArgumentException("Id cannot be set.");
         }
         if (isValid(flight)) {
             try {
@@ -45,11 +45,11 @@ public class FlightServiceImpl implements FlightService {
     public void update(Flight flight) {
         Objects.requireNonNull(flight);
         if (flight.getId() == null) {
-            throw new IllegalArgumentException("Id must be set");
+            throw new IllegalArgumentException("Id must be set.");
         }
         Flight oldFlight = flightDao.findById(flight.getId());
         if (oldFlight == null) {
-            throw new IllegalArgumentException("Flight with this id does not exist");
+            throw new IllegalArgumentException("Flight with this id does not exist.");
         }
         try {
             flightDao.update(flight);

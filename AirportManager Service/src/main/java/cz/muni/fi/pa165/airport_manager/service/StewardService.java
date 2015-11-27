@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.airport_manager.service;
 
-import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 
 import java.util.Date;

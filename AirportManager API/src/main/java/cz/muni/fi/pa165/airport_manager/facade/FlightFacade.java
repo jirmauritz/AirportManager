@@ -15,15 +15,15 @@ import java.util.Set;
 public interface FlightFacade {
 
     /**
-     * Create new entity and persist it
+     * Create new entity and persist it.
      *
      * @param flight entity to create
-	 * @return id
+     * @return id
      */
     Long create(FlightCreateDTO flight);
 
     /**
-     * Get flight by given id
+     * Get flight by given id.
      *
      * @param id
      * @return set of destinations
@@ -31,12 +31,11 @@ public interface FlightFacade {
     FlightDTO getFlight(Long id);
 
     /**
+     * Delete flight identified by id.
      *
-     * Delete flight identified by id
      * @param id
      */
     void delete(Long id);
-
 
     /**
      * Find all
@@ -46,27 +45,28 @@ public interface FlightFacade {
     Set<FlightSimpleDTO> getFlights();
 
     /**
-     * Add steward to the flight, if given Steward is not already assigned for given flight and if he/she is available.
+     * Add steward to the flight, if given Steward is not already assigned for
+     * given flight and if he/she is available.
      *
-     * @param stewardId id of steward to be added.
+     * @param stewardId id of steward to be added
      * @param flightId id of flight
      */
-    void addSteward (Long stewardId, Long flightId);
+    void addSteward(Long stewardId, Long flightId);
 
     /**
-     * Remove steward from the flight, if given steward is assigned for given flight.
+     * Remove steward from the flight, if given steward is assigned for given
+     * flight.
      *
-     * @param stewardId id of steward to be removed.
+     * @param stewardId id of steward to be removed
      * @param flightId id of flight
      */
-    void removeSteward (Long stewardId, Long flightId);
+    void removeSteward(Long stewardId, Long flightId);
 
     /**
-     * Update Flight.
+     * Update flight.
      *
      * @param flight Flight to be updated.
      */
     void update(FlightSimpleDTO flight);
-
 
 }

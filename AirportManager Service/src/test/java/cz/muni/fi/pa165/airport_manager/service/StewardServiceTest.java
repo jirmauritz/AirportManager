@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import javax.persistence.PersistenceException;
 import java.util.Date;
 import java.util.HashSet;
@@ -21,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
- * /**
+ *
  * Test class for {@link StewardServiceImpl}
  *
  * @author Lenka Heldova

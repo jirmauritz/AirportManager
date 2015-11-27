@@ -6,23 +6,17 @@ import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import cz.muni.fi.pa165.airport_manager.service.DestinationService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
@@ -30,16 +24,17 @@ import static org.mockito.Mockito.verify;
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */
-
 @RunWith(MockitoJUnitRunner.class)
 public class DestinationFacadeTest {
 
-    private @Mock DestinationService destinationService;
-    private @Mock MappingService mappingService;
+    private @Mock
+    DestinationService destinationService;
+    private @Mock
+    MappingService mappingService;
 
     @InjectMocks
-    private DestinationFacade destinationFacade =
-            new DestinationFacadeImpl();
+    private DestinationFacade destinationFacade
+            = new DestinationFacadeImpl();
 
     private Destination destination;
     private DestinationCreateDTO destinationCreateDTO;
