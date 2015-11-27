@@ -455,26 +455,24 @@ public class AirplaneServiceTest {
 
         final Date date1 = new Date(1420070400000L); // 2015-01-01 UTC
         final Date date2 = new Date(1422748800000L); // 2015-02-01 UTC
-        final Date date2_1 = new Date(1422748800000L + 1000L); // after  2015-02-01 UTC
-        final Date date2_2 = new Date(1425168000000L - 1000L); // before 2015-03-01 UTC
-        final Date date3 = new Date(1425168000000L); // 2015-03-01 UTC
-        final Date date4 = new Date(1427846400000L); // 2015-04-01 UTC
+        final Date date3 = new Date(1422748800000L + 1000L); // after  2015-02-01 UTC
+        final Date date4 = new Date(1425168000000L - 1000L); // before 2015-03-01 UTC
+        final Date date5 = new Date(1425168000000L); // 2015-03-01 UTC
 
-        final Flight flight1 = new Flight(true, date1, date2_1, Collections.<Steward>emptySet(), airplane1, null, null);
-        final Flight flight2 = new Flight(true, date3, date4, Collections.<Steward>emptySet(), airplane2, null, null);
-        final Flight flight3 = new Flight(true, date1, date3, Collections.<Steward>emptySet(), airplane3, null, null);
+        final Flight flight1 = new Flight(true, date1, date3, Collections.<Steward>emptySet(), airplane1, null, null);
+        final Flight flight2 = new Flight(true, date1, date5, Collections.<Steward>emptySet(), airplane3, null, null);
 
-        doReturn(asSet(flight1, flight2, flight3)).when(flightService).findFlightsInInterval(date2, date2_2);
+        doReturn(asSet(flight1, flight2)).when(flightService).findFlightsInInterval(date2, date4);
         doReturn(asSet(airplane1, airplane2, airplane3, airplane4)).when(airplaneDao).findAll();
 
-        final Set<Airplane> returnedAirplanes = airplaneService.getAllAvailable(date2, date2_2);
+        final Set<Airplane> returnedAirplanes = airplaneService.getAllAvailable(date2, date4);
 
         assertThat(returnedAirplanes)
                 .isNotNull()
                 .isNotEmpty()
                 .contains(airplane2, airplane4);
 
-        verify(flightService).findFlightsInInterval(date2, date2_2);
+        verify(flightService).findFlightsInInterval(date2, date4);
         verify(airplaneDao).findAll();
     }
 
