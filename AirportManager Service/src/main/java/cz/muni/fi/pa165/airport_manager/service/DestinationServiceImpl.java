@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.dao.DestinationDao;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
-import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
+import cz.muni.fi.pa165.airport_manager.exception.AirportManagerDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class DestinationServiceImpl implements DestinationService {
 		try {
 			destinationDao.create(destination);
 		} catch (Exception e) {
-			throw new DataAccessException("Exception in persistence layer", e);
+			throw new AirportManagerDataAccessException("Exception in persistence layer", e);
 		}
 		return destination.getId();
 	}
@@ -49,7 +49,7 @@ public class DestinationServiceImpl implements DestinationService {
 		try {
 			destinationDao.update(destination);
 		} catch (Exception e) {
-			throw new DataAccessException("Exception in persistence layer", e);
+			throw new AirportManagerDataAccessException("Exception in persistence layer", e);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class DestinationServiceImpl implements DestinationService {
 		try {
 			destinationDao.delete(findById(id));
 		} catch (Exception e) {
-			throw new DataAccessException("Exception in persistence layer", e);
+			throw new AirportManagerDataAccessException("Exception in persistence layer", e);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class DestinationServiceImpl implements DestinationService {
 		try {
 			return destinationDao.findById(id);
 		} catch (Exception e) {
-			throw new DataAccessException("Exception in persistence layer", e);
+			throw new AirportManagerDataAccessException("Exception in persistence layer", e);
 		}
 	}
 
@@ -79,7 +79,7 @@ public class DestinationServiceImpl implements DestinationService {
 		try {
 			return destinationDao.findByName(code);
 		} catch (Exception e) {
-			throw new DataAccessException("Exception in persistence layer", e);
+			throw new AirportManagerDataAccessException("Exception in persistence layer", e);
 		}
 	}
 
@@ -89,7 +89,7 @@ public class DestinationServiceImpl implements DestinationService {
 		try {
 			return destinationDao.findByCountry(country);
 		} catch (Exception e) {
-			throw new DataAccessException("Exception in persistence layer", e);
+			throw new AirportManagerDataAccessException("Exception in persistence layer", e);
 		}
 	}
 
@@ -98,7 +98,7 @@ public class DestinationServiceImpl implements DestinationService {
 		try {
 			return destinationDao.findAll();
 		} catch (Exception e) {
-			throw new DataAccessException("Exception in persistence layer", e);
+			throw new AirportManagerDataAccessException("Exception in persistence layer", e);
 		}
 	}
 

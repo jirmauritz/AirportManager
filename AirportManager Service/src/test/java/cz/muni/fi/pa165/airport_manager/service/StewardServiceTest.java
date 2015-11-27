@@ -3,7 +3,7 @@ package cz.muni.fi.pa165.airport_manager.service;
 import cz.muni.fi.pa165.airport_manager.dao.StewardDao;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
-import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
+import cz.muni.fi.pa165.airport_manager.exception.AirportManagerDataAccessException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -122,7 +122,7 @@ public class StewardServiceTest {
         stewardService.createSteward(null);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void createTestException() {
         doThrow(PersistenceException.class).when(stewardDao).create(createSteward);
         stewardService.createSteward(createSteward);
@@ -139,7 +139,7 @@ public class StewardServiceTest {
         stewardService.findSteward(null);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void findStewardTestException1() {
         doThrow(PersistenceException.class).when(stewardDao).findById(TEST_ID);
         stewardService.findSteward(TEST_ID);
@@ -151,7 +151,7 @@ public class StewardServiceTest {
         verify(stewardDao).findById(TEST_ID);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void findAllTestException() {
         when(stewardDao.findAll()).thenThrow(PersistenceException.class);
         stewardService.findAllStewards();
@@ -197,7 +197,7 @@ public class StewardServiceTest {
     }
 
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void updateTestException() {
         doThrow(PersistenceException.class).when(stewardDao).update(steward);
         stewardService.updateSteward(steward);
@@ -215,7 +215,7 @@ public class StewardServiceTest {
 
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void deleteStewardTestException1() {
         doThrow(PersistenceException.class).when(stewardDao).delete(steward);
         stewardService.deleteSteward(TEST_ID);

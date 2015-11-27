@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.dao.DestinationDao;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
-import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
+import cz.muni.fi.pa165.airport_manager.exception.AirportManagerDataAccessException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.PersistenceException;
@@ -103,7 +103,7 @@ public class DestinationServiceTest {
         destinationService.create(destination);
     }
     
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void createPersistenceException(){
         doThrow(PersistenceException.class).when(destinationDao).create(any(Destination.class));
         destinationService.create(destination);
@@ -169,7 +169,7 @@ public class DestinationServiceTest {
         destinationService.update(destination2);
     }
     
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void updatePersistenceException(){
         doThrow(PersistenceException.class).when(destinationDao).update(any(Destination.class));
         destinationService.update(destination2);
@@ -188,7 +188,7 @@ public class DestinationServiceTest {
         verify(destinationDao).delete(destination2);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void deletePersistenceException(){
         doThrow(PersistenceException.class).when(destinationDao).delete(any(Destination.class));
         destinationService.delete(123l);
@@ -207,7 +207,7 @@ public class DestinationServiceTest {
         verify(destinationDao).findById(123l);
     }
     
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void findByIdPersistenceException(){
         doThrow(PersistenceException.class).when(destinationDao).findById(anyLong());
         destinationService.findById(123l);
@@ -226,7 +226,7 @@ public class DestinationServiceTest {
         verify(destinationDao).findByName("CGN");
     }
     
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void findByAirplaneCodePersistenceException(){
         doThrow(PersistenceException.class).when(destinationDao).findByName(any(String.class));
         destinationService.findByAirportCode("CGN");
@@ -245,7 +245,7 @@ public class DestinationServiceTest {
         assertThat(destinations).isNotNull().isNotEmpty().contains(destination, destination2); 
     }
     
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void findByCountryPersistenceException(){
         doThrow(PersistenceException.class).when(destinationDao).findByCountry(any(String.class));
         destinationService.findByCountry("Deutschland");
@@ -259,7 +259,7 @@ public class DestinationServiceTest {
         assertThat(destinations).isNotNull().isNotEmpty().contains(destination, destination2); 
     }
    
-    @Test(expected = DataAccessException.class)
+    @Test(expected = AirportManagerDataAccessException.class)
     public void findAllPersistenceException(){
         doThrow(PersistenceException.class).when(destinationDao).findAll();
         destinationService.findAll();
