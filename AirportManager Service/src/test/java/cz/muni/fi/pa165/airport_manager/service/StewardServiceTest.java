@@ -223,7 +223,6 @@ public class StewardServiceTest {
 
     }
     @Test
-    @Ignore
     public void isAvailableTest() {
 
         //Steward's flight starts inside of interval and ends after interval
