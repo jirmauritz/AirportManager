@@ -4,10 +4,8 @@ import cz.muni.fi.pa165.airport_manager.dto.AirplaneCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
-import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
 import cz.muni.fi.pa165.airport_manager.service.AirplaneService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,11 +13,7 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.persistence.PersistenceException;
-
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 
 /**
@@ -43,7 +37,11 @@ public class AirplaneFacadeTest {
 
     @Test
     public void  createAirplaneTest() {
-        // want to discuss
+        AirplaneCreateDTO airplaneCreateDTO = new AirplaneCreateDTO();
+        airplaneFacade.createAirplane(airplaneCreateDTO);
+        verify(mappingService).mapTo(airplaneCreateDTO,  Airplane.class);
+        verify(airplaneService).create(Matchers.any(Airplane.class));
+
     }
 
     @Test
@@ -92,37 +90,4 @@ public class AirplaneFacadeTest {
         verify(airplaneService).findByMinCapacity(TEST_CAPACITY);
         verify(mappingService).mapTo(Matchers.anyCollectionOf(Airplane.class),  Matchers.eq(AirplaneDTO.class));
     }
-
-    @Ignore
-    @Test(expected = DataAccessException.class)
-    public void createAirplaneTestException(){
-        when(airplaneService.create(new Airplane())).thenThrow(PersistenceException.class);
-        airplaneFacade.createAirplane(new AirplaneCreateDTO());
-    }
-    @Ignore
-    @Test(expected = DataAccessException.class)
-    public void deleteAirplaneByIdTestException(){
-        doThrow(PersistenceException.class).when(airplaneService).delete(TEST_ID);
-        airplaneFacade.deleteAirplaneById(TEST_ID);
-    }
-    @Ignore
-    @Test(expected = DataAccessException.class)
-    public void findAllTestException(){
-        when(airplaneService.findAll()).thenThrow(PersistenceException.class);
-        airplaneFacade.findAll();
-    }
-    @Ignore
-    @Test(expected = DataAccessException.class)
-    public void findByMinCapacityTestException(){
-        when(airplaneService.findByMinCapacity(TEST_CAPACITY)).thenThrow(PersistenceException.class);
-        airplaneFacade.findByMinCapacity(TEST_CAPACITY);
-    }
-    @Ignore
-    @Test(expected = DataAccessException.class)
-    public void findByTypeTestException(){
-        when(airplaneService.findByType(AirplaneType.BUSINESS)).thenThrow(PersistenceException.class);
-        airplaneFacade.findByType(AirplaneType.BUSINESS);
-    }
-
-
 }

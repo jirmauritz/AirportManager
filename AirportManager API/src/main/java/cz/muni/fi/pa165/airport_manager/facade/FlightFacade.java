@@ -46,7 +46,7 @@ public interface FlightFacade {
     Set<FlightSimpleDTO> getFlights();
 
     /**
-     * Add steward to the Flight.
+     * Add steward to the flight, if given Steward is not already assigned for given flight and if he/she is available.
      *
      * @param stewardId id of steward to be added.
      * @param flightId id of flight
@@ -54,7 +54,7 @@ public interface FlightFacade {
     void addSteward (Long stewardId, Long flightId);
 
     /**
-     * Remove steward from the flight.
+     * Remove steward from the flight, if given steward is assigned for given flight.
      *
      * @param stewardId id of steward to be removed.
      * @param flightId id of flight

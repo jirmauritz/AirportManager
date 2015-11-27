@@ -49,7 +49,9 @@ public class FlightServiceImpl implements FlightService {
         if (oldFlight == null) {
             throw new IllegalArgumentException("Flight with this id does not exist");
         }
-        flight.setStewards(oldFlight.getStewards());
+        if (!oldFlight.getStewards().equals(flight.getStewards())){
+            flight.setStewards(oldFlight.getStewards());
+        }
         try {
             flightDao.update(flight);
         } catch (Exception e) {
@@ -123,7 +125,7 @@ public class FlightServiceImpl implements FlightService {
         }
         Set<Flight> wantedFlights = new HashSet<Flight>();
         for (Flight flight : allFlights) {
-            if (from.before(flight.getArrival()) && to.before(flight.getDeparture())) {
+            if (from.before(flight.getArrival()) && to.after(flight.getDeparture())) {
                 wantedFlights.add(flight);
             }
         }

@@ -59,9 +59,11 @@ public class FlightFacadeImpl implements FlightFacade{
         }
         Flight flight = flightService.findById(flightId);
         Steward steward = stewardService.findSteward(stewardId);
-        if (!flight.getStewards().contains(steward)) {
+        if (!flight.getStewards().contains(steward) &&
+                stewardService.isAvailable(stewardId,flight.getDeparture(),flight.getArrival())) {
             flight.addSteward(steward);
         }
+
         flightService.update(flight);
     }
 
