@@ -91,35 +91,35 @@ public class StewardServiceTest {
     }
 
     //has id set
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createStewardTestException() {
         createSteward.setId(TEST_ID);
         stewardService.createSteward(createSteward);
     }
 
     //has businessId set
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createStewardTestException2() {
         createSteward.setBusinessId(TEST_ID);
         stewardService.createSteward(createSteward);
     }
 
     // has not first name set
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createStewardTestException3() {
         createSteward.setFirstName(null);
         stewardService.createSteward(createSteward);
     }
 
     //has not last name set
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createStewardTestException4() {
         createSteward.setLastName(null);
         stewardService.createSteward(createSteward);
     }
 
     //has flights set
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createStewardTestException5() {
         createSteward.setFlights(flights1);
         stewardService.createSteward(createSteward);
@@ -172,21 +172,21 @@ public class StewardServiceTest {
     }
 
     //has businessId change because dao.findById always return steward
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateStewardTestException() {
         steward1.setId(TEST_ID);
         stewardService.updateSteward(steward1);
     }
 
     // has first name null
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateStewardTestException2() {
         steward.setFirstName(null);
         stewardService.updateSteward(steward);
     }
 
     // has last name null
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateStewardTestException3() {
         steward.setLastName(null);
         stewardService.updateSteward(steward);

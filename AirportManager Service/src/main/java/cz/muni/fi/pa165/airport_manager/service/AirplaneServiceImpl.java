@@ -30,18 +30,18 @@ public class AirplaneServiceImpl implements AirplaneService {
         Objects.requireNonNull(airplane);
         
         if (airplane.getId() != null) {
-            throw new IllegalStateException("Airplane cannot have id in it's "
+            throw new IllegalArgumentException("Airplane cannot have id in it's "
                     + "current state.");
         }
         if ((airplane.getName() == null) || (airplane.getName().equals(""))) {
-            throw new IllegalStateException("Airplane has no name.");
+            throw new IllegalArgumentException("Airplane has no name.");
         }
         if (airplane.getCapacity() < 0) {
-            throw new IllegalStateException("Airplane cannot have capacity less"
+            throw new IllegalArgumentException("Airplane cannot have capacity less"
                     + " than 0.");
         }
         if ((airplane.getType() == null) || (!AirplaneType.isMember(airplane.getType()))) {
-            throw new IllegalStateException("Invalid airplane type.");
+            throw new IllegalArgumentException("Invalid airplane type.");
         }
        
         try {
@@ -59,14 +59,14 @@ public class AirplaneServiceImpl implements AirplaneService {
         Objects.requireNonNull(airplane.getId());
         
         if ((airplane.getName() == null) || (airplane.getName().equals(""))) {
-            throw new IllegalStateException("Airplane has no name.");
+            throw new IllegalArgumentException("Airplane has no name.");
         }
         if (airplane.getCapacity() < 0) {
-            throw new IllegalStateException("Airplane cannot have capacity less "
+            throw new IllegalArgumentException("Airplane cannot have capacity less "
                     + "than 0.");
         }
         if ((airplane.getType() == null) || (!AirplaneType.isMember(airplane.getType()))) {
-            throw new IllegalStateException("Invalid airplane type.");
+            throw new IllegalArgumentException("Invalid airplane type.");
         }
         
         try {

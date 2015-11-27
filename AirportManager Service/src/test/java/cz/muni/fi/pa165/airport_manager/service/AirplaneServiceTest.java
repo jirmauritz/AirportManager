@@ -75,7 +75,7 @@ public class AirplaneServiceTest {
         final Airplane airplane = newAirplane();
         airplane.setCapacity(-1);
 
-        expected.expect(IllegalStateException.class);
+        expected.expect(IllegalArgumentException.class);
         airplaneService.create(airplane);
     }
 
@@ -84,7 +84,7 @@ public class AirplaneServiceTest {
         final Airplane airplane = newAirplane();
         airplane.setName(null);
 
-        expected.expect(IllegalStateException.class);
+        expected.expect(IllegalArgumentException.class);
         airplaneService.create(airplane);
     }
 
@@ -93,7 +93,7 @@ public class AirplaneServiceTest {
         final Airplane airplane = newAirplane();
         airplane.setName("");
 
-        expected.expect(IllegalStateException.class);
+        expected.expect(IllegalArgumentException.class);
         airplaneService.create(airplane);
     }
 
@@ -102,7 +102,7 @@ public class AirplaneServiceTest {
         final Airplane airplane = newAirplane();
         airplane.setType(null);
 
-        expected.expect(IllegalStateException.class);
+        expected.expect(IllegalArgumentException.class);
         airplaneService.create(airplane);
     }
 
@@ -111,7 +111,7 @@ public class AirplaneServiceTest {
         final Airplane airplane = newAirplane();
         airplane.setType("");
 
-        expected.expect(IllegalStateException.class);
+        expected.expect(IllegalArgumentException.class);
         airplaneService.create(airplane);
     }
 
@@ -139,7 +139,7 @@ public class AirplaneServiceTest {
         airplane.setId(1L);
         airplane.setCapacity(-1);
 
-        expected.expect(IllegalStateException.class);
+        expected.expect(IllegalArgumentException.class);
         airplaneService.update(airplane);
     }
 
@@ -149,7 +149,7 @@ public class AirplaneServiceTest {
         airplane.setId(1L);
         airplane.setName(null);
 
-        expected.expect(IllegalStateException.class);
+        expected.expect(IllegalArgumentException.class);
         airplaneService.update(airplane);
     }
 
@@ -159,7 +159,7 @@ public class AirplaneServiceTest {
         airplane.setId(1L);
         airplane.setName("");
 
-        expected.expect(IllegalStateException.class);
+        expected.expect(IllegalArgumentException.class);
         airplaneService.update(airplane);
     }
 
@@ -169,7 +169,7 @@ public class AirplaneServiceTest {
         airplane.setId(1L);
         airplane.setType(null);
 
-        expected.expect(IllegalStateException.class);
+        expected.expect(IllegalArgumentException.class);
         airplaneService.update(airplane);
     }
 
@@ -179,7 +179,7 @@ public class AirplaneServiceTest {
         airplane.setId(1L);
         airplane.setType("");
 
-        expected.expect(IllegalStateException.class);
+        expected.expect(IllegalArgumentException.class);
         airplaneService.update(airplane);
     }
 

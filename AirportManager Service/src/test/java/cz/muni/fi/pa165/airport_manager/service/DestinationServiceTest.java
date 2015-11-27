@@ -62,42 +62,42 @@ public class DestinationServiceTest {
         destinationService.create(null);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createWithId() {
         destinationService.create(destination2);
     }
     
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createWithNullName() {
         destination.setName(null);
         destinationService.create(destination);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createWithEmptyName() {
         destination.setName("");
         destinationService.create(destination);
     }
     
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createWithNullCity() {
         destination.setCity(null);
         destinationService.create(destination);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createWithEmptyCity() {
         destination.setCity("");
         destinationService.create(destination);
     }
     
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createWithNullCountry() {
         destination.setCountry(null);
         destinationService.create(destination);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createWithEmptyCountry() {
         destination.setCountry("");
         destinationService.create(destination);
@@ -133,37 +133,37 @@ public class DestinationServiceTest {
         destinationService.update(destination);
     }
     
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateWithNullName() {
         destination2.setName(null);
         destinationService.update(destination2);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateWithEmptyName() {
         destination2.setName("");     
         destinationService.update(destination2);
     }
     
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateWithNullCity() {
         destination2.setCity(null);     
         destinationService.update(destination2);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateWithEmptyCity() {
         destination2.setCity("");     
         destinationService.update(destination2);
     }
     
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateWithNullCountry() {
         destination2.setCountry(null);
         destinationService.update(destination2);
     }
     
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateWithEmptyCountry() {
         destination2.setCountry("");     
         destinationService.update(destination2);

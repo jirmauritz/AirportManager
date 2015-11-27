@@ -42,12 +42,12 @@ public interface StewardService {
 
     /**
      * Updates the steward in the database. Only change of names and flights
-     * is allowed, otherwise, throws IllegalStateException.
+     * is allowed, otherwise, throws IllegalArgumentException.
      *
      * @param steward steward with changed first or last name
-     * @throws IllegalStateException if anything else, than names or flights, has changed
+     * @throws IllegalArgumentException if anything else, than names or flights, has changed
      */
-    void updateSteward(Steward steward) throws IllegalStateException;
+    void updateSteward(Steward steward) throws IllegalArgumentException;
 
     /**
      * Deletes the steward from database.
