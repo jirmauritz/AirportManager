@@ -82,7 +82,7 @@ public class FlightServiceTest {
 		flightService.create(flight);
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void createWithNullDeparture() {
 		// null departure
 		flight.setDeparture(null);
@@ -91,7 +91,7 @@ public class FlightServiceTest {
 		flightService.create(flight);
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void createWithNullArrival() {
 		// null arrival
 		flight.setArrival(null);
@@ -100,8 +100,7 @@ public class FlightServiceTest {
 		flightService.create(flight);
 	}
 
-	@Ignore
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void createWithNullInternational() {
 		// null international
 		flight.setInternational(null);
@@ -110,8 +109,7 @@ public class FlightServiceTest {
 		flightService.create(flight);
 	}
 
-	@Ignore
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void createWithNullStewards() {
 		// null stewards
 		flight.setStewards(null);
@@ -152,7 +150,7 @@ public class FlightServiceTest {
 		flightService.update(flight);
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void updateWithNullDeparture() {
 		// null departure
 		flight.setDeparture(null);
@@ -161,7 +159,7 @@ public class FlightServiceTest {
 		flightService.update(flight);
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void updateWithNullArrival() {
 		// null arrival
 		flight.setArrival(null);
@@ -170,8 +168,7 @@ public class FlightServiceTest {
 		flightService.update(flight);
 	}
 
-	@Ignore
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void updateWithNullInternational() {
 		// null international
 		flight.setInternational(null);
@@ -180,8 +177,7 @@ public class FlightServiceTest {
 		flightService.update(flight);
 	}
 
-	@Ignore
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void updateWithNullStewards() {
 		// null stewards
 		flight.setStewards(null);
