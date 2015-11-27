@@ -130,5 +130,63 @@ public class FlightCreateDTO {
     public void setTo(DestinationSimpleDTO to) {
         this.to = to;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((airplane == null) ? 0 : airplane.hashCode());
+        result = prime * result + ((arrival == null) ? 0 : arrival.hashCode());
+        result = prime * result
+                + ((departure == null) ? 0 : departure.hashCode());
+        result = prime * result + ((from == null) ? 0 : from.hashCode());
+        result = prime * result
+                + ((international == null) ? 0 : international.hashCode());
+        result = prime * result + ((to == null) ? 0 : to.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof FlightCreateDTO))
+            return false;
+        FlightCreateDTO other = (FlightCreateDTO) obj;
+        if (airplane == null) {
+            if (other.getAirplane() != null)
+                return false;
+        } else if (!airplane.equals(other.getAirplane()))
+            return false;
+        if (arrival == null) {
+            if (other.getArrival() != null)
+                return false;
+        } else if (! (arrival.getTime() == other.getArrival().getTime())) //override for Timestamp's violation of equals
+            return false;
+        if (departure == null) {
+            if (other.getDeparture() != null)
+                return false;
+        } else if (! (departure.getTime() == other.getDeparture().getTime())) //override for Timestamp's violation of equals
+            return false;
+        if (from == null) {
+            if (other.getFrom() != null)
+                return false;
+        } else if (!from.equals(other.getFrom()))
+            return false;
+        if (international == null) {
+            if (other.getInternational() != null)
+                return false;
+        } else if (!international.equals(other.getInternational()))
+            return false;
+        if (to == null) {
+            if (other.getTo() != null)
+                return false;
+        } else if (!to.equals(other.getTo()))
+            return false;
+        return true;
+    }
 }
 
