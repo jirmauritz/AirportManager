@@ -199,13 +199,7 @@ public class DestinationFacadeTest {
 
     private Long callCreateDestinationOnDestinationFacade() {
         doReturn(destination).when(mappingService).mapTo(destinationCreateDTO, Destination.class);
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                ((Destination) invocation.getArguments()[0]).setId(1L);
-                return null;
-            }
-        }).when(destinationService).create(destination);
+        doReturn(1L).when(destinationService).create(destination);
 
         return destinationFacade.create(destinationCreateDTO);
     }

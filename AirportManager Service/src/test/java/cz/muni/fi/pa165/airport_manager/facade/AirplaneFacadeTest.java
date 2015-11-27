@@ -36,7 +36,7 @@ public class AirplaneFacadeTest {
     private final static int TEST_CAPACITY = 200;
 
     @Test
-    public void  createAirplaneTest() {
+    public void createAirplaneTest() {
         AirplaneCreateDTO airplaneCreateDTO = new AirplaneCreateDTO();
         airplaneFacade.createAirplane(airplaneCreateDTO);
         verify(mappingService).mapTo(airplaneCreateDTO,  Airplane.class);
