@@ -1,9 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
-import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
+import cz.muni.fi.pa165.airport_manager.dto.*;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import cz.muni.fi.pa165.airport_manager.service.StewardService;
@@ -103,10 +100,10 @@ public class StewardFacadeTest {
     @Test
     public void createSteward() {
 		// fire
-//		StewardDTO returnedSteward = stewardFacade.createSteward(stewardCreateDTO);
+		Long returnedStewardId = stewardFacade.createSteward(stewardCreateDTO);
 		
 		// assert
-//		assertThat(returnedSteward).isEqualTo(stewardRichDTO);
+		assertThat(returnedStewardId).isEqualTo(1L);
 		
 		// verify mocks
 		verify(stewardService).createSteward(Matchers.any(Steward.class));
@@ -135,17 +132,12 @@ public class StewardFacadeTest {
 	
 	@Test
 	public void updateNames() {
-		// mock mapping
-		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(Steward.class)))
-				.thenReturn(updatedSteward);
-		Mockito.when(mappingService.mapTo(Matchers.any(), Matchers.eq(StewardDTO.class)))
-				.thenReturn(updatedRichSteward);
-		
 		// fire
-		//StewardDTO returned = stewardFacade.updateNames(1l, "Vasek", SURNAME);
+		stewardFacade.updateNames(1l, "Vasek", SURNAME);
 		
-		// verify correct updated steward is sent to the persistence layer
-		verify(stewardService).updateSteward(updatedSteward);
+		//verify correct updated steward is sent to the persistence layer
+		verify(stewardService).updateSteward(Matchers.any(Steward.class));
+		verify(mappingService).mapTo(Matchers.any(Steward.class),Matchers.eq(Steward.class));
 	}
 	
 	@Test
@@ -165,8 +157,8 @@ public class StewardFacadeTest {
 		Mockito.when(stewardService.findAllStewards())
 				.thenReturn(set);
 		// create
-		//Mockito.when(stewardService.createSteward(Matchers.any(Steward.class)))
-				//.thenReturn(steward);
+		Mockito.when(stewardService.createSteward(Matchers.any(Steward.class)))
+				.thenReturn(1L);
 		// get
 		Mockito.when(stewardService.findSteward(Matchers.anyLong()))
 				.thenReturn(steward);

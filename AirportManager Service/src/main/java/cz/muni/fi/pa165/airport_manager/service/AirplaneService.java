@@ -2,9 +2,9 @@ package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
-import java.util.Date;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -20,7 +20,7 @@ public interface AirplaneService {
      * Create new persisted entity.
      *
      * @param airplane entity
-     * @throws IllegalStateException in case of no name, type or invalid capacity
+     * @throws IllegalArgumentException in case of no name, type or invalid capacity
      * or existing id
      * @return id of newly created airplane
      */
@@ -30,11 +30,11 @@ public interface AirplaneService {
      * Updates entity.
      *
      * @param airplane updated airplane
-     * @throws IllegalStateException in case of no name or invalid type and
+     * @throws IllegalArgumentException in case of no name or invalid type and
      * capacity
      */
     void update(Airplane airplane)
-            throws IllegalStateException;
+            throws IllegalArgumentException;
 
     /**
      * Delete entity by id.

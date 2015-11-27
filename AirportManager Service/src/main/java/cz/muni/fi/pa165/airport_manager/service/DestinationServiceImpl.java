@@ -3,10 +3,11 @@ package cz.muni.fi.pa165.airport_manager.service;
 import cz.muni.fi.pa165.airport_manager.dao.DestinationDao;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import cz.muni.fi.pa165.airport_manager.exception.DataAccessException;
-import java.util.Objects;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Implementation of the (@link DestinationService}. This class uses
@@ -23,22 +24,10 @@ public class DestinationServiceImpl implements DestinationService {
 
 	@Override
 	public Long create(Destination destination) {
-		Objects.requireNonNull(destination);
+		verifyDestinationObject(destination);
 
 		if (destination.getId() != null) {
-			throw new IllegalStateException("Destination must not have id set.");
-		}
-
-		if (destination.getName() == null) {
-			throw new IllegalStateException("Destination must have name set.");
-		}
-
-		if (destination.getCity() == null) {
-			throw new IllegalStateException("Destination must have city set.");
-		}
-
-		if (destination.getCountry() == null) {
-			throw new IllegalStateException("Destination must have country set.");
+			throw new IllegalArgumentException("Destination must not have id set.");
 		}
 
 		try {
@@ -51,8 +40,12 @@ public class DestinationServiceImpl implements DestinationService {
 
 	@Override
 	public void update(Destination destination) {
-		Objects.requireNonNull(destination);
-		Objects.requireNonNull(destination.getId());
+		verifyDestinationObject(destination);
+		
+		if (destination.getId() == null) {
+			throw new IllegalArgumentException("Destination must have id set.");
+		}
+
 		try {
 			destinationDao.update(destination);
 		} catch (Exception e) {
@@ -106,6 +99,22 @@ public class DestinationServiceImpl implements DestinationService {
 			return destinationDao.findAll();
 		} catch (Exception e) {
 			throw new DataAccessException("Exception in persistence layer", e);
+		}
+	}
+
+	private void verifyDestinationObject(Destination destination) {
+		Objects.requireNonNull(destination);
+
+		if ((destination.getName() == null) || (destination.getName().isEmpty())) {
+			throw new IllegalArgumentException("Destination name cannot be empty.");
+		}
+
+		if ((destination.getCity() == null) || (destination.getCity().isEmpty())) {
+			throw new IllegalArgumentException("Destination city cannot be empty.");
+		}
+
+		if ((destination.getCountry() == null) || (destination.getCountry().isEmpty())) {
+			throw new IllegalArgumentException("Destination country cannot be empty.");
 		}
 	}
 

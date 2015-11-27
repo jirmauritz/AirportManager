@@ -51,9 +51,6 @@ public class FlightServiceImpl implements FlightService {
         if (oldFlight == null) {
             throw new IllegalArgumentException("Flight with this id does not exist");
         }
-        if (flight.getStewards().isEmpty() ){
-            flight.setStewards(oldFlight.getStewards());
-        }
         try {
             flightDao.update(flight);
         } catch (Exception e) {
@@ -152,6 +149,9 @@ public class FlightServiceImpl implements FlightService {
             }
             if (flight.isInternational() == null) {
                 throw new IllegalArgumentException("International cannot be null");
+            }
+            if (flight.getStewards() == null){
+                throw new IllegalArgumentException("Flights cannot be null");
             }
             return true;
 

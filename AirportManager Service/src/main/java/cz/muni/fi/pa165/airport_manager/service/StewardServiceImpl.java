@@ -25,19 +25,19 @@ public class StewardServiceImpl implements StewardService {
         Objects.requireNonNull(steward);
 
         if (steward.getId() != null) {
-            throw new IllegalStateException("Steward must not have id set.");
+            throw new IllegalArgumentException("Steward must not have id set.");
         }
         if (steward.getBusinessId() != null) {
-            throw new IllegalStateException("Steward must not have business id set.");
+            throw new IllegalArgumentException("Steward must not have business id set.");
         }
         if (steward.getFlights() != null && !steward.getFlights().isEmpty()) {
-            throw new IllegalStateException("Steward must not have any flight assigned.");
+            throw new IllegalArgumentException("Steward must not have any flight assigned.");
         }
         if (steward.getFirstName() == null || steward.getFirstName().isEmpty()) {
-            throw new IllegalStateException("Steward must have first name set.");
+            throw new IllegalArgumentException("Steward must have first name set.");
         }
         if (steward.getLastName() == null || steward.getLastName().isEmpty()) {
-            throw new IllegalStateException("Steward must have last name set.");
+            throw new IllegalArgumentException("Steward must have last name set.");
         }
 
         try {
@@ -69,19 +69,19 @@ public class StewardServiceImpl implements StewardService {
     }
 
     @Override
-    public void updateSteward(Steward steward) throws IllegalStateException {
+    public void updateSteward(Steward steward) throws IllegalArgumentException {
         Objects.requireNonNull(steward);
         Objects.requireNonNull(steward.getId());
 
         final Steward actualSteward = this.findSteward(steward.getId());
         if (!actualSteward.getBusinessId().equals(steward.getBusinessId())) {
-            throw new IllegalStateException("Steward has changed businessID. Such change is not allowed.");
+            throw new IllegalArgumentException("Steward has changed businessID. Such change is not allowed.");
         }
         if (steward.getFirstName() == null || steward.getFirstName().isEmpty()) {
-            throw new IllegalStateException("Steward must have first name set.");
+            throw new IllegalArgumentException("Steward must have first name set.");
         }
         if (steward.getLastName() == null || steward.getLastName().isEmpty()) {
-            throw new IllegalStateException("Steward must have last name set.");
+            throw new IllegalArgumentException("Steward must have last name set.");
         }
 
         try {
