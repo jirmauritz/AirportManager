@@ -117,15 +117,8 @@ public class StewardServiceTest {
         stewardService.createSteward(createSteward);
     }
 
-    //has flights set
-    @Test(expected = IllegalArgumentException.class)
-    public void createStewardTestException5() {
-        createSteward.setFlights(flights1);
-        stewardService.createSteward(createSteward);
-    }
-
     @Test(expected = NullPointerException.class)
-    public void createStewardTestException6() {
+    public void createStewardTestException5() {
         stewardService.createSteward(null);
     }
 
@@ -197,7 +190,7 @@ public class StewardServiceTest {
     }
 
     //has not id set
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateStewardTestException5() {
         stewardService.updateSteward(steward1);
 

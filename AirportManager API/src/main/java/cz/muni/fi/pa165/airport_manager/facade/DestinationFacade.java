@@ -29,7 +29,7 @@ public interface DestinationFacade {
     /**
      * Find by id
      *
-	 * @param id
+	 * @param id - id of destination
      * @return set of destinations
      */
     DestinationSimpleDTO findById(Long id);
@@ -45,7 +45,7 @@ public interface DestinationFacade {
     /**
      * Find all destinations in specified country
      *
-	 * @param country
+	 * @param country - country of destination
      * @return set of destination identifiers
      */
     Set<DestinationSimpleDTO> findByCountry(String country);

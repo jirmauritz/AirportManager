@@ -35,7 +35,7 @@ public interface DestinationService {
     /**
      * Find by id
      *
-	 * @param id
+	 * @param id - id of destination
      * @return set of destinations
      */
     Destination findById(Long id);
@@ -51,7 +51,7 @@ public interface DestinationService {
     /**
      * Find all destinations in specified country
      *
-	 * @param country
+	 * @param country - country of destination
      * @return set of destination identifiers
      */
     Set<Destination> findByCountry(String country);

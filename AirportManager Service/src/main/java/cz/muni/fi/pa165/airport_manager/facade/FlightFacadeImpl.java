@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import cz.muni.fi.pa165.airport_manager.service.StewardService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -32,16 +33,19 @@ public class FlightFacadeImpl implements FlightFacade{
 
     @Override
     public Long create(FlightCreateDTO flight) {
+        Objects.requireNonNull(flight);
         return flightService.create(mappingService.mapTo(flight, Flight.class));
     }
 
     @Override
     public FlightDTO getFlight(Long id) {
-        return mappingService.mapTo(flightService.findById(id), FlightDTO.class);
+        Objects.requireNonNull(id);
+        return mappingService.mapTo(flightService.findById(id),FlightDTO.class);
     }
 
     @Override
     public void delete(Long id) {
+        Objects.requireNonNull(id);
         flightService.delete(id);
     }
 
@@ -52,9 +56,9 @@ public class FlightFacadeImpl implements FlightFacade{
 
     @Override
     public void addSteward(Long stewardId, Long flightId) {
-        if (stewardId == null || flightId == null){
-            return;
-        }
+        Objects.requireNonNull(stewardId);
+        Objects.requireNonNull(flightId);
+
         Flight flight = flightService.findById(flightId);
         Steward steward = stewardService.findSteward(stewardId);
         if (!flight.getStewards().contains(steward) &&
@@ -67,9 +71,9 @@ public class FlightFacadeImpl implements FlightFacade{
 
     @Override
     public void removeSteward(Long stewardId, Long flightId) {
-        if (stewardId == null || flightId == null){
-            return;
-        }
+        Objects.requireNonNull(stewardId);
+        Objects.requireNonNull(flightId);
+
         Flight flight = flightService.findById(flightId);
         Steward steward = stewardService.findSteward(stewardId);
         if ( flight.getStewards().contains(steward)) {
@@ -80,6 +84,8 @@ public class FlightFacadeImpl implements FlightFacade{
 
     @Override
     public void update(FlightSimpleDTO flight) {
+        Objects.requireNonNull(flight);
+
         flightService.update(mappingService.mapTo(flight, Flight.class));
     }
 }

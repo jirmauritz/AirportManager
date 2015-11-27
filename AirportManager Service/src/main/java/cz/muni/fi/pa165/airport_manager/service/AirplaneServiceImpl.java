@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of Airplane service
@@ -19,10 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Dušan Lago
  * @author 396336@mail.muni.cz
  */
+@Service
 public class AirplaneServiceImpl implements AirplaneService {
 
     @Autowired
     private AirplaneDao airplaneDao;
+    @Autowired
     private FlightService flightService;
 
     @Override
@@ -56,8 +59,10 @@ public class AirplaneServiceImpl implements AirplaneService {
     @Override
     public void update(Airplane airplane) {
         Objects.requireNonNull(airplane);
-        Objects.requireNonNull(airplane.getId());
-        
+
+        if (airplane.getId() == null) {
+            throw new IllegalArgumentException("Airplane has no id.");
+        }
         if ((airplane.getName() == null) || (airplane.getName().equals(""))) {
             throw new IllegalArgumentException("Airplane has no name.");
         }
@@ -93,7 +98,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             return airplaneDao.findById(id);
         } catch (Exception e) {
-            throw new DataAccessException("Exception on persitence layer.", e);
+            throw new DataAccessException("Exception on persistence layer.", e);
         }
     }
 
@@ -102,16 +107,13 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             return airplaneDao.findAll();
         } catch (Exception e) {
-            throw new DataAccessException("Exception on persitence layer.", e);
+            throw new DataAccessException("Exception on persistence layer.", e);
         }
     }
 
     @Override
     public Set<Airplane> findByType(AirplaneType type) {
         Objects.requireNonNull(type);
-        if (!AirplaneType.isMember(type.toString())) {
-            throw new IllegalArgumentException("No airplane of type : " +  type);  
-        }
         
         try {
             return airplaneDao.findByType(type.toString());
@@ -122,7 +124,6 @@ public class AirplaneServiceImpl implements AirplaneService {
 
     @Override
     public Set<Airplane> findByMinCapacity(int minCapacity) {
-        Objects.requireNonNull(minCapacity);
         if (minCapacity < 0) {
             throw new IllegalArgumentException("Capacity cannot be less than 0.");
         }
@@ -130,7 +131,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         try {
             return airplaneDao.findByMinCapacity(minCapacity);
         } catch (Exception e) {
-            throw new DataAccessException("Exception on persitence layer.", e);
+            throw new DataAccessException("Exception on persistence layer.", e);
         }
     }
 
@@ -144,8 +145,13 @@ public class AirplaneServiceImpl implements AirplaneService {
         }
         
         // Find entered airplane
-        Airplane airplane = airplaneDao.findById(id);
-        
+        Airplane airplane;
+        try {
+            airplane = airplaneDao.findById(id);
+        } catch (Exception e) {
+            throw new DataAccessException("Exception on persistence layer.", e);
+        }
+
         if (airplane == null) {
             throw new IllegalArgumentException("Airplane with id : " + id + "not found.");
         }
@@ -179,13 +185,18 @@ public class AirplaneServiceImpl implements AirplaneService {
 
         /* Set of all available airplanes contains all airplanes excluding
         those, which are in allFlights. */
-        Set<Airplane> allAirplanes = airplaneDao.findAll();
+        Set<Airplane> allAirplanes;
+        try {
+            allAirplanes = airplaneDao.findAll();
+        } catch (Exception e) {
+            throw new DataAccessException("Exception on persistence layer.", e);
+        }
         
         if (allFlights.isEmpty()) {
             return allAirplanes;
         }
 
-        Set<Airplane> allAvailableAirplanes = new HashSet<Airplane>(allAirplanes);
+        Set<Airplane> allAvailableAirplanes = new HashSet<>(allAirplanes);
         
         for (Airplane airplane : allAirplanes) {
             for (Flight flight : allFlights) {
