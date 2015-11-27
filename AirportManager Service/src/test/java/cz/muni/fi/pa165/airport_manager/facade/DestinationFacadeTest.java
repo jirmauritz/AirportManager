@@ -82,7 +82,7 @@ public class DestinationFacadeTest {
         destinationFacade.delete(1L);
 
         verify(destinationService).findById(1L);
-        verify(destinationService).delete(destination);
+        verify(destinationService).delete(1L);
     }
 
     @Test

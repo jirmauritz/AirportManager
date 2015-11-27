@@ -31,7 +31,7 @@ public class DestinationFacadeImpl implements DestinationFacade {
 
 	@Override
 	public void delete(Long id) {
-		destinationService.delete(destinationService.findById(id));
+		destinationService.delete(id);
 	}
 
 	@Override

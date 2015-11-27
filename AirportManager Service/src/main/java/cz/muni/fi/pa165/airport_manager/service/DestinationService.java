@@ -28,9 +28,9 @@ public interface DestinationService {
     /**
      * Delete destination from database
      *
-     * @param destination destination entity to delete
+     * @param id destination id to delete
      */
-    void delete(Destination destination);	
+    void delete(Long id);	
 
     /**
      * Find by id

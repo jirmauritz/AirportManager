@@ -61,11 +61,10 @@ public class DestinationServiceImpl implements DestinationService {
 	}
 
 	@Override
-	public void delete(Destination destination) {
-		Objects.requireNonNull(destination);
-		Objects.requireNonNull(destination.getId());
+	public void delete(Long id) {
+		Objects.requireNonNull(id);
 		try {
-			destinationDao.delete(destination);
+			destinationDao.delete(findById(id));
 		} catch (Exception e) {
 			throw new DataAccessException("Exception in persistence layer", e);
 		}
