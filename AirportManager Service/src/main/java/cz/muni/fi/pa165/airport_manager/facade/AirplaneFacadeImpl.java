@@ -17,7 +17,7 @@ import java.util.*;
  * @author 396336@mail.muni.cz
  */
 @Facade
-public class AirplaneFacadeImpl implements AirplaneFasade {
+public class AirplaneFacadeImpl implements AirplaneFacade {
 
     @Autowired
     private AirplaneService airplaneService;

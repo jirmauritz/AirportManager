@@ -44,6 +44,33 @@ public class AirplaneCreateDTO {
         return capacity;
     }
 
+    /**
+     * Set name
+     *
+     * @param name name of Airplane
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Set type
+     *
+     * @param type type of airplane
+     */
+    public void setType(AirplaneType type) {
+        this.type = type;
+    }
+
+    /**
+     * Set capacity
+     *
+     * @param capacity capacity of plane
+     */
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;

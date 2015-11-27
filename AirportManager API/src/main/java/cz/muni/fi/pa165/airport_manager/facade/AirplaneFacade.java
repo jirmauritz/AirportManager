@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Dušan Lago
  * @author 396336@mail.muni.cz
  */
-public interface AirplaneFasade {
+public interface AirplaneFacade {
 
     /**
      * Create and persist a new airplane
@@ -31,7 +31,8 @@ public interface AirplaneFasade {
 
     /**
      * Delete airplane by it's id
-     * @param id
+     *
+     * @param id id of entity
      */
     void deleteAirplaneById(Long id);
 

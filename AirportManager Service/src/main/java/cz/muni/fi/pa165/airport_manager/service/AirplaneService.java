@@ -17,11 +17,9 @@ import java.util.Set;
 public interface AirplaneService {
     
     /**
-     * Create new persisted entity.
+     * Create new created id of persisted entity.
      *
-     * @param airplane entity
-     * @throws IllegalArgumentException in case of no name, type or invalid capacity
-     * or existing id
+     * @param airplane id of airplane entity
      * @return id of newly created airplane
      */
     Long create(Airplane airplane);
@@ -30,17 +28,13 @@ public interface AirplaneService {
      * Updates entity.
      *
      * @param airplane updated airplane
-     * @throws IllegalArgumentException in case of no name or invalid type and
-     * capacity
      */
-    void update(Airplane airplane)
-            throws IllegalArgumentException;
+    void update(Airplane airplane);
 
     /**
      * Delete entity by id.
      *
      * @param id database id
-     * @throws IllegalArgumentException in case of invalid id
      */
     void delete(Long id);
 
@@ -64,42 +58,34 @@ public interface AirplaneService {
      *
      * @param type airplane type
      * @return set of Airplanes
-     * @throws IllegalArgumentException in case of invalid type
      */
-    Set<Airplane> findByType(AirplaneType type)
-            throws IllegalArgumentException;
+    Set<Airplane> findByType(AirplaneType type);
     
     /**
-     * Find all airplanes with minimal capacity.
+     * Find all airplanes with minimal capacity or higher.
      *
      * @param minCapacity minimal legal value
      * @return set of Airplanes
-     * @throws IllegalArgumentException in case of illegal value of capacity
      */
-    Set<Airplane> findByMinCapacity(int minCapacity)
-            throws IllegalArgumentException;
+    Set<Airplane> findByMinCapacity(int minCapacity);
     
     /**
      * Check if airplane is available in entered time range.
      *
      * @param id airplanes id
-     * @param from star of the time range
+     * @param from start of the time range
      * @param to end of the time range
-     * @return boolean
-     * @throws IllegalArgumentException in case of invalid id and time range
+     * @return true if available, false if not
      */
-    boolean isAvailable(Long id, final Date from, final Date to) 
-            throws IllegalArgumentException;
+    boolean isAvailable(Long id, final Date from, final Date to);
 
     /**
      * Return all available airplanes in entered time range.
      *
-     * @param from star of the time range
+     * @param from start of the time range
      * @param to end of the time range
      * @return set of Airplanes
-     * @throws IllegalArgumentException in case of invalid time range
      */
-    Set<Airplane> getAllAvailable(final Date from, final Date to)
-            throws IllegalArgumentException;
+    Set<Airplane> getAllAvailable(final Date from, final Date to);
 
 }
