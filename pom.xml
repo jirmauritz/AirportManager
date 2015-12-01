@@ -16,6 +16,7 @@
         <module>AirportManager API</module>
         <module>AirportManager Rest</module>
         <module>AirportManager UI</module>
+        <module>AirportManager Data</module>
     </modules>
 
     <name>AirportManager</name>
