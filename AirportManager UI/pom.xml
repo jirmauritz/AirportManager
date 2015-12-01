@@ -10,17 +10,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>service</artifactId>
+    <artifactId>spring-mvc</artifactId>
 
-    <name>AirportManager Service</name>
+    <name>AirportManager UI</name>
 
     <dependencies>
         <!-- project -->
-        <dependency>
-            <groupId>cz.muni.fi.pa165.airport_manager</groupId>
-            <artifactId>persistence</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>cz.muni.fi.pa165.airport_manager</groupId>
             <artifactId>api</artifactId>
@@ -29,26 +24,19 @@
 
         <!-- compile -->
         <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
 
-        <!-- test -->
+        <!-- provided -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-api</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
