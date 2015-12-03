@@ -18,7 +18,7 @@ import java.io.IOException;
 @Configuration
 @Import(ServiceConfiguration.class)
 @ComponentScan(basePackages = "cz.muni.fi.pa165.airport_manager")
-public class EshopWithSampleDataConfiguration {
+public class DataConfiguration {
 
     @Autowired
     SampleDataFacade sampleDataFacade;

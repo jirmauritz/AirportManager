@@ -13,10 +13,10 @@
     <modules>
         <module>AirportManager Persistence</module>
         <module>AirportManager Service</module>
+        <module>AirportManager Data</module>
         <module>AirportManager API</module>
         <module>AirportManager Rest</module>
         <module>AirportManager UI</module>
-        <module>AirportManager Data</module>
     </modules>
 
     <name>AirportManager</name>
@@ -31,43 +31,48 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- plugin -->
-        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
+        <maven-compiler.version>3.3</maven-compiler.version>
+        <maven-surefire.version>2.19</maven-surefire.version>
+        <maven-war.version>2.5</maven-war.version>
+        <tomcat7-maven.version>2.2</tomcat7-maven.version>
 
-        <!-- dependencies compile -->
-        <slf4j.version>1.7.12</slf4j.version>
-        <javax.inject.version>1</javax.inject.version>
-        <spring.version>4.0.6.RELEASE</spring.version>
-        <spring-data-jpa.version>1.6.1.RELEASE</spring-data-jpa.version>
-        <hibernate-entitymanager.version>4.3.5.Final</hibernate-entitymanager.version>
-        <hibernate-validator.version>5.0.3.Final</hibernate-validator.version>
-        <hibernate-jpa.version>1.0.1.Final</hibernate-jpa.version>
+        <!-- spring bom -->
+        <spring.platform-bom.version>1.1.4.RELEASE</spring.platform-bom.version>
+
+        <!-- versions -->
         <dozer.version>5.4.0</dozer.version>
-        <taglibs-standard.version>1.2.5</taglibs-standard.version>
         <tomcat-api.version>7.0.64</tomcat-api.version>
-
-        <!-- dependencies test -->
-        <assertj.version>2.2.0</assertj.version>
         <junit.version>4.12</junit.version>
+        <assertj.version>2.2.0</assertj.version>
         <mockito.version>1.10.19</mockito.version>
-        <spring-test.version>4.2.2.RELEASE</spring-test.version>
-        <derby.version>10.12.1.1</derby.version>
     </properties>
 
     <build>
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
+                    <version>${maven-compiler.version}</version>
                     <configuration>
                         <source>${project.source}</source>
                         <target>${project.target}</target>
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
+                    <version>${maven-surefire.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${maven-war.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>${tomcat7-maven.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -75,62 +80,20 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- spring bom -->
+            <dependency>
+                <groupId>io.spring.platform</groupId>
+                <artifactId>platform-bom</artifactId>
+                <version>${spring.platform-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- compile -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-jpa</artifactId>
-                <version>${spring-data-jpa.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.inject</groupId>
-                <artifactId>javax.inject</artifactId>
-                <version>${javax.inject.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>${hibernate-entitymanager.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate-validator.version}</version>
-            </dependency>
             <dependency>
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
                 <version>${dozer.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.derby</groupId>
-                <artifactId>derby</artifactId>
-                <version>${derby.version}</version>
-                <type>jar</type>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.taglibs</groupId>
-                <artifactId>taglibs-standard-spec</artifactId>
-                <version>${taglibs-standard.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.taglibs</groupId>
-                <artifactId>taglibs-standard-impl</artifactId>
-                <version>${taglibs-standard.version}</version>
             </dependency>
 
             <!-- provided -->
@@ -158,12 +121,6 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>${mockito.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
