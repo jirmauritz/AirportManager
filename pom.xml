@@ -41,6 +41,7 @@
 
         <!-- versions -->
         <dozer.version>5.4.0</dozer.version>
+        <javax.json-api.version>1.0</javax.json-api.version>
         <tomcat-api.version>7.0.64</tomcat-api.version>
         <junit.version>4.12</junit.version>
         <assertj.version>2.2.0</assertj.version>
@@ -94,6 +95,11 @@
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
                 <version>${dozer.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.json</groupId>
+                <artifactId>javax.json-api</artifactId>
+                <version>${javax.json-api.version}</version>
             </dependency>
 
             <!-- provided -->

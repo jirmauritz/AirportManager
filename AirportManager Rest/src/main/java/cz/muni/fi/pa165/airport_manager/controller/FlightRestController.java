@@ -1,4 +1,4 @@
-package controller;
+package cz.muni.fi.pa165.airport_manager.controller;
 
 import cz.muni.fi.pa165.airport_manager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;

@@ -9,11 +9,9 @@
         <artifactId>root</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-
-    <artifactId>spring-mvc</artifactId>
-
     <packaging>war</packaging>
 
+    <artifactId>spring-mvc</artifactId>
     <name>AirportManager UI</name>
 
     <build>
