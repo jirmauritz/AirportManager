@@ -44,7 +44,7 @@ public class AirplaneServiceImpl implements AirplaneService {
                     + " than 0.");
         }
         if ((airplane.getType() == null) || (!AirplaneType.isMember(airplane.getType()))) {
-            throw new IllegalArgumentException("Invalid airplane type.");
+            throw new IllegalArgumentException("Invalid airplane type: " + airplane.getType());
         }
        
         try {
