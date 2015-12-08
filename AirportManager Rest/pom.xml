@@ -26,7 +26,7 @@
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <configuration>
-                    <path>/airport-manager/rest</path>
+                    <path>/pa165/rest</path>
                 </configuration>
             </plugin>
         </plugins>
