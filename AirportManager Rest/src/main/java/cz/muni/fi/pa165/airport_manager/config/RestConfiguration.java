@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.util.List;
 
 /**
- * Configuration for UI
+ * Configuration for Rest
  *
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
