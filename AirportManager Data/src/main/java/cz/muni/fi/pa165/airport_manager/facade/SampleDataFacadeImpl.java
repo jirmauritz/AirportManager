@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.dto.FlightCreateDTO;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
+import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.service.AirplaneService;
@@ -72,17 +73,17 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         AirplaneDTO wren = createAirplane("Airbus A320 Wren", AirplaneType.ECONOMY, 525);
 
         // stewards
-        StewardDTO carman = createSteward(5847L, "Carman", "Parlier");
-        StewardDTO rose = createSteward(8055L, "Rose", "Fosdick");
-        StewardDTO keisha = createSteward(1595L, "Keisha", "Mak");
-        StewardDTO mamie = createSteward(7326L, "Mamie", "Mund");
-        StewardDTO deane = createSteward(6416L, "Deane", "Cassady");
-        StewardDTO rhea = createSteward(8519L, "Rhea", "Foley");
-        StewardDTO sean = createSteward(1601L, "Sean", "Neubert");
-        StewardDTO gerardo = createSteward(7582L, "Gerardo", "Williford");
-        StewardDTO ema = createSteward(1904L, "Ema", "Holder");
-        StewardDTO lavette = createSteward(5931L, "Lavette", "Gully");
-        StewardDTO aracely = createSteward(6330L, "Aracely", "Dimas");
+        StewardDTO carman = createSteward("Carman", "Parlier");
+        StewardDTO rose = createSteward("Rose", "Fosdick");
+        StewardDTO keisha = createSteward("Keisha", "Mak");
+        StewardDTO mamie = createSteward("Mamie", "Mund");
+        StewardDTO deane = createSteward("Deane", "Cassady");
+        StewardDTO rhea = createSteward("Rhea", "Foley");
+        StewardDTO sean = createSteward("Sean", "Neubert");
+        StewardDTO gerardo = createSteward("Gerardo", "Williford");
+        StewardDTO ema = createSteward("Ema", "Holder");
+        StewardDTO lavette = createSteward("Lavette", "Gully");
+        StewardDTO aracely = createSteward("Aracely", "Dimas");
 
         // crews
         Set<StewardSimpleDTO> crew1 = new HashSet<>();
@@ -164,10 +165,9 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
      *
      * @return created entity DTO
      */
-    private StewardDTO createSteward(Long businessId, String firstName, String lastName) {
+    private StewardDTO createSteward(String firstName, String lastName) {
 
-        StewardSimpleDTO s = new StewardSimpleDTO();
-        s.setBusinessId(businessId);
+        StewardCreateDTO s = new StewardCreateDTO();
         s.setFirstName(firstName);
         s.setLastName(lastName);
 
