@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.airport_manager.dto;
 
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import java.util.Objects;
 
 /**
@@ -13,7 +12,7 @@ public class AirplaneCreateDTO {
   
     private String name;
 
-    private AirplaneType type;
+    private String type;
 
     private int capacity;
     
@@ -31,7 +30,7 @@ public class AirplaneCreateDTO {
      *
      * @return type
      */
-    public AirplaneType getType() {
+    public String getType() {
         return type;
     }
 
@@ -58,7 +57,7 @@ public class AirplaneCreateDTO {
      *
      * @param type type of airplane
      */
-    public void setType(AirplaneType type) {
+    public void setType(String type) {
         this.type = type;
     }
 

@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import cz.muni.fi.pa165.airport_manager.service.FlightService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import cz.muni.fi.pa165.airport_manager.service.StewardService;
@@ -62,7 +61,7 @@ public class FlightFacadeTest {
 
         Set<Steward> stewards = new HashSet<>();
 
-        Airplane airplane = new Airplane("Boing", AirplaneType.ECONOMY.name(), 150);
+        Airplane airplane = new Airplane("Boing", "Economy", 150);
         flight = new Flight(Boolean.TRUE, new Date(10000l), new Date(20000l), stewards, airplane, from, to);
         flight.setId(testId);
     }

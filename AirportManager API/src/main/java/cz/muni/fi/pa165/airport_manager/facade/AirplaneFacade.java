@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.airport_manager.facade;
 
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import java.util.Set;
 
 /**
@@ -49,7 +48,7 @@ public interface AirplaneFacade {
      * @param type of airplane
      * @return set of airplane DTOs
      */
-    Set<AirplaneDTO> findByType(AirplaneType type);
+    Set<AirplaneDTO> findByType(String type);
     
     /**
      * Find all airplanes with minimal capacity

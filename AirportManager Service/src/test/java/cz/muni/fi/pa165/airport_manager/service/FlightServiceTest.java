@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,7 +47,7 @@ public class FlightServiceTest {
 		Steward steward = new Steward(1l, "Vaclav", "Havel", new HashSet<Flight>());
 		Set<Steward> stewards = new HashSet<>();
 		stewards.add(steward);
-		Airplane airplane = new Airplane("Boing", AirplaneType.BUSINESS.name(), 200);
+		Airplane airplane = new Airplane("Boing", "Business", 200);
 		from = new Destination("KEF", "Reykjavik", "Iceland");
 		to = new Destination("VIE", "Vienna", "Austria");
 		flight = new Flight(true, new Date(1000l), new Date(2000l), stewards, airplane, from, to);

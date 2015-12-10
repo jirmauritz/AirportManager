@@ -9,7 +9,6 @@ import cz.muni.fi.pa165.airport_manager.dto.FlightSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import cz.muni.fi.pa165.airport_manager.facade.FlightFacade;
 import java.util.Arrays;
 import java.util.Date;

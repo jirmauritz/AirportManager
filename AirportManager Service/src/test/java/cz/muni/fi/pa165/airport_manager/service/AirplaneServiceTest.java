@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.airport_manager.dao.AirplaneDao;
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import org.assertj.core.api.Condition;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -278,7 +277,7 @@ public class AirplaneServiceTest {
         doReturn(allPlanesEconomy) .when(airplaneDao).findByType("Economy");
         doReturn(allPlanesBusiness).when(airplaneDao).findByType("Business");
 
-        Set<Airplane> returnedAirplanes = airplaneService.findByType(AirplaneType.ECONOMY);
+        Set<Airplane> returnedAirplanes = airplaneService.findByType("Economy");
 
         verify(airplaneDao).findByType("Economy");
 
@@ -296,7 +295,7 @@ public class AirplaneServiceTest {
     public void findByTypeEmptyCollection() {
         doReturn(Collections.EMPTY_SET).when(airplaneDao).findByType(any(String.class));
 
-        final Set<Airplane> returnedAirplanes = airplaneService.findByType(AirplaneType.BUSINESS);
+        final Set<Airplane> returnedAirplanes = airplaneService.findByType("Business");
 
         verify(airplaneDao).findByType("Business");
 

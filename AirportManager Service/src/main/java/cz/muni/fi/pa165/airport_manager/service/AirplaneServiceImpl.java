@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.airport_manager.service;
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.dao.AirplaneDao;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import cz.muni.fi.pa165.airport_manager.exception.AirportManagerDataAccessException;
 
 import java.util.Date;
@@ -43,7 +42,7 @@ public class AirplaneServiceImpl implements AirplaneService {
             throw new IllegalArgumentException("Airplane cannot have capacity less"
                     + " than 0.");
         }
-        if ((airplane.getType() == null) || (!AirplaneType.isMember(airplane.getType()))) {
+        if ((airplane.getType() == null) || (airplane.getType().equals(""))) {
             throw new IllegalArgumentException("Invalid airplane type: " + airplane.getType());
         }
        
@@ -70,7 +69,7 @@ public class AirplaneServiceImpl implements AirplaneService {
             throw new IllegalArgumentException("Airplane cannot have capacity less "
                     + "than 0.");
         }
-        if ((airplane.getType() == null) || (!AirplaneType.isMember(airplane.getType()))) {
+        if ((airplane.getType() == null) || (airplane.getType().equals(""))) {
             throw new IllegalArgumentException("Invalid airplane type.");
         }
         
@@ -112,7 +111,7 @@ public class AirplaneServiceImpl implements AirplaneService {
     }
 
     @Override
-    public Set<Airplane> findByType(AirplaneType type) {
+    public Set<Airplane> findByType(String type) {
         Objects.requireNonNull(type);
         
         try {

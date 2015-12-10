@@ -5,14 +5,10 @@ import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.dto.FlightCreateDTO;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
-import cz.muni.fi.pa165.airport_manager.service.AirplaneService;
-import cz.muni.fi.pa165.airport_manager.service.DestinationService;
-import cz.muni.fi.pa165.airport_manager.service.StewardService;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -66,11 +62,11 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         DestinationSimpleDTO NEW828 = createDestination("NEW828", "New York City", "United States");
 
         // airplanes
-        AirplaneDTO jumbo = createAirplane("Boeing 747 Jumbo", AirplaneType.ECONOMY, 600);
-        AirplaneDTO vulture = createAirplane("Boeing 747 Vulture", AirplaneType.ECONOMY, 427);
-        AirplaneDTO cardinal = createAirplane("Boeing 747 Cardinal", AirplaneType.BUSINESS, 427);
-        AirplaneDTO jay = createAirplane("Airbus A320 Jay", AirplaneType.FIRST, 200);
-        AirplaneDTO wren = createAirplane("Airbus A320 Wren", AirplaneType.ECONOMY, 525);
+        AirplaneDTO jumbo = createAirplane("Boeing 747 Jumbo", "Economy", 600);
+        AirplaneDTO vulture = createAirplane("Boeing 747 Vulture", "Economy", 427);
+        AirplaneDTO cardinal = createAirplane("Boeing 747 Cardinal", "Business", 427);
+        AirplaneDTO jay = createAirplane("Airbus A320 Jay", "First", 200);
+        AirplaneDTO wren = createAirplane("Airbus A320 Wren", "Economy", 525);
 
         // stewards
         StewardDTO carman = createSteward("Carman", "Parlier");
@@ -145,7 +141,7 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
      *
      * @return created entity DTO
      */
-    private AirplaneDTO createAirplane(String name, AirplaneType type, int capacity) {
+    private AirplaneDTO createAirplane(String name, String type, int capacity) {
 
         AirplaneCreateDTO a = new AirplaneCreateDTO();
         a.setName(name);

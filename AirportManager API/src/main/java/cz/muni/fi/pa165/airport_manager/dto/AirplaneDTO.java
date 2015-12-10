@@ -1,8 +1,5 @@
 package cz.muni.fi.pa165.airport_manager.dto;
 
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
-import java.util.Objects;
-
 /**
  * Data transfer object for the entity Airplane.
  *

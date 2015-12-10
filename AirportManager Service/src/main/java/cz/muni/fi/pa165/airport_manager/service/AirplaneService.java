@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -59,7 +58,7 @@ public interface AirplaneService {
      * @param type airplane type
      * @return set of Airplanes
      */
-    Set<Airplane> findByType(AirplaneType type);
+    Set<Airplane> findByType(String type);
     
     /**
      * Find all airplanes with minimal capacity or higher.

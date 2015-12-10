@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.airport_manager.facade;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneCreateDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import cz.muni.fi.pa165.airport_manager.service.AirplaneService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,7 @@ public class AirplaneFacadeImpl implements AirplaneFacade {
     }
     
     @Override
-    public Set<AirplaneDTO> findByType(AirplaneType type) {
+    public Set<AirplaneDTO> findByType(String type) {
         Objects.requireNonNull(type);
 
         Set<Airplane> airplanes = airplaneService.findByType(type);

@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.airport_manager.facade;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import cz.muni.fi.pa165.airport_manager.service.AirplaneService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import org.junit.Test;
@@ -74,8 +73,8 @@ public class AirplaneFacadeTest {
 
     @Test
     public void findByTypeTest() {
-        airplaneFacade.findByType(AirplaneType.BUSINESS);
-        verify(airplaneService).findByType(AirplaneType.BUSINESS);
+        airplaneFacade.findByType("Business");
+        verify(airplaneService).findByType("Business");
         verify(mappingService).mapTo(Matchers.anyCollectionOf(Airplane.class),  Matchers.eq(AirplaneDTO.class));
     }
 
