@@ -36,14 +36,13 @@ public class StewardDaoImplTest {
     private StewardDao stewardDaoTest;
 
     private Steward peter = new Steward();
-    private Steward wendy = new Steward(Long.MIN_VALUE, "Wendy", "Darling", Collections.<Flight>emptySet());
+    private Steward wendy = new Steward("Wendy", "Darling", Collections.<Flight>emptySet());
 
     @Before
     public void setUp() {
 
         peter.setFirstName("Peter");
         peter.setLastName("Pan");
-        peter.setBusinessId(Long.MAX_VALUE);
 
     }
 

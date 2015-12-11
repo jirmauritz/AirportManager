@@ -11,19 +11,9 @@ import java.util.Objects;
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */
-public class StewardSimpleDTO extends StewardCreateDTO implements Comparable<StewardSimpleDTO> {
+public class StewardSimpleDTO extends StewardCreateDTO {
 
     private Long id;
-    private Long businessId;
-
-    /**
-     * Returns the business id of the steward
-     *
-     * @return business id
-     */
-    public Long getBusinessId() {
-        return this.businessId;
-    }
 
     /**
      * Returns the database id of the steward
@@ -35,14 +25,6 @@ public class StewardSimpleDTO extends StewardCreateDTO implements Comparable<Ste
     }
 
     /**
-     * Sets the business id of this steward to the specified one.
-     *
-     * @param businessId new business id
-     */
-    public void setBusinessId(Long businessId) {
-        this.businessId = businessId;
-    }
-    /**
      * Sets the database id of this steward to the specified one.
      *
      * @param id new database id
@@ -51,36 +33,12 @@ public class StewardSimpleDTO extends StewardCreateDTO implements Comparable<Ste
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof StewardSimpleDTO)) return false;
-        if (!super.equals(o)) return false;
-
-        final StewardSimpleDTO that = (StewardSimpleDTO) o;
-
-        return this.getBusinessId().equals(that.getBusinessId());
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + this.getBusinessId().hashCode();
-        return result;
-    }
-
-    @Override
-    public int compareTo(StewardSimpleDTO o) {
-        Objects.requireNonNull(o);
-        return this.businessId.compareTo(o.getBusinessId());
-    }
 
     @Override
     public String toString() {
         return "StewardSimpleDTO{" +
                 "firstName='" + this.getFirstName() + '\'' +
                 ", lastName='" + this.getLastName() + '\'' +
-                ", businessId=" + this.getBusinessId() +
                 '}';
     }
 }

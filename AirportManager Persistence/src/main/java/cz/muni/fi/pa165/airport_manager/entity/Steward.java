@@ -18,10 +18,6 @@ public class Steward {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long businessId;
-
     @NotNull
     private String firstName;
 
@@ -37,13 +33,11 @@ public class Steward {
      * Constructs new entity Steward. Setting id at construction time is prohibited. Id should be set only by the
      * database. All flights are copied into a new collection, same flights are used.
      *
-     * @param businessId business id of the Steward, assigned by business managers
      * @param firstName first name of this steward
      * @param lastName last name of this steward
      * @param flights set of flights steward is assigned to
      */
     public Steward(
-            final Long businessId,
             final String firstName,
             final String lastName,
             final Set<Flight> flights
@@ -52,7 +46,6 @@ public class Steward {
         Objects.requireNonNull(lastName);
         Objects.requireNonNull(flights);
         this.id = null;
-        this.businessId = businessId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.flights = new HashSet<>(flights);
@@ -80,14 +73,6 @@ public class Steward {
             throw new NoSuchElementException("No such element: " + flight);
         }
         this.flights.remove(flight);
-    }
-
-	/**
-	 * Get business id of the Steward.
-	 * @return business id
-	 */
-    public Long getBusinessId() {
-        return businessId;
     }
 
 	/**
@@ -119,7 +104,7 @@ public class Steward {
 	 * @return set of flights
 	 */
     public final Set<Flight> getFlights() {
-        return Collections.unmodifiableSet(flights);
+        return this.flights;
     }
 
 	/**
@@ -128,14 +113,6 @@ public class Steward {
 	 */
     public void setId(Long id) {
         this.id = id;
-    }
-
-	/**
-	 * Set business id of the Steward.
-	 * @param businessId business id of the steward
-	 */
-    public void setBusinessId(Long businessId) {
-        this.businessId = businessId;
     }
 
 	/**
@@ -169,7 +146,6 @@ public class Steward {
 
         Steward steward = (Steward) o;
 
-        if (!getBusinessId().equals(steward.getBusinessId())) return false;
         if (!getFirstName().equals(steward.getFirstName())) return false;
         return getLastName().equals(steward.getLastName());
 
@@ -177,8 +153,7 @@ public class Steward {
 
     @Override
     public int hashCode() {
-        int result = getBusinessId().hashCode();
-        result = 31 * result + getFirstName().hashCode();
+        int result = getFirstName().hashCode();
         result = 31 * result + getLastName().hashCode();
         return result;
     }
@@ -187,7 +162,6 @@ public class Steward {
     public String toString() {
         return "Steward{" +
                 "id=" + id +
-                ", businessId=" + businessId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", flights=" + flights +

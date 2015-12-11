@@ -200,9 +200,11 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         f.setTo(to);
 
         Long id = flightFacade.create(f);
-        FlightDTO f2 = flightFacade.getFlight(id);
-        f2.setStewards(stewards);
 
-        return f2;
+        for (StewardSimpleDTO s : stewards) {
+            flightFacade.addSteward(s.getId(), id);
+        }
+
+        return flightFacade.getFlight(id);
     }
 }

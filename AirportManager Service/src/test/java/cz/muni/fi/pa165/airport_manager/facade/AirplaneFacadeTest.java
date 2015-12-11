@@ -6,11 +6,13 @@ import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import cz.muni.fi.pa165.airport_manager.service.AirplaneService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.verify;
@@ -25,15 +27,20 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class AirplaneFacadeTest {
 
-    @InjectMocks
-    private AirplaneFacadeImpl airplaneFacade;
     @Mock
     private AirplaneService airplaneService;
     @Mock
     private MappingService mappingService;
+    @InjectMocks
+    private AirplaneFacade airplaneFacade = new AirplaneFacadeImpl();
 
     private final static Long TEST_ID = 1L;
     private final static int TEST_CAPACITY = 200;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void createAirplaneTest() {
@@ -41,7 +48,6 @@ public class AirplaneFacadeTest {
         airplaneFacade.createAirplane(airplaneCreateDTO);
         verify(mappingService).mapTo(airplaneCreateDTO,  Airplane.class);
         verify(airplaneService).create(Matchers.any(Airplane.class));
-
     }
 
     @Test

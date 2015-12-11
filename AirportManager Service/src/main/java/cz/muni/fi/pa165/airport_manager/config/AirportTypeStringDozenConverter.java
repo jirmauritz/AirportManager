@@ -17,12 +17,12 @@ public class AirportTypeStringDozenConverter  extends DozerConverter<String, Air
 	
 	@Override
 	public AirplaneType convertTo(String a, AirplaneType b) {
-		return AirplaneType.valueOf(a);
+		return AirplaneType.of(a);
 	}
 
 	@Override
 	public String convertFrom(AirplaneType b, String a) {
-		return b.name();
+		return b.toString();
 	}
 
 }

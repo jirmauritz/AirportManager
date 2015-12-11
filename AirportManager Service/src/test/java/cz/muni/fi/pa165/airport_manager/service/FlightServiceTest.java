@@ -45,7 +45,7 @@ public class FlightServiceTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		Steward steward = new Steward(1l, "Vaclav", "Havel", new HashSet<Flight>());
+		Steward steward = new Steward("Vaclav", "Havel", new HashSet<Flight>());
 		Set<Steward> stewards = new HashSet<>();
 		stewards.add(steward);
 		Airplane airplane = new Airplane("Boing", AirplaneType.BUSINESS.name(), 200);

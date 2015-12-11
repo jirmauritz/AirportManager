@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import javax.persistence.PersistenceException;
 import java.util.Date;
@@ -29,12 +30,11 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class StewardServiceTest {
 
-    @InjectMocks
-    private StewardServiceImpl stewardService;
-
     @Mock
     private StewardDao stewardDao;
 
+    @InjectMocks
+    private StewardService stewardService = new StewardServiceImpl();
 
     private Steward steward = new Steward();
     private Steward steward1 = new Steward();
@@ -48,27 +48,27 @@ public class StewardServiceTest {
     private Date from = new Date(4000);
     private Date to = new Date(10000);
 
-    private Set<Steward> stewards = new HashSet<Steward>();
-    private Set<Flight> flights1 = new HashSet<Flight>();
+    private Set<Steward> stewards = new HashSet<>();
+    private Set<Flight> flights1 = new HashSet<>();
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
+
         createSteward.setFirstName(TEST_NAME);
         createSteward.setLastName(TEST_NAME1);
 
         steward.setId(TEST_ID);
-        steward.setBusinessId(TEST_ID1);
         steward.setFirstName(TEST_NAME);
         steward.setLastName(TEST_NAME);
 
-        steward1.setBusinessId(TEST_ID);
         steward1.setFirstName(TEST_NAME1);
         steward1.setLastName(TEST_NAME1);
 
         Flight flight = new Flight();
         flight.setDeparture(new Date(4000));
         flight.setArrival(new Date(7000));
-        Set<Flight> flights = new HashSet<Flight>();
+        Set<Flight> flights = new HashSet<>();
         flights.add(flight);
 
         Flight flight1 = new Flight();
@@ -93,13 +93,6 @@ public class StewardServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void createStewardTestException() {
         createSteward.setId(TEST_ID);
-        stewardService.createSteward(createSteward);
-    }
-
-    //has businessId set
-    @Test(expected = IllegalArgumentException.class)
-    public void createStewardTestException2() {
-        createSteward.setBusinessId(TEST_ID);
         stewardService.createSteward(createSteward);
     }
 
@@ -161,13 +154,6 @@ public class StewardServiceTest {
     public void findAllStewardsTest() {
         stewardService.findAllStewards();
         verify(stewardDao).findAll();
-    }
-
-    //has businessId change because dao.findById always return steward
-    @Test(expected = IllegalArgumentException.class)
-    public void updateStewardTestException() {
-        steward1.setId(TEST_ID);
-        stewardService.updateSteward(steward1);
     }
 
     // has first name null

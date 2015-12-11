@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airport_manager.dto;
 
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Set;
  */
 public class FlightDTO extends FlightSimpleDTO {
 
-    private Set<StewardSimpleDTO> stewards;
+    private Set<StewardSimpleDTO> stewards = new HashSet<>();
 
     /**
      * Gets Stewards of the Flight.
@@ -21,7 +22,7 @@ public class FlightDTO extends FlightSimpleDTO {
      * @return set of stewards
      */
     public Set<StewardSimpleDTO> getStewards() {
-        return Collections.unmodifiableSet(stewards);
+        return new HashSet<>(stewards);
     }
 
     /**
@@ -30,7 +31,7 @@ public class FlightDTO extends FlightSimpleDTO {
      * @param stewards
      */
     public void setStewards(Set<StewardSimpleDTO> stewards) {
-        this.stewards = stewards;
+        this.stewards = new HashSet<>(stewards);
     }
 
 }

@@ -19,7 +19,7 @@ public final class StewardDTO extends StewardSimpleDTO {
      * @return set of flights
      */
     public Set<FlightDTO> getFlights() {
-        return Collections.unmodifiableSet(flights);
+        return new HashSet<>(this.flights);
     }
 
     /**
@@ -36,7 +36,6 @@ public final class StewardDTO extends StewardSimpleDTO {
         return "StewardDTO{" +
                 "firstName='" + this.getFirstName() + '\'' +
                 ", lastName='" + this.getLastName() + '\'' +
-                ", businessId=" + this.getBusinessId() +
                 ", flights=" + this.getFlights() +
                 '}';
     }

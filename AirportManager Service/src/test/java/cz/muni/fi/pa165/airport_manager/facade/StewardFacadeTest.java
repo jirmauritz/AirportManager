@@ -53,7 +53,6 @@ public class StewardFacadeTest {
 
         // create objects
         steward = new Steward();
-        steward.setBusinessId(1l);
         steward.setFirstName("Vaclav");
         steward.setLastName("Havel");
 
@@ -61,7 +60,6 @@ public class StewardFacadeTest {
         set.add(steward);
 
         stewardDTO = new StewardSimpleDTO();
-        stewardDTO.setBusinessId(B_ID);
         stewardDTO.setFirstName(NAME);
         stewardDTO.setLastName(SURNAME);
 
@@ -70,14 +68,12 @@ public class StewardFacadeTest {
         stewardCreateDTO.setLastName(SURNAME);
 
         stewardRichDTO = new StewardDTO();
-        stewardRichDTO.setBusinessId(B_ID);
         stewardRichDTO.setFirstName(NAME);
         stewardRichDTO.setLastName(SURNAME);
         Set<FlightDTO> flights = new HashSet<>(Arrays.asList(flight));
         stewardRichDTO.setFlights(flights);
 
         updatedRichSteward = new StewardDTO();
-        updatedRichSteward.setBusinessId(1l);
         updatedRichSteward.setFirstName("Vasek");
         updatedRichSteward.setLastName("Havel");
         updatedRichSteward.setFlights(flights);

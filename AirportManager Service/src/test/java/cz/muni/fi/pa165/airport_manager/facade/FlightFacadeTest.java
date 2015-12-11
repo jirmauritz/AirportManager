@@ -20,6 +20,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.verify;
+
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.Matchers;
 import static org.mockito.Mockito.when;
@@ -43,7 +45,7 @@ public class FlightFacadeTest {
     private MappingService mappingService;
 
     @InjectMocks
-    private FlightFacadeImpl flightFacade = new FlightFacadeImpl();
+    private FlightFacade flightFacade = new FlightFacadeImpl();
 
     private final Long testId = 123l;
     private Steward steward;
@@ -53,11 +55,12 @@ public class FlightFacadeTest {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
 
         from = new Destination("CGN", "Köln", "Deutschland");
         to = new Destination("DUS", "Düsseldorf", "Deutschland");
 
-        steward = new Steward(123l, "Peter", "Pan", new HashSet<Flight>());
+        steward = new Steward("Peter", "Pan", new HashSet<Flight>());
         steward.setId(testId);
 
         Set<Steward> stewards = new HashSet<>();

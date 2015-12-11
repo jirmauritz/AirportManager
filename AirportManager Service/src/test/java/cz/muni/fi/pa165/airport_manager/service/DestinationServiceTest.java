@@ -31,6 +31,8 @@ public class DestinationServiceTest {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
+
         destination.setName("CGN");
         destination.setCity("Köln");
         destination.setCountry("Deutschland");

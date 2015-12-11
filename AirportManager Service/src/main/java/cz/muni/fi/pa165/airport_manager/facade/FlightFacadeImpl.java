@@ -64,9 +64,11 @@ public class FlightFacadeImpl implements FlightFacade{
         if (!flight.getStewards().contains(steward) &&
                 stewardService.isAvailable(stewardId,flight.getDeparture(), flight.getArrival())) {
             flight.addSteward(steward);
+            steward.addFlight(flight);
         }
 
         flightService.update(flight);
+        stewardService.updateSteward(steward);
     }
 
     @Override
@@ -78,8 +80,11 @@ public class FlightFacadeImpl implements FlightFacade{
         Steward steward = stewardService.findSteward(stewardId);
         if ( flight.getStewards().contains(steward)) {
             flight.removeSteward(steward);
+            steward.removeFlight(flight);
         }
+
         flightService.update(flight);
+        stewardService.updateSteward(steward);
     }
 
     @Override

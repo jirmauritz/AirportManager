@@ -8,28 +8,32 @@ package cz.muni.fi.pa165.airport_manager.enums;
  */
 public enum AirplaneType {
 
-    ECONOMY {
-        public String toString() {
-            return "Economy"; }
-    },
-          
-    BUSINESS {
-        public String toString() {
-            return "Business"; }
-    },
+    ECONOMY("Economy"),
+    BUSINESS("Business"),
+    FIRST("First");
 
-    FIRST {
-        public String toString() {
-            return "First"; }
-    };
-    
-    static public boolean isMember(String checkedType) {
-       AirplaneType[] definedTypes = AirplaneType.values();
-       for (AirplaneType type : definedTypes) {
-           if (type.name().equals(checkedType)) {
-               return true;
-           }
-       }
-       return false;
-   }
+    private final String name;
+
+    AirplaneType(String name) {
+        this.name = name;
+    }
+
+    public static boolean isMember(String typeToCheck) {
+        return AirplaneType.of(typeToCheck) != null;
+    }
+
+    public static AirplaneType of(String typeVal) {
+        for (AirplaneType type : AirplaneType.values()) {
+            if (type.toString().equals(typeVal)) {
+                return type;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
 }

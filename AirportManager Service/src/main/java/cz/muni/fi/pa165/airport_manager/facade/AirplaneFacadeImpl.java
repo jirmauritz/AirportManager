@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import cz.muni.fi.pa165.airport_manager.service.AirplaneService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
@@ -17,6 +18,7 @@ import java.util.*;
  * @author 396336@mail.muni.cz
  */
 @Facade
+@Service
 public class AirplaneFacadeImpl implements AirplaneFacade {
 
     @Autowired
