@@ -31,24 +31,4 @@ public class SecurityController {
         return "redirect:/login?logout";
     }
 
-    //TODO: just example - delete this
-    @Secured(SecurityConfiguration.ROLE_FLIGHT)
-    @RequestMapping("/security/flight")
-    public String flight(){
-        return "home";
-    }
-
-    //TODO: just example - delete this
-    @Secured(SecurityConfiguration.ROLE_AIRPORT)
-    @RequestMapping("/security/airport")
-    public String airport(){
-        return "home";
-    }
-
-    //TODO: just example - delete this
-    @RequestMapping({"security"})
-    public String any() {
-        return "home";
-    }
-
 }

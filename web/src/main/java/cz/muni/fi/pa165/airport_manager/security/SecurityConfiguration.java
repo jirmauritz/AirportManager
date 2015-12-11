@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.sql.DataSource;
-
 /**
  * Simple security configuration - defines user roles and credentials
  *
@@ -38,11 +36,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        auth.jdbcAuthentication().passwordEncoder(encoder)
+        auth.inMemoryAuthentication().passwordEncoder(encoder)
                 .withUser(USER_FLIGHT) .password(PASSWD_FLIGHT) .roles(USER_FLIGHT);
-        auth.jdbcAuthentication().passwordEncoder(encoder)
+        auth.inMemoryAuthentication().passwordEncoder(encoder)
                 .withUser(USER_AIRPORT).password(PASSWD_AIRPORT).roles(USER_AIRPORT);
-        auth.jdbcAuthentication().passwordEncoder(encoder)
+        auth.inMemoryAuthentication().passwordEncoder(encoder)
                 .withUser(USER_ADMIN)  .password(PASSWD_ADMIN)  .roles(USER_ADMIN, USER_FLIGHT, USER_AIRPORT);
     }
 
@@ -52,8 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/**")
                 .access("hasRole('" + ROLE_FLIGHT + "') or hasRole('" + ROLE_AIRPORT + "') or hasRole('" + ROLE_ADMIN + "')")
-                .and().formLogin()
-                .and().logout().logoutSuccessUrl("/login?logout");
+                .and().formLogin();
 
     }
 

@@ -11,7 +11,7 @@
     </parent>
     <packaging>war</packaging>
 
-    <artifactId>spring-mvc</artifactId>
+    <artifactId>web</artifactId>
     <name>AirportManager UI</name>
 
     <build>

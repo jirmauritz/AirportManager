@@ -7,7 +7,7 @@
     <parent>
         <groupId>cz.muni.fi.pa165.airport_manager</groupId>
         <artifactId>root</artifactId>
-        <version>${project.version}</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>data</artifactId>
