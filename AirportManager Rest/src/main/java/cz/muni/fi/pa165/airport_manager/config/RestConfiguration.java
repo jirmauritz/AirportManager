@@ -19,7 +19,7 @@ import java.util.List;
 
 @Configuration
 @Import({DataConfiguration.class})
-@ComponentScan(basePackages = "cz.muni.fi.pa165.airport_manager")
+@ComponentScan(basePackages = "cz.muni.fi.pa165.airport_manager.controller")
 @EnableWebMvc
 public class RestConfiguration extends WebMvcConfigurerAdapter {
 

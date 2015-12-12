@@ -13,4 +13,9 @@ public interface SampleDataFacade {
      */
     void loadData();
 
+    /**
+     * Loads users for authentication
+     */
+    void loadUsers();
+
 }

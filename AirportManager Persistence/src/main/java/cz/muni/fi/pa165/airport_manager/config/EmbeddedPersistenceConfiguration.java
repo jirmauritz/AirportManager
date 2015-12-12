@@ -1,12 +1,17 @@
 package cz.muni.fi.pa165.airport_manager.config;
 
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.sql.DataSource;
 
 /**
  * Configuration of the application. Uses embedded, in-memory database.
@@ -27,7 +32,18 @@ public class EmbeddedPersistenceConfiguration {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        return new LocalContainerEntityManagerFactoryBean();
+        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean =
+                new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactoryBean.setDataSource(this.dataSource());
+        entityManagerFactoryBean.setPersistenceProvider(new HibernatePersistenceProvider());
+        return entityManagerFactoryBean;
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        final EmbeddedDatabaseBuilder databaseBuilder = new EmbeddedDatabaseBuilder();
+        databaseBuilder.setType(EmbeddedDatabaseType.DERBY);
+        return databaseBuilder.build();
     }
 
 }

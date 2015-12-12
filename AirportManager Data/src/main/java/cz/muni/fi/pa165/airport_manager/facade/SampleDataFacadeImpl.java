@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
+import cz.muni.fi.pa165.airport_manager.config.DataConfiguration;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
@@ -10,13 +11,13 @@ import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
 import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
-import cz.muni.fi.pa165.airport_manager.service.AirplaneService;
-import cz.muni.fi.pa165.airport_manager.service.DestinationService;
-import cz.muni.fi.pa165.airport_manager.service.StewardService;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.EntityManager;
 
 /**
  * Basic implementation of sample data for AirportManager
@@ -39,9 +40,11 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
     private @Autowired
     StewardFacade stewardFacade;
 
+    @Autowired
+    EntityManager em;
+
     @Override
     public void loadData() {
-
         // destinations
         DestinationSimpleDTO SHA430 = createDestination("SHA430", "Shanghai", "China");
         DestinationSimpleDTO KAR735 = createDestination("KAR735", "Karachi", "Pakistan");
@@ -116,15 +119,53 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         FlightDTO f10 = createFlight(true, new Date(1452668400L), new Date(1452715200L), crew1, jay, BEI973, JAK487);
     }
 
+    @Override
+    public void loadUsers() {
+        em.createNativeQuery("CREATE TABLE users (" +
+                "username VARCHAR(7) NOT NULL, " +
+                "password VARCHAR(60) NOT NULL, " +
+                "enabled BOOLEAN NOT NULL DEFAULT TRUE, " +
+                "PRIMARY KEY (username))")
+                .executeUpdate();
+        em.createNativeQuery("CREATE TABLE user_roles (" +
+                "username VARCHAR(7) NOT NULL, " +
+                "role VARCHAR(12) NOT NULL, " +
+                "FOREIGN KEY (username) REFERENCES users (username))")
+                .executeUpdate();
+
+        em.createNativeQuery("INSERT INTO users (username, password, enabled)" +
+                "VALUES ('" + DataConfiguration.USER_ADMIN   + "', '" + DataConfiguration.PASSWD_ADMIN + "', true)")
+                .executeUpdate();
+        em.createNativeQuery("INSERT INTO users (username, password, enabled)" +
+                "VALUES ('" + DataConfiguration.USER_FLIGHT  + "', '" + DataConfiguration.PASSWD_FLIGHT + "', true)")
+                .executeUpdate();
+        em.createNativeQuery("INSERT INTO users (username, password, enabled)" +
+                "VALUES ('" + DataConfiguration.USER_AIRPORT + "', '" + DataConfiguration.PASSWD_AIRPORT + "', true)")
+                .executeUpdate();
+
+        em.createNativeQuery("INSERT INTO user_roles (username, role)" +
+                "VALUES ('" + DataConfiguration.USER_ADMIN   + "', '" + DataConfiguration.ROLE_FLIGHT + "')")
+                .executeUpdate();
+        em.createNativeQuery("INSERT INTO user_roles (username, role)" +
+                "VALUES ('" + DataConfiguration.USER_ADMIN   + "', '" + DataConfiguration.ROLE_AIRPORT + "')")
+                .executeUpdate();
+        em.createNativeQuery("INSERT INTO user_roles (username, role)" +
+                "VALUES ('" + DataConfiguration.USER_FLIGHT  + "', '" + DataConfiguration.ROLE_FLIGHT + "')")
+                .executeUpdate();
+        em.createNativeQuery("INSERT INTO user_roles (username, role)" +
+                "VALUES ('" + DataConfiguration.USER_AIRPORT + "', '" + DataConfiguration.ROLE_AIRPORT + "')")
+                .executeUpdate();
+    }
+
     /*
-     * Bypass parameters to facade for Destination
-     *
-     * @param airport code
-     * @param airport name
-     * @param country
-     *
-     * @return created entity DTO   
-     */
+         * Bypass parameters to facade for Destination
+         *
+         * @param airport code
+         * @param airport name
+         * @param country
+         *
+         * @return created entity DTO
+         */
     private DestinationSimpleDTO createDestination(String name, String city, String country) {
 
         DestinationCreateDTO d = new DestinationCreateDTO();
