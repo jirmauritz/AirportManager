@@ -35,7 +35,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="">Airplane Manager</a>
+                    <a class="navbar-brand" href="">Airport Manager</a>
                 </div>
             </div>
         </nav>
