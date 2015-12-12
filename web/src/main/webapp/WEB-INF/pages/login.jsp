@@ -42,7 +42,7 @@
 
         <div class="container">
             <img class="img-responsive center-block img-airplane" src="/pa165/resources/images/airplane.gif" />
-            <form class="form-signin" action="login" method="post">
+            <form name="f" class="form-signin" action="login" method="post">
                 <input class="form-control" type="text" id="username" name="username" placeholder="Username"/>
                 <input class="form-control" type="password" id="password" name="password" placeholder="Password">
                 <button type="submit" class="btn btn-md btn-primary btn-block">Log in</button>

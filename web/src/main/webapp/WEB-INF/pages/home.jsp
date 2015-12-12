@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" trimDirectiveWhitespaces="true" session="false" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <tags:pagetemplate>
     <jsp:attribute name="body">
@@ -8,19 +10,23 @@
                     <h1 class="page-header">Ongoing flights</h1>
 
                     <div class="row placeholders">
+                        <sec:authorize access="hasRole('ROLE_flight')">
                         <div class="col-xs-6 col-sm-3 placeholder">
                             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
+                            <h4>Only flight can see it</h4>
                             <span class="text-muted">Something else</span>
                         </div>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_airport')">
                         <div class="col-xs-6 col-sm-3 placeholder">
                             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
+                            <h4>Only airport can see it</h4>
                             <span class="text-muted">Something else</span>
                         </div>
+                        </sec:authorize>
                         <div class="col-xs-6 col-sm-3 placeholder">
                             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>Label</h4>
+                            <h4><c:out value="${principal.role}"/></h4>
                             <span class="text-muted">Something else</span>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">

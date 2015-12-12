@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.controller;
 
+import cz.muni.fi.pa165.airport_manager.config.DataConfiguration;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +46,7 @@ public class FlightController {
      * @return JSP page name
      */
     @RequestMapping("/list")
+    @Secured(value = DataConfiguration.ROLE_FLIGHT)
     public String list(Model model) {
 		
         //get all flights

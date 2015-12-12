@@ -41,14 +41,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/someImage.jpg").permitAll()
+                .antMatchers("/resources/**").permitAll()
                 .anyRequest().authenticated()
-            .and()
-                .formLogin()
-            .and()
-                .logout()
-            .and()
-                .csrf().disable();
+                .and()
+            .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+            .logout()
+                .permitAll()
+                .and()
+            .csrf()
+                .disable();
     }
 
     @Bean
