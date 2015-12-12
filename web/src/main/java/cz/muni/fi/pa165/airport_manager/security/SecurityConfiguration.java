@@ -46,12 +46,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http.csrf().disable();  
         http.authorizeRequests()
                 .antMatchers("/**")
                 .access("hasRole('" + ROLE_FLIGHT + "') or hasRole('" + ROLE_AIRPORT + "') or hasRole('" + ROLE_ADMIN + "')")
-                .and().formLogin();
-
+                .and()
+                .formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll();
     }
 
 }

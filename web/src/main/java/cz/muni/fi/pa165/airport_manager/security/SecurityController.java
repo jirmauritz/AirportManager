@@ -30,5 +30,10 @@ public class SecurityController {
         }
         return "redirect:/login?logout";
     }
-
+    
+    @RequestMapping(value="/login", method = RequestMethod.GET)
+    public String loginPage (HttpServletRequest request, HttpServletResponse response) {
+        return "login";
+    }
+    
 }
