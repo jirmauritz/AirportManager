@@ -46,27 +46,27 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
     @Override
     public void loadData() {
         // destinations
-        DestinationSimpleDTO SHA430 = createDestination("SHA430", "Shanghai", "China");
-        DestinationSimpleDTO KAR735 = createDestination("KAR735", "Karachi", "Pakistan");
-        DestinationSimpleDTO LAG255 = createDestination("LAG255", "Lagos", "Nigeria");
-        DestinationSimpleDTO DEL532 = createDestination("DEL532", "Delhi", "India");
-        DestinationSimpleDTO IST676 = createDestination("IST676", "Istanbul", "Turkey");
-        DestinationSimpleDTO TOK639 = createDestination("TOK639", "Tokyo", "Japan");
-        DestinationSimpleDTO TIA416 = createDestination("TIA416", "Tianjin", "China");
-        DestinationSimpleDTO GUA103 = createDestination("GUA103", "Guangzhou", "China");
-        DestinationSimpleDTO MUM180 = createDestination("MUM180", "Mumbai", "India");
-        DestinationSimpleDTO MOS673 = createDestination("MOS673", "Moscow", "Russia");
-        DestinationSimpleDTO SAP339 = createDestination("SA339", "São Paulo", "Brazil");
-        DestinationSimpleDTO BEI973 = createDestination("BEI973", "Beijing", "China");
-        DestinationSimpleDTO SHE785 = createDestination("SHE785", "Shenzhen", "China");
-        DestinationSimpleDTO SEO471 = createDestination("SEO471", "Seoul", "South Korea");
-        DestinationSimpleDTO JAK487 = createDestination("JAK487", "Jakarta", "Indonesia");
-        DestinationSimpleDTO LAH638 = createDestination("LAH638", "Lahore", "Pakistan");
-        DestinationSimpleDTO KIN411 = createDestination("KIN411", "Kinshasa", "Democratic Republic of the Congo");
-        DestinationSimpleDTO CAI346 = createDestination("CAI346", "Cairo", "Egypt");
-        DestinationSimpleDTO MEX134 = createDestination("MEX134", "Mexico City", "Mexico");
-        DestinationSimpleDTO LIM467 = createDestination("LIM467", "Lima", "Peru");
-        DestinationSimpleDTO NEW828 = createDestination("NEW828", "New York City", "United States");
+        DestinationSimpleDTO SHA430 = createDestination("SHA", "Shanghai", "China");
+        DestinationSimpleDTO KAR735 = createDestination("KAR", "Karachi", "Pakistan");
+        DestinationSimpleDTO LAG255 = createDestination("LAG", "Lagos", "Nigeria");
+        DestinationSimpleDTO DEL532 = createDestination("DEL", "Delhi", "India");
+        DestinationSimpleDTO IST676 = createDestination("IST", "Istanbul", "Turkey");
+        DestinationSimpleDTO TOK639 = createDestination("TOK", "Tokyo", "Japan");
+        DestinationSimpleDTO TIA416 = createDestination("TIA", "Tianjin", "China");
+        DestinationSimpleDTO GUA103 = createDestination("GUA", "Guangzhou", "China");
+        DestinationSimpleDTO MUM180 = createDestination("MUM", "Mumbai", "India");
+        DestinationSimpleDTO MOS673 = createDestination("MOS", "Moscow", "Russia");
+        DestinationSimpleDTO SAP339 = createDestination("SAP", "São Paulo", "Brazil");
+        DestinationSimpleDTO BEI973 = createDestination("BEI", "Beijing", "China");
+        DestinationSimpleDTO SHE785 = createDestination("SHE", "Shenzhen", "China");
+        DestinationSimpleDTO SEO471 = createDestination("SEO", "Seoul", "South Korea");
+        DestinationSimpleDTO JAK487 = createDestination("JAK", "Jakarta", "Indonesia");
+        DestinationSimpleDTO LAH638 = createDestination("LAH", "Lahore", "Pakistan");
+        DestinationSimpleDTO KIN411 = createDestination("KIN", "Kinshasa", "Democratic Republic of the Congo");
+        DestinationSimpleDTO CAI346 = createDestination("CAI", "Cairo", "Egypt");
+        DestinationSimpleDTO MEX134 = createDestination("MEX", "Mexico City", "Mexico");
+        DestinationSimpleDTO LIM467 = createDestination("LIM", "Lima", "Peru");
+        DestinationSimpleDTO NEW828 = createDestination("NYC", "New York City", "United States");
 
         // airplanes
         AirplaneDTO jumbo = createAirplane("Boeing 747 Jumbo", AirplaneType.ECONOMY, 600);
@@ -107,16 +107,16 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         crew3.add(aracely);
 
         // flights
-        FlightDTO f1 = createFlight(true, new Date(1451664000L), new Date(1451757600L), crew1, jumbo, SHA430, KAR735);
-        FlightDTO f2 = createFlight(false, new Date(1451736000L), new Date(1451777400L), crew2, cardinal, SHA430, GUA103);
-        FlightDTO f3 = createFlight(true, new Date(1451734200L), new Date(1451755800L), crew3, jay, MOS673, SEO471);
-        FlightDTO f4 = createFlight(true, new Date(1451896200L), new Date(1451911500L), crew1, vulture, LIM467, SAP339);
-        FlightDTO f5 = createFlight(true, new Date(1451997900L), new Date(1452037500L), crew2, jay, KIN411, MUM180);
-        FlightDTO f6 = createFlight(true, new Date(1452145500L), new Date(1452169200L), crew3, wren, SEO471, SHE785);
-        FlightDTO f7 = createFlight(true, new Date(1452164400L), new Date(1452189600L), crew1, jumbo, IST676, LAG255);
-        FlightDTO f8 = createFlight(true, new Date(1452168000L), new Date(1452182400L), crew2, cardinal, NEW828, MEX134);
-        FlightDTO f9 = createFlight(true, new Date(1452312000L), new Date(1452394800L), crew3, vulture, DEL532, TOK639);
-        FlightDTO f10 = createFlight(true, new Date(1452668400L), new Date(1452715200L), crew1, jay, BEI973, JAK487);
+        FlightDTO f1 = createFlight(true, new Date(1451664000L), new Date(1451757600000L), crew1, jumbo, SHA430, KAR735);
+        FlightDTO f2 = createFlight(false, new Date(1451736000L), new Date(1451777400000L), crew2, cardinal, SHA430, GUA103);
+        FlightDTO f3 = createFlight(true, new Date(1451734200L), new Date(1451755800000L), crew3, jay, MOS673, SEO471);
+        FlightDTO f4 = createFlight(true, new Date(1451896200L), new Date(1451911500000L), crew1, vulture, LIM467, SAP339);
+        FlightDTO f5 = createFlight(true, new Date(1451997900L), new Date(1452037500000L), crew2, jay, KIN411, MUM180);
+        FlightDTO f6 = createFlight(true, new Date(1452145500L), new Date(1452169200000L), crew3, wren, SEO471, SHE785);
+        FlightDTO f7 = createFlight(true, new Date(1452164400L), new Date(1452189600000L), crew1, jumbo, IST676, LAG255);
+        FlightDTO f8 = createFlight(true, new Date(1452168000L), new Date(1452182400000L), crew2, cardinal, NEW828, MEX134);
+        FlightDTO f9 = createFlight(true, new Date(1452312000L), new Date(1452394800000L), crew3, vulture, DEL532, TOK639);
+        FlightDTO f10 = createFlight(true, new Date(1452668400L), new Date(1452715200000L), crew1, jay, BEI973, JAK487);
     }
 
     @Override
