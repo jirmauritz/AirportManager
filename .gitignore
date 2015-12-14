@@ -8,3 +8,4 @@
 *.log
 /target/
 **/*.class
+nb-configuration.xml

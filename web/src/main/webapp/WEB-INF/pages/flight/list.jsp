@@ -25,9 +25,17 @@
                     <!-- Output every flight in flights variable -->
                     <c:forEach items="${flights}" var="flight">
            <!--         <a href ="${pageContext.request.contextPath}/flights/detail/${flight.id}"> -->
-                        <tr class="listTable" onclick="location.href='${pageContext.request.contextPath}/flights/detail/${flight.id}';">
-                            <td><c:out value="${flight.id}"/></td>
-                            <td><c:out value="${flight.international}"/></td>
+                        <tr class="listTable" onclick="location.href = '${pageContext.request.contextPath}/flights/detail/${flight.id}';">
+                            <td>${flight.id}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${flight.international}">
+                                        Yes
+                                    </c:when>
+                                    <c:otherwise>
+                                        No
+                                    </c:otherwise>
+                                </c:choose></td>
                             <td><c:out value="${flight.airplane.name}"/></td>
                             <td><c:out value="${flight.departure}"/></td>
                             <td><c:out value="${flight.arrival}"/></td>

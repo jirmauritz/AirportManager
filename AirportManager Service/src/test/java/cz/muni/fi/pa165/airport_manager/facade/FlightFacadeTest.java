@@ -66,7 +66,7 @@ public class FlightFacadeTest {
         Set<Steward> stewards = new HashSet<>();
 
         Airplane airplane = new Airplane("Boing", AirplaneType.ECONOMY.name(), 150);
-        flight = new Flight(Boolean.TRUE, new Date(10000l), new Date(20000l), stewards, airplane, from, to);
+        flight = new Flight(true, new Date(10000l), new Date(20000l), stewards, airplane, from, to);
         flight.setId(testId);
     }
 

@@ -20,7 +20,7 @@ public class Flight {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	private Boolean international;
+	private boolean international;
 	
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
@@ -57,7 +57,7 @@ public class Flight {
 	 * @param from - departure destination
 	 * @param to - arrival destination
 	 */
-	public Flight(Boolean international, Date departure, Date arrival,
+	public Flight(boolean international, Date departure, Date arrival,
 			Set<Steward> stewards, Airplane airplane, Destination from,
 			Destination to) {
 		super();
@@ -88,8 +88,6 @@ public class Flight {
 		result = prime * result
 				+ ((departure == null) ? 0 : departure.hashCode());
 		result = prime * result + ((from == null) ? 0 : from.hashCode());
-		result = prime * result
-				+ ((international == null) ? 0 : international.hashCode());
 		result = prime * result + ((to == null) ? 0 : to.hashCode());
 		return result;
 	}
@@ -123,11 +121,6 @@ public class Flight {
 				return false;
 		} else if (!from.equals(other.getFrom()))
 			return false;
-		if (international == null) {
-			if (other.isInternational() != null)
-				return false;
-		} else if (!international.equals(other.isInternational()))
-			return false;
 		if (to == null) {
 			if (other.getTo() != null)
 				return false;
@@ -152,7 +145,7 @@ public class Flight {
 	 * Is the flight international.
 	 * @return true if the flight is international
 	 */
-	public Boolean isInternational() {
+	public boolean isInternational() {
 		return international;
 	}
 
@@ -160,7 +153,7 @@ public class Flight {
 	 * Set international flag of the flight.
 	 * @param international true if the flight is international
 	 */
-	public void setInternational(Boolean international) {
+	public void setInternational(boolean international) {
 		this.international = international;
 	}
 

@@ -147,9 +147,6 @@ public class FlightServiceImpl implements FlightService {
             if (flight.getTo() == null) {
                 throw new IllegalArgumentException("To cannot be null");
             }
-            if (flight.isInternational() == null) {
-                throw new IllegalArgumentException("International cannot be null");
-            }
             if (flight.getStewards() == null){
                 throw new IllegalArgumentException("Flights cannot be null");
             }

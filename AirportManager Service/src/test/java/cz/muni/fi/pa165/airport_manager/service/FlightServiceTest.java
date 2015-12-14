@@ -82,15 +82,6 @@ public class FlightServiceTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void createWithNullInternational() {
-		// null international
-		flight.setInternational(null);
-
-		// fire
-		flightService.create(flight);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
 	public void createWithNullStewards() {
 		// null stewards
 		flight.setStewards(null);
@@ -126,15 +117,6 @@ public class FlightServiceTest {
 	public void updateWithNullId() {
 		// null id
 		flight.setId(null);
-
-		// fire
-		flightService.update(flight);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void updateWithNullInternational() {
-		// null international
-		flight.setInternational(null);
 
 		// fire
 		flightService.update(flight);

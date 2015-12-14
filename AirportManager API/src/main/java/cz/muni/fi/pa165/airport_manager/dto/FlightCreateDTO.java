@@ -31,25 +31,16 @@ public class FlightCreateDTO {
      *
      * @return true, if Flight is international, false otherwise.
      */
-    public Boolean getInternational() {
+    public boolean getInternational() {
         return international;
     }
 	
-	/**
-     * Return boolean value whether Flight is international.
-     *
-     * @return true, if Flight is international, false otherwise.
-     */
-    public boolean getInternationalBoolean() {
-        return international;
-    }
-
     /**
      * Sets whether Flight is international.
      *
      * @param international
      */
-    public void setInternational(Boolean international) {
+    public void setInternational(boolean international) {
         this.international = international;
     }
 
@@ -153,8 +144,6 @@ public class FlightCreateDTO {
         result = prime * result
                 + ((departure == null) ? 0 : departure.hashCode());
         result = prime * result + ((from == null) ? 0 : from.hashCode());
-        result = prime * result
-                + ((international == null) ? 0 : international.hashCode());
         result = prime * result + ((to == null) ? 0 : to.hashCode());
         return result;
     }
@@ -187,11 +176,6 @@ public class FlightCreateDTO {
             if (other.getFrom() != null)
                 return false;
         } else if (!from.equals(other.getFrom()))
-            return false;
-        if (international == null) {
-            if (other.getInternational() != null)
-                return false;
-        } else if (!international.equals(other.getInternational()))
             return false;
         if (to == null) {
             if (other.getTo() != null)
