@@ -21,9 +21,10 @@
         <!-- Custom styles for this template -->
         <link href="<%=request.getContextPath()%>/resources/css/dashboard.css" rel="stylesheet">
 
-        <!-- Time picker import cdn -->
-        <link href="<%=request.getContextPath()%>/resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-        
+        <!-- Bootstrap select css -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.min.css">
+
+
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -123,9 +124,8 @@
     <!-- Latest compiled and minified Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
     integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <!-- Date picker import cdn -->
-    <script src="<%=request.getContextPath()%>/resources/js/bootstrap-datetimepicker.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>-->
+    <!-- Bootstrap select js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js"></script>
     <!-- Custom js file -->
     <script src="<%=request.getContextPath()%>/resources/js/dashboard.js"></script>
 </html>

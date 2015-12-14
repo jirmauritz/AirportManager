@@ -121,7 +121,8 @@ public class FlightController {
 		// prepare airplanes as options
 		Set<AirplaneDTO> airplanes = airplaneFacade.findAll();
 		model.addAttribute("airplanes", convertAirplanesToStrings(airplanes));
-		// TODO prepare stewards as options
+		Set<StewardSimpleDTO> stewards = stewardFacade.getAllStewards();
+		model.addAttribute("stewards", convertStewardsToStrings(stewards));
 
 		return "flight/new";
 	}
@@ -171,9 +172,8 @@ public class FlightController {
 	private Set<String> convertStewardsToStrings(Set<StewardSimpleDTO> stewards) {
 		Set<String> strings = new HashSet<> ();
 		for (StewardSimpleDTO steward : stewards) {
-			strings.add(steward.getId() + 
-					" first name: " + steward.getFirstName() + 
-					" last name: " + steward.getLastName());
+			strings.add(steward.getId() + " " + steward.getFirstName() +
+					" " + steward.getLastName());
 		}
 		return strings;
 	}

@@ -26,6 +26,7 @@ public class StewardEditor extends PropertyEditorSupport {
 	 * @throws IllegalArgumentException 
 	 */
 	public void setAsText(String text) throws IllegalArgumentException {
+		System.out.println("text: " + text);
 		String[] arrayString = text.split(" ");
 		String id = arrayString[0];
 		StewardSimpleDTO steward = stewardFacade.getSteward(Long.parseLong(id));
