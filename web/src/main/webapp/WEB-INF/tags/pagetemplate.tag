@@ -1,4 +1,6 @@
 <%@ tag pageEncoding="utf-8" dynamic-attributes="dynattrs" trimDirectiveWhitespaces="true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ attribute name="title" required="false" %>
 <%@ attribute name="head" fragment="true" %>
 <%@ attribute name="body" fragment="true" required="true" %>
@@ -18,6 +20,10 @@
 
         <!-- Custom styles for this template -->
         <link href="<%=request.getContextPath()%>/resources/css/dashboard.css" rel="stylesheet">
+
+        <!-- Time picker import cdn -->
+        <link href="<%=request.getContextPath()%>/resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+        
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,29 +62,70 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-                        <li><a href="${pageContext.request.contextPath}/flights/list">Flights</a></li>
-                        <li><a href="">Airplanes</a></li>
-                        <li><a href="">Stewards</a></li>
-                        <li><a href="">Destinations</a></li>
+                        <li class="${fn:contains(pageContext.request.requestURI, 'home') ? ' active' : ''}"><a href="${pageContext.request.contextPath}">Overview </a></li>
+                        <li class="${fn:contains(pageContext.request.requestURI, 'flight') ? ' active' : ''}"><a href="${pageContext.request.contextPath}/flights/list">Flights</a></li>
+                        <li class="${fn:contains(pageContext.request.requestURI, 'airplane') ? ' active' : ''}"><a href="">Airplanes</a></li>
+                        <li class="${fn:contains(pageContext.request.requestURI, 'steward') ? ' active' : ''}"><a href="">Stewards</a></li>
+                        <li class="${fn:contains(pageContext.request.requestURI, 'destination') ? ' active' : ''}"><a href="">Destinations</a></li>
                     </ul>
-                    <ul class="nav nav-sidebar">
-                        <li><a href="">New flight</a></li>
-                        <li><a href="">New airplane</a></li>
-                        <li><a href="">New steward</a></li>
-                        <li><a href="">New destination</a></li>
-                    </ul>
+
+                    <!-- Submenu is different in every page -->
+                    <!-- FLIGHT submenu -->
+                    <c:if test="${fn:contains(pageContext.request.requestURI, 'flight')}">
+                        <ul class="nav nav-sidebar">
+                            <li><a href="${pageContext.request.contextPath}/flights/new"><b>New flight</b></a></li>
+                            <li><a href="${pageContext.request.contextPath}/flights/list"><b>List all flights</b></a></li>
+                            <li><a href="${pageContext.request.contextPath}/flights/search"><b>Search for a flight</b></a></li>
+                        </ul>
+                    </c:if>
+
+                    <!-- AIRPLANE submenu -->
+                    <c:if test="${fn:contains(pageContext.request.requestURI, 'airplane')}">
+                        <ul class="nav nav-sidebar">
+                            <li><a href="${pageContext.request.contextPath}/airplanes/new"><b>New airplane</b></a></li>
+                            <li><a href="${pageContext.request.contextPath}/airplanes/list"><b>List all airplanes</b></a></li>
+                            <li><a href="${pageContext.request.contextPath}/airplanes/search"><b>Search for an airplane</b></a></li>
+                        </ul> 
+                    </c:if>
+
+                    <!-- DESTINATION submenu -->
+                    <c:if test="${fn:contains(pageContext.request.requestURI, 'destination')}">
+                        <ul class="nav nav-sidebar">
+                            <li><a href="${pageContext.request.contextPath}/destinations/new"><b>New destination</b></a></li>
+                            <li><a href="${pageContext.request.contextPath}/destinations/list"><b>List all destinations</b></a></li>
+                            <li><a href="${pageContext.request.contextPath}/destinations/search"><b>Search for a destination</b></a></li>
+                        </ul> 
+                    </c:if>
+
+                    <!-- STEWARD submenu -->
+                    <c:if test="${fn:contains(pageContext.request.requestURI, 'steward')}">
+                        <ul class="nav nav-sidebar">
+                            <li><a href="${pageContext.request.contextPath}/stewards/new"><b>New steward</b></a></li>
+                            <li><a href="${pageContext.request.contextPath}/stewards/list"><b>List all stewards</b></a></li>
+                            <li><a href="${pageContext.request.contextPath}/stewards/search"><b>Search for a steward</b></a></li>
+                        </ul> 
+                    </c:if>
+
                 </div>
 
-                <!-- page body -->
-                <jsp:invoke fragment="body"/>
-                
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+                    <!-- page body -->
+                    <jsp:invoke fragment="body"/>
+
+                </div>
             </div>
         </div>
     </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Latest compiled and minified Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
     integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- Date picker import cdn -->
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrap-datetimepicker.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>-->
+    <!-- Custom js file -->
+    <script src="<%=request.getContextPath()%>/resources/js/dashboard.js"></script>
 </html>

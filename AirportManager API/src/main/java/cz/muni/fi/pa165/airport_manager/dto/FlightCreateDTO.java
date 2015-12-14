@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.airport_manager.dto;
 
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Data transfer object for the entity Flight.
@@ -13,8 +14,10 @@ public class FlightCreateDTO {
 
     private Boolean international;
 
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date departure;
 
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date arrival;
 
     private AirplaneDTO airplane;
@@ -29,6 +32,15 @@ public class FlightCreateDTO {
      * @return true, if Flight is international, false otherwise.
      */
     public Boolean getInternational() {
+        return international;
+    }
+	
+	/**
+     * Return boolean value whether Flight is international.
+     *
+     * @return true, if Flight is international, false otherwise.
+     */
+    public boolean getInternationalBoolean() {
         return international;
     }
 

@@ -12,5 +12,12 @@
 
     <artifactId>api</artifactId>
     <name>AirportManager API</name>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.2.2.RELEASE</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
 </project>
