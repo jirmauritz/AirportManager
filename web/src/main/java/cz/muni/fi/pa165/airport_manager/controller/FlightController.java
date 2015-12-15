@@ -1,4 +1,4 @@
-zpackage cz.muni.fi.pa165.airport_manager.controller;
+package cz.muni.fi.pa165.airport_manager.controller;
 
 import cz.muni.fi.pa165.airport_manager.config.DataConfiguration;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
