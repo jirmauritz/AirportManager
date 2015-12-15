@@ -31,6 +31,9 @@ public class FlightServiceImpl implements FlightService {
         if (flight.getId() != null) {
             throw new IllegalArgumentException("Id cannot be set.");
         }
+        if (flight.getAirplane() != null) {
+            throw new IllegalArgumentException("Airplane must be null");
+        }
         if (isValid(flight)) {
             try {
                 flightDao.create(flight);
@@ -116,13 +119,13 @@ public class FlightServiceImpl implements FlightService {
             throw new IllegalArgumentException("From Date must be before to Date");
         }
 
-        Set<Flight> allFlights = null;
+        Set<Flight> allFlights;
         try {
             allFlights = flightDao.findAll();
         } catch (Exception e) {
             throw new AirportManagerDataAccessException("This exception was thrown while finding all flights in findFlightsInInterval method.", e);
         }
-        Set<Flight> wantedFlights = new HashSet<Flight>();
+        Set<Flight> wantedFlights = new HashSet<>();
         for (Flight flight : allFlights) {
             if (from.before(flight.getArrival()) && to.after(flight.getDeparture())) {
                 wantedFlights.add(flight);
@@ -131,26 +134,23 @@ public class FlightServiceImpl implements FlightService {
         return wantedFlights;
     }
 
-        private boolean isValid (Flight flight){
-            if (flight.getAirplane() == null ) {
-                throw new IllegalArgumentException("Airplane cannot be null");
-            }
-            if (flight.getArrival() == null) {
-                throw new IllegalArgumentException("Arrival cannot be null");
-            }
-            if (flight.getDeparture() == null) {
-                throw new IllegalArgumentException("Departure cannot be null");
-            }
-            if (flight.getFrom() == null) {
-                throw new IllegalArgumentException("From cannot be null");
-            }
-            if (flight.getTo() == null) {
-                throw new IllegalArgumentException("To cannot be null");
-            }
-            if (flight.getStewards() == null){
-                throw new IllegalArgumentException("Flights cannot be null");
-            }
-            return true;
+    private boolean isValid (Flight flight){
+        if (flight.getArrival() == null) {
+            throw new IllegalArgumentException("Arrival cannot be null");
+        }
+        if (flight.getDeparture() == null) {
+            throw new IllegalArgumentException("Departure cannot be null");
+        }
+        if (flight.getFrom() == null) {
+            throw new IllegalArgumentException("From cannot be null");
+        }
+        if (flight.getTo() == null) {
+            throw new IllegalArgumentException("To cannot be null");
+        }
+        if (flight.getStewards() == null){
+            throw new IllegalArgumentException("Flights cannot be null");
+        }
+        return true;
 
 
     }

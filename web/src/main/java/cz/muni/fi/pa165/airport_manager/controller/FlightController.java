@@ -113,7 +113,8 @@ public class FlightController {
 		FlightCreateDTO flight = new FlightCreateDTO();
 		flight.setDeparture(new Date());
 		flight.setArrival(new Date());
-		flight.setInternational(false);
+		flight.setInternational(true);
+
 		model.addAttribute("flightToCreate", flight);
 
 		// prepare destinations as options
