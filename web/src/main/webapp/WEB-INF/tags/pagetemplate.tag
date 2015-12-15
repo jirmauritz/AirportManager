@@ -46,16 +46,8 @@
                     </button>
                     <a class="navbar-brand" href="">Airport Manager</a>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Dashboard</a></li>
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="#">Help</a></li>
-                    </ul>
-                    <form class="navbar-form navbar-right">
-                        <input type="text" class="form-control" placeholder="Search...">
-                    </form>
+                <div id="navbar" class="navbar-collapse collapse navbar-right">
+                    <a href="logout" class="btn btn-primary btn-sm navbut" class="" role="button">Log Out</a>
                 </div>
             </div>
         </nav>

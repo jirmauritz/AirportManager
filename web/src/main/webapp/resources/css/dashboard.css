@@ -111,3 +111,7 @@ tr.listTable {
 .listTable tbody tr:hover {
     background-color: #509fe3;
 }
+
+.navbut {
+    margin: 10px;
+}
