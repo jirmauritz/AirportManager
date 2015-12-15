@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.airport_manager.controller;
+zpackage cz.muni.fi.pa165.airport_manager.controller;
 
 import cz.muni.fi.pa165.airport_manager.config.DataConfiguration;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
@@ -109,10 +109,11 @@ public class FlightController {
 	@Secured(value = DataConfiguration.ROLE_FLIGHT)
 	public String newCategory(Model model) {
 
-		// prepare new flight
+		// prepare new flight, default values
 		FlightCreateDTO flight = new FlightCreateDTO();
 		flight.setDeparture(new Date());
 		flight.setArrival(new Date());
+		flight.setInternational(false);
 		model.addAttribute("flightToCreate", flight);
 
 		// prepare destinations as options
