@@ -31,9 +31,6 @@ public class FlightServiceImpl implements FlightService {
         if (flight.getId() != null) {
             throw new IllegalArgumentException("Id cannot be set.");
         }
-        if (flight.getAirplane() != null) {
-            throw new IllegalArgumentException("Airplane must be null");
-        }
         if (isValid(flight)) {
             try {
                 flightDao.create(flight);
