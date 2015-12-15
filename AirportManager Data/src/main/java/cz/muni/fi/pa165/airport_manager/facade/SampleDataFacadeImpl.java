@@ -1,23 +1,14 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
 import cz.muni.fi.pa165.airport_manager.config.DataConfiguration;
-import cz.muni.fi.pa165.airport_manager.dto.AirplaneCreateDTO;
-import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
-import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
-import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
-import cz.muni.fi.pa165.airport_manager.dto.FlightCreateDTO;
+import cz.muni.fi.pa165.airport_manager.dto.*;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
-import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Basic implementation of sample data for AirportManager
@@ -107,7 +98,7 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         crew3.add(aracely);
 
         // flights
-        FlightDTO f1 = createFlight(true, new Date(1451664000L), new Date(1451757600000L), crew1, jumbo, SHA430, KAR735);
+        FlightDTO f1 = createFlight(true, new Date(1451664000L), new Date(1451757600000L), null, jumbo, SHA430, KAR735);
         FlightDTO f2 = createFlight(false, new Date(1451736000L), new Date(1451777400000L), crew2, cardinal, SHA430, GUA103);
         FlightDTO f3 = createFlight(true, new Date(1451734200L), new Date(1451755800000L), crew3, jay, MOS673, SEO471);
         FlightDTO f4 = createFlight(true, new Date(1451896200L), new Date(1451911500000L), crew1, vulture, LIM467, SAP339);
@@ -242,10 +233,11 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
 
         Long id = flightFacade.create(f);
 
-        for (StewardSimpleDTO s : stewards) {
-            flightFacade.addSteward(s.getId(), id);
+        if (stewards !=null) {
+            for (StewardSimpleDTO s : stewards) {
+                flightFacade.addSteward(s.getId(), id);
+            }
         }
-
         return flightFacade.getFlight(id);
     }
 }
