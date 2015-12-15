@@ -3,6 +3,8 @@ package cz.muni.fi.pa165.airport_manager.facade;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.AirplaneDTO;
 import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
+
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -58,5 +60,14 @@ public interface AirplaneFacade {
      * @return set of airplane DTOs
      */
     Set<AirplaneDTO> findByMinCapacity(int minCapacity);
+
+    /**
+     * Returns all available airplanes in the specified interval
+     *
+     * @param from start of the interval
+     * @param to end of the interval
+     * @return set of available planes
+     */
+    Set<AirplaneDTO> getAllAvailable(Date from, Date to);
 
 }

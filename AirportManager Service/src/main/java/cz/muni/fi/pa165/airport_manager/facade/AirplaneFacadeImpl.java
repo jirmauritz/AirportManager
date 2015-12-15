@@ -29,7 +29,6 @@ public class AirplaneFacadeImpl implements AirplaneFacade {
     @Override
     public Long createAirplane(AirplaneCreateDTO airplane) {
         Objects.requireNonNull(airplane);
-
         return airplaneService.create(mappingService.mapTo(airplane, Airplane.class));
     }
     
@@ -47,21 +46,23 @@ public class AirplaneFacadeImpl implements AirplaneFacade {
 
     @Override
     public Set<AirplaneDTO> findAll() {
-        Set<Airplane> airplanes = airplaneService.findAll();
-        return new HashSet<>(mappingService.mapTo(airplanes, AirplaneDTO.class));
+        return new HashSet<>(mappingService.mapTo(airplaneService.findAll(), AirplaneDTO.class));
     }
     
     @Override
     public Set<AirplaneDTO> findByType(AirplaneType type) {
         Objects.requireNonNull(type);
-
-        Set<Airplane> airplanes = airplaneService.findByType(type);
-        return new HashSet<>(mappingService.mapTo(airplanes, AirplaneDTO.class));
+        return new HashSet<>(mappingService.mapTo(airplaneService.findByType(type), AirplaneDTO.class));
     }
 
     @Override
     public Set<AirplaneDTO> findByMinCapacity(int minCapacity) {
-        Set<Airplane> airplanes = airplaneService.findByMinCapacity(minCapacity);
-        return new HashSet<>(mappingService.mapTo(airplanes, AirplaneDTO.class));
+        return new HashSet<>(mappingService.mapTo(airplaneService.findByMinCapacity(minCapacity), AirplaneDTO.class));
+    }
+
+    @Override
+    public Set<AirplaneDTO> getAllAvailable(Date from, Date to) {
+        return new HashSet<>(mappingService.mapTo(airplaneService.getAllAvailable(from, to), AirplaneDTO.class));
     }
 }
+

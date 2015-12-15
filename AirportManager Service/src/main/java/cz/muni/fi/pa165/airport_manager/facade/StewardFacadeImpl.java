@@ -80,4 +80,9 @@ public class StewardFacadeImpl implements StewardFacade {
     public Set<FlightDTO> getAllFlightsForSteward(Long id) {
         return this.getSteward(id).getFlights();
     }
+
+    @Override
+    public Set<StewardSimpleDTO> getAllAvailable(Date from, Date to) {
+        return mappingService.mapTo(stewardService.getAllAvailable(from, to), StewardSimpleDTO.class);
+    }
 }

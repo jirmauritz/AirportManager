@@ -1,10 +1,8 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
-import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
+import cz.muni.fi.pa165.airport_manager.dto.*;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -61,4 +59,13 @@ public interface StewardFacade {
      * @return sorted set of flights
      */
     Set<FlightDTO> getAllFlightsForSteward(Long id);
+
+    /**
+     * Returns all available stewards in the specified interval
+     *
+     * @param from start of the interval
+     * @param to end of the interval
+     * @return set of available stewards
+     */
+    Set<StewardSimpleDTO> getAllAvailable(Date from, Date to);
 }
