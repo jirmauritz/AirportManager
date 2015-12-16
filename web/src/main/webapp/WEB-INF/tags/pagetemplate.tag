@@ -47,7 +47,7 @@
                     <a class="navbar-brand" href="">Airport Manager</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse navbar-right">
-                    <a href="logout" class="btn btn-primary btn-sm navbut" class="" role="button">Log Out</a>
+                    <a href="${pageContext.request.contextPath}/logout" class="btn btn-primary btn-sm navbut" class="" role="button">Log Out</a>
                 </div>
             </div>
         </nav>
@@ -57,7 +57,7 @@
                     <ul class="nav nav-sidebar">
                         <li class="${fn:contains(pageContext.request.requestURI, 'home') ? ' active' : ''}"><a href="${pageContext.request.contextPath}">Overview </a></li>
                         <li class="${fn:contains(pageContext.request.requestURI, 'flight') ? ' active' : ''}"><a href="${pageContext.request.contextPath}/flights/list">Flights</a></li>
-                        <li class="${fn:contains(pageContext.request.requestURI, 'airplane') ? ' active' : ''}"><a href="">Airplanes</a></li>
+                        <li class="${fn:contains(pageContext.request.requestURI, 'airplane') ? ' active' : ''}"><a href="${pageContext.request.contextPath}/airplanes/list">Airplanes</a></li>
                         <li class="${fn:contains(pageContext.request.requestURI, 'steward') ? ' active' : ''}"><a href="">Stewards</a></li>
                         <li class="${fn:contains(pageContext.request.requestURI, 'destination') ? ' active' : ''}"><a href="">Destinations</a></li>
                     </ul>
@@ -76,7 +76,6 @@
                     <c:if test="${fn:contains(pageContext.request.requestURI, 'airplane')}">
                         <ul class="nav nav-sidebar">
                             <li><a href="${pageContext.request.contextPath}/airplanes/new"><b>New airplane</b></a></li>
-                            <li><a href="${pageContext.request.contextPath}/airplanes/list"><b>List all airplanes</b></a></li>
                             <li><a href="${pageContext.request.contextPath}/airplanes/search"><b>Search for an airplane</b></a></li>
                         </ul> 
                     </c:if>
