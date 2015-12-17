@@ -65,6 +65,7 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         AirplaneDTO cardinal = createAirplane("Boeing 747 Cardinal", AirplaneType.BUSINESS, 427);
         AirplaneDTO jay = createAirplane("Airbus A320 Jay", AirplaneType.FIRST, 200);
         AirplaneDTO wren = createAirplane("Airbus A320 Wren", AirplaneType.ECONOMY, 525);
+        AirplaneDTO swallow = createAirplane("Airbus A320 Swallow", AirplaneType.ECONOMY, 100);
 
         // stewards
         StewardDTO carman = createSteward("Carman", "Parlier");

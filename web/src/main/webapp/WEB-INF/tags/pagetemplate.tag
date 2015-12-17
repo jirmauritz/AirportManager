@@ -1,4 +1,5 @@
 <%@ tag pageEncoding="utf-8" dynamic-attributes="dynattrs" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ attribute name="title" required="false" %>
@@ -23,8 +24,6 @@
 
         <!-- Bootstrap select css -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.min.css">
-
-
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -75,8 +74,9 @@
                     <!-- AIRPLANE submenu -->
                     <c:if test="${fn:contains(pageContext.request.requestURI, 'airplane')}">
                         <ul class="nav nav-sidebar">
-                            <li><a href="${pageContext.request.contextPath}/airplanes/new"><b>New airplane</b></a></li>
-                            <li><a href="${pageContext.request.contextPath}/airplanes/search"><b>Search for an airplane</b></a></li>
+                            <sec:authorize ifAllGranted="ROLE_airport">
+                                <li><a href="${pageContext.request.contextPath}/airplanes/new"><b>New airplane</b></a></li>
+                                </sec:authorize>
                         </ul> 
                     </c:if>
 
