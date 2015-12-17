@@ -34,7 +34,6 @@ public class Flight {
 	@ManyToMany
 	private Set<Steward> stewards = new HashSet<>();
 	
-	@NotNull
 	@ManyToOne
 	private Airplane airplane;
 	

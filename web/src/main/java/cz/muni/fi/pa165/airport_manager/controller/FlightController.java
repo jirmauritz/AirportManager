@@ -120,11 +120,6 @@ public class FlightController {
 		// prepare destinations as options
 		Set<DestinationSimpleDTO> destinations = destinationFacade.findAll();
 		model.addAttribute("destinations", convertDestinationsToStrings(destinations));
-		// prepare airplanes as options
-		Set<AirplaneDTO> airplanes = airplaneFacade.findAll();
-		model.addAttribute("airplanes", convertAirplanesToStrings(airplanes));
-		Set<StewardSimpleDTO> stewards = stewardFacade.getAllStewards();
-		model.addAttribute("stewards", convertStewardsToStrings(stewards));
 
 		return "flight/new";
 	}

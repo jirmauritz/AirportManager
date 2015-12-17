@@ -16,7 +16,7 @@
                 </div>   
                 <h4> Arrival </h4>
                 <div class="well">
-                    <c:out value="${flight.departure}"/>
+                    <c:out value="${flight.arrival}"/>
                 </div>  
                 <h4> From </h4>
                 <div class="well">
