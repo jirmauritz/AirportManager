@@ -79,6 +79,7 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         StewardDTO ema = createSteward("Ema", "Holder");
         StewardDTO lavette = createSteward("Lavette", "Gully");
         StewardDTO aracely = createSteward("Aracely", "Dimas");
+        StewardDTO notassigned = createSteward("Not", "Assigned");
 
         // crews
         Set<StewardSimpleDTO> crew1 = new HashSet<>();

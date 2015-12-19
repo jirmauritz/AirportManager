@@ -6,7 +6,9 @@ import cz.muni.fi.pa165.airport_manager.facade.AirplaneFacade;
 import cz.muni.fi.pa165.airport_manager.facade.DestinationFacade;
 import cz.muni.fi.pa165.airport_manager.facade.FlightFacade;
 import cz.muni.fi.pa165.airport_manager.facade.StewardFacade;
+import org.dozer.MappingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,17 +44,6 @@ public class StewardController {
 	private StewardFacade stewardFacade;
 
     /**
-     * Delegates '' to '/list'
-     *
-     * @param model data to display
-     * @return JSP page name
-     */
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String root(Model model) throws Exception {
-        return this.list(model);
-    }
-
-    /**
      * All stewards
      *
      * @param model data to display
@@ -75,6 +66,43 @@ public class StewardController {
     public String list(@PathVariable long id, Model model) {
         model.addAttribute("steward", stewardFacade.getSteward(id));
         return PATH_PREFIX + "/detail";
+    }
+
+    /**
+     * Create new airplane from mapped form values
+     * @param id airplane id
+     * @param model displayed data
+     * @param redirectAttributes redirected attributes
+     * @param uriBuilder url builder
+     * @return redirection according to action result
+     */
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @Secured(value = DataConfiguration.ROLE_AIRPORT)
+    public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
+                         UriComponentsBuilder uriBuilder) {
+
+        StewardDTO steward;
+        try {
+            steward = stewardFacade.getSteward(id);
+        } catch (MappingException e) {
+            redirectAttributes.addFlashAttribute("error", "Steward with id " + id
+                    + " does not exist.");
+            return "redirect:/action";
+        }
+
+        // Try to delete airplane
+        try {
+            stewardFacade.deleteSteward(id);
+        } catch (JpaSystemException e) {
+            redirectAttributes.addFlashAttribute("warning", "Cannot remove steward with id " + id
+                    + ". It is still assigned to some flight.");
+            return "redirect:/action";
+        }
+
+        // Report success
+        redirectAttributes.addFlashAttribute("success", "Steward " + steward.getFirstName() + ' '
+                + steward.getLastName() + " with id " + id + " successfully deleted.");
+        return "redirect:/action";
     }
 
 }

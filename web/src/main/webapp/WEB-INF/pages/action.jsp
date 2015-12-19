@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" trimDirectiveWhitespaces="true" session="false" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" session="false" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -9,7 +9,6 @@
         <c:if test="${not empty error}">
         <div class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            
             <strong>Error: </strong><c:out value="${error}"/>
         </div>
         </c:if>

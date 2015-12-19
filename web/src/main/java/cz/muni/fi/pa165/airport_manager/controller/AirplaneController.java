@@ -84,7 +84,7 @@ public class AirplaneController {
         AirplaneCreateDTO airplane = new AirplaneCreateDTO();
 
         // Load all airplane types
-        List<String> types = new ArrayList<String>();
+        List<String> types = new ArrayList<>();
 
         for (AirplaneType t : AirplaneType.values()) {
             types.add(t.toString().toUpperCase());
@@ -101,7 +101,7 @@ public class AirplaneController {
      * @param airplane to be created
      * @param model to be displayed
      * @param redirectAttributes redirected attributes
-     * @param uriBuilder
+     * @param uriBuilder url builder
      * @return redirection according to action result
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -130,7 +130,7 @@ public class AirplaneController {
      * @param id airplane id
      * @param model displayed data
      * @param redirectAttributes redirected attributes
-     * @param uriBuilder
+     * @param uriBuilder url builder
      * @return redirection according to action result
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
@@ -145,7 +145,7 @@ public class AirplaneController {
         } catch (MappingException e) {
             redirectAttributes.addFlashAttribute("error", "Airplane with id " + id
                     + " does not exist.");
-            return "redirect:" + uriBuilder.path("/airplanes/action").toUriString();
+            return "redirect:/action";
         }
 
         // Try to delete airplane
@@ -154,12 +154,12 @@ public class AirplaneController {
         } catch (JpaSystemException e) {
             redirectAttributes.addFlashAttribute("warning", "Cannot remove airplane with id " + id
                     + ". It is still used by some flight.");
-            return "redirect:" + uriBuilder.path("/airplanes/action").toUriString();
+            return "redirect:/action";
         }
 
         // Report success
         redirectAttributes.addFlashAttribute("success", "Airplane " + airplane.getName()
                 + " with id " + id + " successfully deleted.");
-        return "redirect:" + uriBuilder.path("/airplanes/action").toUriString();
+        return "redirect:/action";
     }
 }
