@@ -17,9 +17,9 @@
                         <th>Name</th>
                         <th>Type</th>
                         <th>Capacity</th>
-                            <sec:authorize ifAllGranted="ROLE_airport">
+                        <sec:authorize ifAllGranted="ROLE_airport">
                             <th></th>
-                            </sec:authorize>
+                        </sec:authorize>
                     </tr>
                 </thead>
                 <tbody>

@@ -126,7 +126,7 @@ public class AirplaneController {
     }
 
     /**
-     * Create new airplane from mapped form values
+     * Delete airplane by id
      * @param id airplane id
      * @param model displayed data
      * @param redirectAttributes redirected attributes
