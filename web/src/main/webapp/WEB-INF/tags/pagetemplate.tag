@@ -1,7 +1,7 @@
-<%@ tag pageEncoding="utf-8" dynamic-attributes="dynattrs" trimDirectiveWhitespaces="true" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ tag pageEncoding="utf-8" dynamic-attributes="dynattrs" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ attribute name="title" required="false" %>
 <%@ attribute name="head" fragment="true" %>
 <%@ attribute name="body" fragment="true" required="true" %>
@@ -16,15 +16,14 @@
         <title>Airport Manager</title>
 
         <!-- Latest compiled and minified Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
-              integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" crossorigin="anonymous">
 
         <!-- Custom styles for this template -->
-        <link href="<%=request.getContextPath()%>/resources/css/dashboard.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/dashboard.css" rel="stylesheet">
 
         <!-- Bootstrap select css -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.min.css">
-        
+
         <!-- Bootstrap datetime picker css -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
 
@@ -49,7 +48,7 @@
                     <a class="navbar-brand" href="">Airport Manager</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse navbar-right">
-                    <a href="${pageContext.request.contextPath}/logout" class="btn btn-primary btn-sm navbut" class="" role="button">Log Out</a>
+                    <a href="${pageContext.request.contextPath}/logout" class="btn btn-primary btn-sm navbut" role="button">Log Out</a>
                 </div>
             </div>
         </nav>
@@ -57,50 +56,60 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="${fn:contains(pageContext.request.requestURI, 'home') ? ' active' : ''}"><a href="${pageContext.request.contextPath}">Overview </a></li>
-                        <li class="${fn:contains(pageContext.request.requestURI, 'flight') ? ' active' : ''}"><a href="${pageContext.request.contextPath}/flights/list">Flights</a></li>
-                        <li class="${fn:contains(pageContext.request.requestURI, 'airplane') ? ' active' : ''}"><a href="${pageContext.request.contextPath}/airplanes/list">Airplanes</a></li>
-                        <li class="${fn:contains(pageContext.request.requestURI, 'steward') ? ' active' : ''}"><a href="">Stewards</a></li>
-                        <li class="${fn:contains(pageContext.request.requestURI, 'destination') ? ' active' : ''}"><a href="">Destinations</a></li>
+
+                        <li class="${fn:contains(pageContext.request.requestURI, 'home') ? ' active' : ''}">
+                            <a href="${pageContext.request.contextPath}">Overview</a>
+                        </li>
+
+                        <li><a href="${pageContext.request.contextPath}/flights/list">Flights</a></li>
+                        <c:if test="${fn:contains(pageContext.request.requestURI, 'flight')}">
+                            <li class="${fn:contains(pageContext.request.requestURI, 'flight/list') ? ' active' : ''}">
+                                <a href="${pageContext.request.contextPath}/flights/list">&nbsp;&nbsp;&nbsp;&nbsp;<b>List all flights</b></a>
+                            </li>
+                            <sec:authorize access="hasRole('ROLE_flight')">
+                                <li class="${fn:contains(pageContext.request.requestURI, 'flight/new') ? ' active' : ''}">
+                                    <a href="${pageContext.request.contextPath}/flights/new">&nbsp;&nbsp;&nbsp;&nbsp;<b>New flight</b></a>
+                                </li>
+                            </sec:authorize>
+                        </c:if>
+
+                        <li><a href="${pageContext.request.contextPath}/airplanes/list">Airplanes</a></li>
+                        <c:if test="${fn:contains(pageContext.request.requestURI, 'airplane')}">
+                            <li class="${fn:contains(pageContext.request.requestURI, 'airplane/list') ? ' active' : ''}">
+                                <a href="${pageContext.request.contextPath}/airplanes/list">&nbsp;&nbsp;&nbsp;&nbsp;<b>List all airplanes</b></a>
+                            </li>
+                            <sec:authorize access="hasRole('ROLE_airport')">
+                                <li class="${fn:contains(pageContext.request.requestURI, 'airplane/new') ? ' active' : ''}">
+                                    <a href="${pageContext.request.contextPath}/airplanes/new">&nbsp;&nbsp;&nbsp;&nbsp;<b>New airplane</b></a>
+                                </li>
+                            </sec:authorize>
+                        </c:if>
+
+                        <li><a href="${pageContext.request.contextPath}/stewards/list">Stewards</a></li>
+                        <c:if test="${fn:contains(pageContext.request.requestURI, 'steward')}">
+                            <li class="${fn:contains(pageContext.request.requestURI, 'steward/list') ? ' active' : ''}">
+                                <a href="${pageContext.request.contextPath}/stewards/list">&nbsp;&nbsp;&nbsp;&nbsp;<b>List all stewards</b></a>
+                            </li>
+                            <sec:authorize access="hasRole('ROLE_airport')">
+                                <li class="${fn:contains(pageContext.request.requestURI, 'steward/new') ? ' active' : ''}">
+                                    <a href="${pageContext.request.contextPath}/stewards/new">&nbsp;&nbsp;&nbsp;&nbsp;<b>New steward</b></a>
+                                </li>
+                            </sec:authorize>
+                        </c:if>
+
+                        <li><a href="${pageContext.request.contextPath}/destinations/list">Destinations</a></li>
+                        <c:if test="${fn:contains(pageContext.request.requestURI, 'destination')}">
+                            <li class="${fn:contains(pageContext.request.requestURI, 'destination/list') ? ' active' : ''}">
+                                <a href="${pageContext.request.contextPath}/destinations/list">&nbsp;&nbsp;&nbsp;&nbsp;<b>List all destinations</b></a>
+                            </li>
+                            <sec:authorize access="hasRole('ROLE_airport')">
+                                <li class="${fn:contains(pageContext.request.requestURI, 'destination/new') ? ' active' : ''}">
+                                    <a href="${pageContext.request.contextPath}/destinations/new">&nbsp;&nbsp;&nbsp;&nbsp;<b>New destination</b></a>
+                                </li>
+                            </sec:authorize>
+                        </c:if>
+
                     </ul>
-
-                    <!-- Submenu is different in every page -->
-                    <!-- FLIGHT submenu -->
-                    <c:if test="${fn:contains(pageContext.request.requestURI, 'flight')}">
-                        <ul class="nav nav-sidebar">
-                            <li><a href="${pageContext.request.contextPath}/flights/new"><b>New flight</b></a></li>
-                            <li><a href="${pageContext.request.contextPath}/flights/list"><b>List all flights</b></a></li>
-                            <li><a href="${pageContext.request.contextPath}/flights/search"><b>Search for a flight</b></a></li>
-                        </ul>
-                    </c:if>
-
-                    <!-- AIRPLANE submenu -->
-                    <c:if test="${fn:contains(pageContext.request.requestURI, 'airplane')}">
-                        <ul class="nav nav-sidebar">
-                            <sec:authorize ifAllGranted="ROLE_airport">
-                                <li><a href="${pageContext.request.contextPath}/airplanes/new"><b>New airplane</b></a></li>
-                                </sec:authorize>
-                        </ul> 
-                    </c:if>
-
-                    <!-- DESTINATION submenu -->
-                    <c:if test="${fn:contains(pageContext.request.requestURI, 'destination')}">
-                        <ul class="nav nav-sidebar">
-                            <li><a href="${pageContext.request.contextPath}/destinations/new"><b>New destination</b></a></li>
-                            <li><a href="${pageContext.request.contextPath}/destinations/list"><b>List all destinations</b></a></li>
-                            <li><a href="${pageContext.request.contextPath}/destinations/search"><b>Search for a destination</b></a></li>
-                        </ul> 
-                    </c:if>
-
-                    <!-- STEWARD submenu -->
-                    <c:if test="${fn:contains(pageContext.request.requestURI, 'steward')}">
-                        <ul class="nav nav-sidebar">
-                            <li><a href="${pageContext.request.contextPath}/stewards/new"><b>New steward</b></a></li>
-                            <li><a href="${pageContext.request.contextPath}/stewards/list"><b>List all stewards</b></a></li>
-                            <li><a href="${pageContext.request.contextPath}/stewards/search"><b>Search for a steward</b></a></li>
-                        </ul> 
-                    </c:if>
-
                 </div>
 
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -116,12 +125,11 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Latest compiled and minified Bootstrap JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
-    integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <!-- Bootstrap select js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js"></script>
     <!-- Bootstrap datetimepicker js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <!-- Custom js file -->
-    <script src="<%=request.getContextPath()%>/resources/js/dashboard.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/dashboard.js"></script>
 </html>

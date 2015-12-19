@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" trimDirectiveWhitespaces="true" session="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" session="false" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,11 +11,10 @@
         <title>Airport Manager</title>
 
         <!-- Latest compiled and minified Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
-              integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" crossorigin="anonymous">
 
         <!-- Custom styles for this template -->
-        <link href="/pa165/resources/css/login.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet">
 
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -35,13 +35,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="">Airport Manager</a>
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}">Airport Manager</a>
                 </div>
             </div>
         </nav>
 
         <div class="container">
-            <img class="img-responsive center-block img-airplane" src="/pa165/resources/images/airplane.gif" />
+            <img class="img-responsive center-block img-airplane" src="${pageContext.request.contextPath}/resources/images/airplane.gif" />
             <form name="f" class="form-signin" action="login" method="post">
                 <input class="form-control" type="text" id="username" name="username" placeholder="Username"/>
                 <input class="form-control" type="password" id="password" name="password" placeholder="Password">
