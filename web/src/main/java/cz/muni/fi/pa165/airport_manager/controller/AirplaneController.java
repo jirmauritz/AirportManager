@@ -67,7 +67,7 @@ public class AirplaneController {
     @RequestMapping(value = "/action", method = RequestMethod.GET)
     @Secured(value = {DataConfiguration.ROLE_FLIGHT, DataConfiguration.ROLE_AIRPORT})
     public String action(Model model) {
-        return "airplane/action";
+        return "action";
     }
 
     /**
