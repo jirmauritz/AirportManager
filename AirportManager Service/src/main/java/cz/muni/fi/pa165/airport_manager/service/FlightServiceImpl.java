@@ -141,6 +141,9 @@ public class FlightServiceImpl implements FlightService {
         if (flight.getFrom() == null) {
             throw new IllegalArgumentException("From cannot be null");
         }
+		if (flight.getDeparture().after(flight.getArrival())) {
+			throw new IllegalArgumentException("Departure of the flight must be before arrival.");
+		}
         if (flight.getTo() == null) {
             throw new IllegalArgumentException("To cannot be null");
         }
