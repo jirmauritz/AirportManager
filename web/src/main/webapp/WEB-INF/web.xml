@@ -8,6 +8,10 @@
     <display-name>Airport Manager</display-name>
 
     <error-page>
+        <error-code>900</error-code>
+        <location>/WEB-INF/pages/error/900.jsp</location>
+    </error-page>
+    <error-page>
         <error-code>500</error-code>
         <location>/WEB-INF/pages/error/500.jsp</location>
     </error-page>

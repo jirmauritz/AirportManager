@@ -114,6 +114,28 @@
 
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <strong>Error: </strong><c:out value="${error}"/>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${not empty warning}">
+                        <div class="alert alert-warning" role="alert">
+                            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                            <strong>Warning: </strong><c:out value="${warning}"/>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${not empty success}">
+                        <div class="alert alert-success" role="alert">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            <span class="sr-only">Success:</span>
+                            <strong>Success: </strong><c:out value="${success}"/>
+                        </div>
+                    </c:if>
+
                     <!-- page body -->
                     <jsp:invoke fragment="body"/>
 

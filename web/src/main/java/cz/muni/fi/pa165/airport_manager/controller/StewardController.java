@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.airport_manager.controller;
 
 import cz.muni.fi.pa165.airport_manager.config.DataConfiguration;
 import cz.muni.fi.pa165.airport_manager.dto.*;
+import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
+import cz.muni.fi.pa165.airport_manager.exception.AirportManagerDataAccessException;
 import cz.muni.fi.pa165.airport_manager.facade.AirplaneFacade;
 import cz.muni.fi.pa165.airport_manager.facade.DestinationFacade;
 import cz.muni.fi.pa165.airport_manager.facade.FlightFacade;
@@ -21,9 +23,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Provides the main steward manager interface.
@@ -36,9 +37,6 @@ import java.util.Set;
 public class StewardController {
 
     private static final String PATH_PREFIX = "/steward";
-
-	@Autowired
-	private FlightFacade flightFacade;
 
 	@Autowired
 	private StewardFacade stewardFacade;
@@ -63,46 +61,138 @@ public class StewardController {
      * @return JSP page name
      */
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public String list(@PathVariable long id, Model model) {
-        model.addAttribute("steward", stewardFacade.getSteward(id));
+    public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
+        final StewardDTO stewardDTO = stewardFacade.getSteward(id);
+        if (stewardDTO == null) {
+            redirectAttributes.addFlashAttribute("warning", "No steward with id " + id + "exists.");
+            return "redirect:/stewards/list";
+        }
+
+        model.addAttribute("steward", stewardDTO);
         return PATH_PREFIX + "/detail";
+    }
+
+    /**
+     * Prepare empty steward and return new page
+     *
+     * @param model data to display
+     * @return JSP page name
+     */
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    @Secured(DataConfiguration.ROLE_AIRPORT)
+    public String newSteward(Model model) {
+        final StewardCreateDTO stewardCreateDTO = new StewardCreateDTO();
+        model.addAttribute("stewardDTO", stewardCreateDTO);
+        return PATH_PREFIX + "/new";
+    }
+
+    /**
+     * Shows update page of one steward.
+     *
+     * @param id of the steward
+     * @param model data to display
+     * @param redirectAttributes redirected attributes
+     * @return JSP page name
+     */
+    @RequestMapping(value = "/new/{id}", method = RequestMethod.GET)
+    @Secured(DataConfiguration.ROLE_AIRPORT)
+    public String update(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
+        final StewardDTO stewardDTO = stewardFacade.getSteward(id);
+        if (stewardDTO == null) {
+            redirectAttributes.addFlashAttribute("warning", "No steward with id " + id + "exists.");
+            return "redirect:/stewards/list";
+        }
+        model.addAttribute("stewardDTO", stewardDTO);
+        model.addAttribute("stewardId", Long.toString(id));
+        return PATH_PREFIX + "/new";
+    }
+
+    /**
+     * Create new steward from mapped form values
+     *
+     * @param stewardCreateDTO to be created
+     * @param model data to display
+     * @param redirectAttributes redirected attributes
+     * @return redirection according to action result
+     */
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @Secured(value = DataConfiguration.ROLE_AIRPORT)
+    public String create(@Valid @ModelAttribute("stewardDTO") StewardCreateDTO stewardCreateDTO,
+                         Model model, RedirectAttributes redirectAttributes) {
+        if (!isValid(stewardCreateDTO)) {
+            model.addAttribute("warning", "Steward names are not correct");
+            model.addAttribute("stewardDTO", stewardCreateDTO);
+            return PATH_PREFIX + "/new";
+        }
+        final Long id = stewardFacade.createSteward(stewardCreateDTO);
+        // Report success
+        redirectAttributes.addFlashAttribute("success", "Steward " +
+                stewardCreateDTO.getFirstName() + ' ' + stewardCreateDTO.getLastName() +
+                " successfully created with id " + id + ".");
+        return "redirect:/stewards/detail/" + id;
+    }
+
+    /**
+     * Update steward from mapped form values
+     *
+     * @param stewardCreateDTO to be updated
+     * @param id of the steward
+     * @param model data to display
+     * @param redirectAttributes redirected attributes
+     * @return redirection according to action result
+     */
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @Secured(value = DataConfiguration.ROLE_AIRPORT)
+    public String update(@Valid @ModelAttribute("stewardDTO") StewardCreateDTO stewardCreateDTO, @PathVariable long id,
+                         Model model, RedirectAttributes redirectAttributes) {
+        if (!isValid(stewardCreateDTO)) {
+            model.addAttribute("warning", "Steward names are not correct");
+            model.addAttribute("stewardDTO", stewardCreateDTO);
+            model.addAttribute("stewardId", Long.toString(id));
+            return PATH_PREFIX + "/new";
+        }
+        stewardFacade.updateNames(id, stewardCreateDTO.getFirstName(), stewardCreateDTO.getLastName());
+        // Report success
+        redirectAttributes.addFlashAttribute("success", "Steward " +
+                stewardCreateDTO.getFirstName() + ' ' + stewardCreateDTO.getLastName() +
+                "with id " + id + " successfully updated.");
+        return "redirect:/stewards/detail/" + id;
     }
 
     /**
      * Create new airplane from mapped form values
      * @param id airplane id
-     * @param model displayed data
      * @param redirectAttributes redirected attributes
-     * @param uriBuilder url builder
      * @return redirection according to action result
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @Secured(value = DataConfiguration.ROLE_AIRPORT)
-    public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
-                         UriComponentsBuilder uriBuilder) {
+    @Secured(DataConfiguration.ROLE_AIRPORT)
+    public String delete(@PathVariable long id, RedirectAttributes redirectAttributes) {
+        final StewardDTO steward = stewardFacade.getSteward(id);
 
-        StewardDTO steward;
-        try {
-            steward = stewardFacade.getSteward(id);
-        } catch (MappingException e) {
-            redirectAttributes.addFlashAttribute("error", "Steward with id " + id
-                    + " does not exist.");
-            return "redirect:/action";
+        if (steward == null) {
+            redirectAttributes.addFlashAttribute("warning", "No steward with id " + id + "exists.");
+            return "redirect:/stewards/list";
         }
 
-        // Try to delete airplane
-        try {
-            stewardFacade.deleteSteward(id);
-        } catch (JpaSystemException e) {
-            redirectAttributes.addFlashAttribute("warning", "Cannot remove steward with id " + id
-                    + ". It is still assigned to some flight.");
-            return "redirect:/action";
+        if (!steward.getFlights().isEmpty()) {
+            redirectAttributes.addFlashAttribute("warning", "Cannot remove steward " +
+                    steward.getFirstName() + ' ' + steward.getLastName() +
+                    " with id " + id + ". It is still assigned to some flight.");
+            return "redirect:/stewards/detail/" + id;
         }
 
-        // Report success
+        stewardFacade.deleteSteward(id);
+
         redirectAttributes.addFlashAttribute("success", "Steward " + steward.getFirstName() + ' '
                 + steward.getLastName() + " with id " + id + " successfully deleted.");
-        return "redirect:/action";
+        return "redirect:/stewards/list";
+    }
+
+    private static boolean isValid(final StewardCreateDTO steward) {
+        if (steward.getFirstName().isEmpty()) return false;
+        if (steward.getLastName().isEmpty()) return false;
+        return steward.getFirstName().matches("(?:\\s*\\p{L})+") && steward.getLastName().matches("(?:\\s*\\p{L})+");
     }
 
 }

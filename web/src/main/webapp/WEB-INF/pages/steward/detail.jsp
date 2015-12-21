@@ -6,7 +6,14 @@
 
     <jsp:attribute name="body">
 
-        <h1 class="page-header">Steward </h1>
+        <h1 class="page-header">
+            Steward
+            <a href="${pageContext.request.contextPath}/stewards/new/${steward.id}"
+               class="btn btn-primary btn-sm navbut" role="button">Edit</a>
+            <a class="btn btn-primary btn-sm navbut" role="button"
+               data-toggle="modal" data-target="#stewardDeleting">Delete</a>
+        </h1>
+
 
         <div class="row">
             <div class="col-sm-5">
@@ -53,6 +60,28 @@
             </div>
         </div>
 
+        <div id="stewardDeleting" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Delete Steward</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this steward?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="${pageContext.request.contextPath}/stewards/delete/${steward.id}"
+                           type="button" class="btn btn-default"
+                           onclick="resoudre(this)"> OK</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
     </jsp:attribute>
 </tags:pagetemplate>

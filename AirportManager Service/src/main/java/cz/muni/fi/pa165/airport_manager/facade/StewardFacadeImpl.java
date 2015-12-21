@@ -1,9 +1,6 @@
 package cz.muni.fi.pa165.airport_manager.facade;
 
-import cz.muni.fi.pa165.airport_manager.dto.FlightDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardCreateDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardDTO;
-import cz.muni.fi.pa165.airport_manager.dto.StewardSimpleDTO;
+import cz.muni.fi.pa165.airport_manager.dto.*;
 import cz.muni.fi.pa165.airport_manager.entity.Steward;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import cz.muni.fi.pa165.airport_manager.service.StewardService;
@@ -33,10 +30,8 @@ public class StewardFacadeImpl implements StewardFacade {
     public Long createSteward(final StewardCreateDTO steward) {
         Objects.requireNonNull(steward);
 
-
         return stewardService.createSteward(
-                mappingService.mapTo(steward, Steward.class)
-        );
+                mappingService.mapTo(steward, Steward.class));
     }
 
     @Override
@@ -44,9 +39,7 @@ public class StewardFacadeImpl implements StewardFacade {
         Objects.requireNonNull(id);
 
         return mappingService.mapTo(
-                stewardService.findSteward(id),
-                StewardDTO.class
-        );
+                stewardService.findSteward(id), StewardDTO.class);
     }
 
     @Override
@@ -74,11 +67,6 @@ public class StewardFacadeImpl implements StewardFacade {
         stewardService.updateSteward(
             mappingService.mapTo(steward, Steward.class)
         );
-    }
-
-    @Override
-    public Set<FlightDTO> getAllFlightsForSteward(Long id) {
-        return this.getSteward(id).getFlights();
     }
 
     @Override

@@ -29,7 +29,7 @@ public interface StewardFacade {
     Long createSteward(StewardCreateDTO steward);
 
     /**
-     * Returns the specified steward with more detail.
+     * Returns the specified steward with more detail or null if no steward with specified id exists.
      *
      * @param id id of steward to get detail for
      * @return Steward with all details
@@ -51,14 +51,6 @@ public interface StewardFacade {
      * @param lastName new last name of the steward
      */
     void updateNames(Long id, String firstName, String lastName);
-
-    /**
-     * This is just convenience method for {@link StewardFacade#getSteward(Long)}.getFlights()
-     *
-     * @param id id of steward to find flights for
-     * @return sorted set of flights
-     */
-    Set<FlightDTO> getAllFlightsForSteward(Long id);
 
     /**
      * Returns all available stewards in the specified interval

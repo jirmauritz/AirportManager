@@ -14,18 +14,24 @@ import java.util.*;
  */
 @Service
 public class MappingServiceImpl implements MappingService {
+
     @Autowired
     private Mapper dozer;
 
     public  <T> Set<T> mapTo(Collection<?> objects, Class<T> mapToClass) {
         Set<T> mappedCollection = new HashSet<>();
         for (Object object : objects) {
-            mappedCollection.add(dozer.map(object, mapToClass));
+            if (object == null) {
+                continue;
+            }
+            mappedCollection.add(this.mapTo(object, mapToClass));
         }
         return mappedCollection;
     }
 
-    public  <T> T mapTo(Object u, Class<T> mapToClass) {
+    public <T> T mapTo(Object u, Class<T> mapToClass) {
+        if (u == null) return null;
         return dozer.map(u,mapToClass);
     }
+
 }

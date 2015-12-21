@@ -79,13 +79,9 @@ public class AirplaneController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
     public String newCategory(Model model) {
-
-        // prepare new flight, default values
         AirplaneCreateDTO airplane = new AirplaneCreateDTO();
 
-        // Load all airplane types
         List<String> types = new ArrayList<>();
-
         for (AirplaneType t : AirplaneType.values()) {
             types.add(t.toString().toUpperCase());
         }

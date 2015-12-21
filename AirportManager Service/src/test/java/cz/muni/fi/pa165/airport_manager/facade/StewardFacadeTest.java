@@ -70,7 +70,7 @@ public class StewardFacadeTest {
         stewardRichDTO = new StewardDTO();
         stewardRichDTO.setFirstName(NAME);
         stewardRichDTO.setLastName(SURNAME);
-        Set<FlightDTO> flights = new HashSet<>(Arrays.asList(flight));
+        Set<FlightSimpleDTO> flights = new HashSet<>(Arrays.asList(new FlightSimpleDTO()));
         stewardRichDTO.setFlights(flights);
 
         updatedRichSteward = new StewardDTO();
@@ -135,18 +135,6 @@ public class StewardFacadeTest {
         //verify correct updated steward is sent to the persistence layer
         verify(stewardService).updateSteward(Matchers.any(Steward.class));
         verify(mappingService).mapTo(Matchers.any(Steward.class), Matchers.eq(Steward.class));
-    }
-
-    @Test
-    public void getAllFlightsForSteward() {
-        // fire
-        Set<FlightDTO> returned = stewardFacade.getAllFlightsForSteward(1l);
-
-        // assert
-        assertThat(returned).containsExactly(flight);
-
-        // verify
-        verify(stewardService).findSteward(1l);
     }
 
     private void mockStewardService() {

@@ -11,14 +11,14 @@ import java.util.*;
  */
 public final class StewardDTO extends StewardSimpleDTO {
 
-    private Set<FlightDTO> flights = new HashSet<>();
+    private Set<FlightSimpleDTO> flights = new HashSet<>();
 
     /**
      * Returns a view of sorted set of the flights assigned to this steward
      *
      * @return set of flights
      */
-    public Set<FlightDTO> getFlights() {
+    public Set<FlightSimpleDTO> getFlights() {
         return new HashSet<>(this.flights);
     }
 
@@ -27,7 +27,7 @@ public final class StewardDTO extends StewardSimpleDTO {
      *
      * @param flights new flights
      */
-    public void setFlights(final Set<FlightDTO> flights) {
+    public void setFlights(final Set<FlightSimpleDTO> flights) {
         this.flights = new HashSet<>(flights);
     }
 

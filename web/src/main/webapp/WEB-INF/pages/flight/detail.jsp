@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" trimDirectiveWhitespaces="true" session="false" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" session="false" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -62,7 +62,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach items="${flight.stewards}" var="steward">
-                                    <tr class="listTable" onclick="location.href = '${pageContext.request.contextPath}/steward/detail/${steward.id}';">
+                                    <tr class="listTable" onclick="location.href = '${pageContext.request.contextPath}/stewards/detail/${steward.id}';">
                                         <td><c:out value="${steward.id}"/></td>
                                         <td><c:out value="${steward.firstName}"/></td>
                                         <td><c:out value="${steward.lastName}"/></td>
