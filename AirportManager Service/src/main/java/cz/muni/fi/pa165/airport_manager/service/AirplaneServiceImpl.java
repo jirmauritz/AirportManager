@@ -200,7 +200,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         
         for (Airplane airplane : allAirplanes) {
             for (Flight flight : allFlights) {
-                if (flight.getAirplane().equals(airplane)) {
+                if (flight.getAirplane() != null && flight.getAirplane().equals(airplane)) {
                     allAvailableAirplanes.remove(airplane);
                 }
             }
