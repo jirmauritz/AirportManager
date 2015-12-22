@@ -91,6 +91,13 @@ public class FlightFacadeImpl implements FlightFacade{
     public void update(FlightSimpleDTO flight) {
         Objects.requireNonNull(flight);
 
-        flightService.update(mappingService.mapTo(flight, Flight.class));
+		// map to flight entity
+		Flight flightToUpdate = mappingService.mapTo(flight, Flight.class);
+		
+		// the Stewards list is unchanged, use addSteward and removeSteward
+		flightToUpdate.setStewards(flightService.findById(flight.getId()).getStewards());
+		
+		// update
+        flightService.update(flightToUpdate);
     }
 }

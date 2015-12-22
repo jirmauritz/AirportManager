@@ -81,7 +81,13 @@ public class FlightFacadeTest {
     
     @Test
     public void update() {
+		when(mappingService.mapTo(Matchers.any(FlightSimpleDTO.class), Matchers.eq(Flight.class)))
+				.thenReturn(flight);
+		when(flightService.findById(Matchers.anyLong()))
+				.thenReturn(flight);
+				
         FlightSimpleDTO flightSimpleDTO = new FlightSimpleDTO();
+		flightSimpleDTO.setId(1l);
         flightFacade.update(flightSimpleDTO);
 
         verify(mappingService).mapTo(flightSimpleDTO, Flight.class);

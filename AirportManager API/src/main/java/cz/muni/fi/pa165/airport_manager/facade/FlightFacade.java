@@ -64,6 +64,8 @@ public interface FlightFacade {
 
     /**
      * Update flight.
+	 * The Stewards of the flight are unchanged when updating,
+	 * use addSteward and removeSteward for this.
      *
      * @param flight Flight to be updated.
      */
