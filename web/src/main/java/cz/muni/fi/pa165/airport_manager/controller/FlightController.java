@@ -92,17 +92,25 @@ public class FlightController {
 	 */
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
 	@Secured(value = DataConfiguration.ROLE_FLIGHT)
-	public String detail(@PathVariable long id, Model model) {
+	public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
 
 		// get flight detail
-		FlightDTO flight = flightFacade.getFlight(id);
+		final FlightDTO flight = flightFacade.getFlight(id);
+
+		// check if exists
+		if (flight == null) {
+			redirectAttributes.addFlashAttribute("warning", "No flight with id " + id + "exists.");
+			return "redirect:/flights/list";
+		}
+
+		//assign to model
 		model.addAttribute("flight", flight);
 
 		// get all available stewards, than are not tied to the flight
 		Set<StewardSimpleDTO> availableStewards = stewardFacade.getAllAvailable(flight.getDeparture(), flight.getArrival());
 		availableStewards.removeAll(flight.getStewards());
 		model.addAttribute("availableStewards", availableStewards);
-		
+
 		// get all available airplanes
 		Set<AirplaneDTO> availableAirplanes = airplaneFacade.getAllAvailable(flight.getDeparture(), flight.getArrival());
 		model.addAttribute("availableAirplanes", availableAirplanes);
@@ -138,34 +146,24 @@ public class FlightController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	@Secured(value = DataConfiguration.ROLE_FLIGHT)
-	public String create(@Valid @ModelAttribute("flightToCreate") FlightCreateDTO flight, BindingResult bindingResult,
-			Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
-		//in case of validation error forward back to the the form
-		if (bindingResult.hasErrors()) {
-			for (ObjectError ge : bindingResult.getGlobalErrors()) {
-			}
-			for (FieldError fe : bindingResult.getFieldErrors()) {
-				model.addAttribute(fe.getField() + "_error", true);
-			}
-			return "flight/new";
+	public String create(@Valid @ModelAttribute("flightToCreate") FlightCreateDTO flight,
+			Model model, RedirectAttributes redirectAttributes) {
+		// check dates
+		if (flight.getDeparture().after(flight.getArrival())) {
+			redirectAttributes.addFlashAttribute("error", "Departure of the flight must be before the arrival.");
+			return "redirect:/flights/new";
 		}
 		//create product
-		Long id = flightFacade.create(flight);
+		Long id = null;
+		try {
+			id = flightFacade.create(flight);
+		} catch (IllegalArgumentException ex) {
+			// report error
+			redirectAttributes.addFlashAttribute("error", ex.getMessage());
+		}
 		//report success
-		redirectAttributes.addFlashAttribute("alert_success", "Flight " + id + " was created");
-		return "redirect:" + uriBuilder.path("/flights/detail/" + id).toUriString();
-	}
-
-	/**
-	 * Show blank page with action results
-	 *
-	 * @param model data to display
-	 * @return JSP page name
-	 */
-	@RequestMapping(value = "/action", method = RequestMethod.GET)
-	@Secured(value = {DataConfiguration.ROLE_FLIGHT, DataConfiguration.ROLE_AIRPORT})
-	public String action(Model model) {
-		return "action";
+		redirectAttributes.addFlashAttribute("success", "Flight " + id + " was created");
+		return "redirect:/flights/detail/" + id;
 	}
 
 	/**
@@ -177,7 +175,7 @@ public class FlightController {
 	 * @param uriBuilder url builder
 	 * @return redirection according to action result
 	 */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	@Secured(value = DataConfiguration.ROLE_FLIGHT)
 	public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
 			UriComponentsBuilder uriBuilder) {
@@ -189,7 +187,7 @@ public class FlightController {
 		} catch (MappingException e) {
 			redirectAttributes.addFlashAttribute("error", "Flight with id " + id
 					+ " does not exist.");
-			return "redirect:/action";
+			return "redirect:/flights/list";
 		}
 
 		// Try to delete flight
@@ -198,15 +196,15 @@ public class FlightController {
 		} catch (JpaSystemException e) {
 			redirectAttributes.addFlashAttribute("error", "Error while deleting flight "
 					+ "with id " + id + ".");
-			return "redirect:/action";
+			return "redirect:/flights/list";
 		}
 
 		// Report success
 		redirectAttributes.addFlashAttribute("success", "Flight with id " + id
 				+ " successfully deleted.");
-		return "redirect:/action";
+		return "redirect:/flights/list";
 	}
-	
+
 	/**
 	 * Remove steward from flight
 	 *
@@ -227,9 +225,9 @@ public class FlightController {
 		} catch (MappingException e) {
 			redirectAttributes.addFlashAttribute("error", "Flight with id " + flightId
 					+ " does not exist.");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
-		
+
 		// Check, if the steward exists
 		StewardDTO steward;
 		try {
@@ -237,21 +235,21 @@ public class FlightController {
 		} catch (MappingException e) {
 			redirectAttributes.addFlashAttribute("error", "Steward with id " + stewardId
 					+ " does not exist.");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
-		
+
 		// Try to remove steward from flight
 		try {
 			flightFacade.removeSteward(stewardId, flightId);
 		} catch (JpaSystemException e) {
 			redirectAttributes.addFlashAttribute("error", "Error while removing steward id " + stewardId + " from flight "
 					+ "with id " + flightId + ".");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
 
 		return "redirect:/flights/detail/" + flightId;
 	}
-	
+
 	/**
 	 * Add steward to flight
 	 *
@@ -272,9 +270,9 @@ public class FlightController {
 		} catch (MappingException e) {
 			redirectAttributes.addFlashAttribute("error", "Flight with id " + flightId
 					+ " does not exist.");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
-		
+
 		// Check, if the steward exists
 		StewardDTO steward;
 		try {
@@ -282,21 +280,21 @@ public class FlightController {
 		} catch (MappingException e) {
 			redirectAttributes.addFlashAttribute("error", "Steward with id " + stewardId
 					+ " does not exist.");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
-		
+
 		// Try to add steward to flight
 		try {
 			flightFacade.addSteward(stewardId, flightId);
 		} catch (JpaSystemException e) {
 			redirectAttributes.addFlashAttribute("error", "Error while adding steward id " + stewardId + " to flight "
 					+ "with id " + flightId + ".");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
 
 		return "redirect:/flights/detail/" + flightId;
-	}	
-	
+	}
+
 	/**
 	 * Add airplane to flight
 	 *
@@ -317,19 +315,19 @@ public class FlightController {
 		} catch (MappingException e) {
 			redirectAttributes.addFlashAttribute("error", "Flight with id " + flightId
 					+ " does not exist.");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
-		
+
 		// Check, if the steward exists
 		AirplaneDTO airplane;
 		try {
 			airplane = airplaneFacade.getAirplane(airplaneId);
 		} catch (MappingException e) {
-			redirectAttributes.addFlashAttribute("error", "Airplane with id " +airplaneId
+			redirectAttributes.addFlashAttribute("error", "Airplane with id " + airplaneId
 					+ " does not exist.");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
-		
+
 		// Try to add airplane to flight
 		try {
 			flight.setAirplane(airplane);
@@ -337,12 +335,12 @@ public class FlightController {
 		} catch (JpaSystemException e) {
 			redirectAttributes.addFlashAttribute("error", "Error while adding airplane id " + airplaneId + " to flight "
 					+ "with id " + flightId + ".");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
 
 		return "redirect:/flights/detail/" + flightId;
 	}
-	
+
 	/**
 	 * Remove airplane from flight
 	 *
@@ -362,9 +360,9 @@ public class FlightController {
 		} catch (MappingException e) {
 			redirectAttributes.addFlashAttribute("error", "Flight with id " + flightId
 					+ " does not exist.");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
-		
+
 		// Try to remove airplane from flight
 		try {
 			flight.setAirplane(null);
@@ -372,7 +370,7 @@ public class FlightController {
 		} catch (JpaSystemException e) {
 			redirectAttributes.addFlashAttribute("error", "Error while removing airplane from flight "
 					+ "with id " + flightId + ".");
-			return "redirect:/action";
+			return "redirect:/flights/detail/" + flightId;
 		}
 
 		return "redirect:/flights/detail/" + flightId;
