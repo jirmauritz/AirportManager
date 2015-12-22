@@ -12,12 +12,14 @@ import cz.muni.fi.pa165.airport_manager.facade.AirplaneFacade;
 import cz.muni.fi.pa165.airport_manager.facade.DestinationFacade;
 import cz.muni.fi.pa165.airport_manager.facade.FlightFacade;
 import cz.muni.fi.pa165.airport_manager.facade.StewardFacade;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.Valid;
 import org.dozer.MappingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -63,6 +65,8 @@ public class FlightController {
 	protected void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(AirplaneDTO.class, new AirplaneEditor(airplaneFacade));
 		binder.registerCustomEditor(DestinationSimpleDTO.class, new DestinationEditor(destinationFacade));
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
 
 	/**
@@ -88,6 +92,7 @@ public class FlightController {
 	 *
 	 * @param id of the flight
 	 * @param model data to display
+	 * @param redirectAttributes
 	 * @return JSP page name
 	 */
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
@@ -146,14 +151,14 @@ public class FlightController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	@Secured(value = DataConfiguration.ROLE_FLIGHT)
-	public String create(@Valid @ModelAttribute("flightToCreate") FlightCreateDTO flight,
+	public String create(@ModelAttribute("flightToCreate") FlightCreateDTO flight,
 			Model model, RedirectAttributes redirectAttributes) {
 		// check dates
-		if (flight.getDeparture().after(flight.getArrival())) {
+		if (flight.getDeparture().after(flight.getArrival()) || flight.getDeparture().equals(flight.getArrival())) {
 			redirectAttributes.addFlashAttribute("error", "Departure of the flight must be before the arrival.");
 			return "redirect:/flights/new";
 		}
-		//create product
+		//create flight
 		Long id = null;
 		try {
 			id = flightFacade.create(flight);
@@ -163,6 +168,62 @@ public class FlightController {
 		}
 		//report success
 		redirectAttributes.addFlashAttribute("success", "Flight " + id + " was created");
+		return "redirect:/flights/detail/" + id;
+	}
+
+	/**
+	 * Prepares prefilled form for updating flight.
+	 *
+	 * @param id of the flight
+	 * @param model data to display
+	 * @return JSP page name
+	 */
+	@RequestMapping(value = "/updating/{id}", method = RequestMethod.GET)
+	@Secured(value = DataConfiguration.ROLE_FLIGHT)
+	public String updatingFlight(@PathVariable long id, Model model) {
+
+		// fetch flight from db for updating
+		FlightSimpleDTO flight = flightFacade.getFlight(id);
+
+		model.addAttribute("flightToUpdate", flight);
+
+		// prepare destinations as options
+		Set<DestinationSimpleDTO> destinations = destinationFacade.findAll();
+		model.addAttribute("destinations", convertDestinationsToStrings(destinations));
+
+		return "flight/updating";
+	}
+
+	/**
+	 * Updates the flight.
+	 *
+	 * @param id of the flight
+	 * @param flight updated flight
+	 * @param model data to display
+	 * @param redirectAttributes
+	 * @return JSP page name
+	 */
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+	@Secured(value = DataConfiguration.ROLE_FLIGHT)
+	public String updateFlight(@PathVariable long id, @ModelAttribute("flightToUpdate") FlightSimpleDTO flight,
+			Model model, RedirectAttributes redirectAttributes) {
+		// check dates
+		if (flight.getDeparture().after(flight.getArrival()) || flight.getDeparture().equals(flight.getArrival())) {
+			redirectAttributes.addFlashAttribute("error", "Departure of the flight must be before the arrival.");
+			return "redirect:/flights/updating/" + id;
+		}
+		// update flight
+		try {
+			// keep airplane of the flight
+			flight.setAirplane(flightFacade.getFlight(id).getAirplane());
+			// update
+			flightFacade.update(flight);
+		} catch (IllegalArgumentException ex) {
+			// report error
+			redirectAttributes.addFlashAttribute("error", ex.getMessage());
+		}
+		//report success
+		redirectAttributes.addFlashAttribute("success", "Flight " + id + " was successfuly updated.");
 		return "redirect:/flights/detail/" + id;
 	}
 

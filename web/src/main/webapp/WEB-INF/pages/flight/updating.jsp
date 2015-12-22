@@ -8,8 +8,8 @@
 
     <jsp:attribute name="body">
 
-        <form:form method="post" action="${pageContext.request.contextPath}/flights/create" modelAttribute="flightToCreate">
-            <h1 class="page-header">New flight </h1>
+        <form:form method="post" action="${pageContext.request.contextPath}/flights/update/${flightToUpdate.id}" modelAttribute="flightToUpdate">
+            <h1 class="page-header">Update flight </h1>
 
             <div class="row">
                 <div class="col-sm-6">
@@ -57,9 +57,9 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary btn-block" type="submit">Create flight</button>
+            <button class="btn btn-primary btn-block" type="submit">Update flight</button>
             <button class="btn btn-secondary btn-block" type="button" 
-                    onclick="location.href='${pageContext.request.contextPath}/flights/list'">Cancel</button>
+                    onclick="location.href='${pageContext.request.contextPath}/flights/detail/${flightToUpdate.id}'">Cancel</button>
         </form:form>
 
 

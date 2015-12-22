@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.airport_manager.dto;
 
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Data transfer object for the entity Flight.
@@ -13,8 +14,10 @@ public class FlightCreateDTO {
 
     private Boolean international;
 
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date departure;
 
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date arrival;
 
     private AirplaneDTO airplane;
