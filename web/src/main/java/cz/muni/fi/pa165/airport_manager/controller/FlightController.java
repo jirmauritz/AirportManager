@@ -57,10 +57,6 @@ public class FlightController {
 	@Autowired
 	private StewardFacade stewardFacade;
 
-	public void setCategoryFacade(FlightFacade categoryFacade) {
-		this.flightFacade = categoryFacade;
-	}
-
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(AirplaneDTO.class, new AirplaneEditor(airplaneFacade));
@@ -147,6 +143,14 @@ public class FlightController {
 		return "flight/new";
 	}
 
+	/**
+	 * Creates flight if there are no stewards tied to the flight.
+	 * 
+	 * @param flight to be deleted
+	 * @param model data to display
+	 * @param redirectAttributes to add flash attributes
+	 * @return JSP page
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	@Secured(value = DataConfiguration.ROLE_FLIGHT)
 	public String create(@ModelAttribute("flightToCreate") FlightCreateDTO flight,
@@ -198,7 +202,7 @@ public class FlightController {
 	 * @param id of the flight
 	 * @param flight updated flight
 	 * @param model data to display
-	 * @param redirectAttributes
+	 * @param redirectAttributes to add flash attributes
 	 * @return JSP page name
 	 */
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
@@ -442,17 +446,6 @@ public class FlightController {
 		return "redirect:/flights/detail/" + flightId;
 	}
 
-	private Set<String> convertAirplanesToStrings(Set<AirplaneDTO> airplanes) {
-		Set<String> strings = new HashSet<>();
-		for (AirplaneDTO airplane : airplanes) {
-			strings.add(airplane.getId()
-					+ " name: " + airplane.getName()
-					+ " type: " + airplane.getType()
-					+ " capacity: " + airplane.getCapacity());
-		}
-		return strings;
-	}
-
 	private Set<String> convertDestinationsToStrings(Set<DestinationSimpleDTO> destinations) {
 		Set<String> strings = new HashSet<>();
 		for (DestinationSimpleDTO destination : destinations) {
@@ -460,15 +453,6 @@ public class FlightController {
 					+ " name: " + destination.getName()
 					+ " city: " + destination.getCity()
 					+ " country: " + destination.getCountry());
-		}
-		return strings;
-	}
-
-	private Set<String> convertStewardsToStrings(Set<StewardSimpleDTO> stewards) {
-		Set<String> strings = new HashSet<>();
-		for (StewardSimpleDTO steward : stewards) {
-			strings.add(steward.getId() + " " + steward.getFirstName()
-					+ " " + steward.getLastName());
 		}
 		return strings;
 	}
