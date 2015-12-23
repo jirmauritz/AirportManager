@@ -251,6 +251,13 @@ public class FlightController {
 			return "redirect:/flights/list";
 		}
 
+		// Check if there are stewards tied to flight
+		if (! flight.getStewards().isEmpty()) {
+			redirectAttributes.addFlashAttribute("error", "Error while deleting flight "
+					+ "with id " + id + ": stewards are still tied to the flight.");
+			return "redirect:/flights/list";
+		}
+		 
 		// Try to delete flight
 		try {
 			flightFacade.delete(id);
