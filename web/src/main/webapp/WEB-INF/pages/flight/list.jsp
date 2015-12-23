@@ -19,9 +19,9 @@
                         <th>Arrival</th>
                         <th>From</th>
                         <th>To</th>
-                        <sec:authorize access="hasRole('ROLE_flight')">
-                            <th></th>
-                        </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_flight')">
+                    <th></th>
+                </sec:authorize>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,7 +45,7 @@
                     <sec:authorize access="hasRole('ROLE_flight')">
                         <td align="right">
                             <button type="button" class="btn btn-info btn-xs" data-toggle="modal"
-                                                  data-target="#myModal_${flight.id}">
+                                    data-target="#myModal_${flight.id}">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </td>
@@ -65,10 +65,10 @@
                                         <p>Are you sure you want to delete this flight?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="${pageContext.request.contextPath}/flights/delete/${flight.id}"
-                                           type="button" class="btn btn-default"
-                                           onclick="resoudre(this)"> OK</a>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <form method="POST" action="${pageContext.request.contextPath}/flights/delete/${flight.id}">
+                                            <input value="OK" type="submit" class="btn btn-default" onclick="resoudre(this)"/>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </form>
                                     </div>
                                 </div>
 

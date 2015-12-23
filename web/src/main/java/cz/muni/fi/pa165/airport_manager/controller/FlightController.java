@@ -236,7 +236,7 @@ public class FlightController {
 	 * @param uriBuilder url builder
 	 * @return redirection according to action result
 	 */
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@Secured(value = DataConfiguration.ROLE_FLIGHT)
 	public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
 			UriComponentsBuilder uriBuilder) {

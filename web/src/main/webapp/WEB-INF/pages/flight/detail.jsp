@@ -12,7 +12,7 @@
             <a class="btn btn-primary btn-sm navbut" role="button"
                data-toggle="modal" data-target="#delete_${flight.id}">Delete</a>
         </h1>
-               
+
         <div class="row">
             <div class="col-sm-5">
                 <h4> Departure </h4>
@@ -290,10 +290,10 @@
                             <p>Are you sure you want to delete this flight?</p>
                         </div>
                         <div class="modal-footer">
-                            <a href="${pageContext.request.contextPath}/flights/delete/${flight.id}"
-                               type="button" class="btn btn-default"
-                               onclick="resoudre(this)"> OK</a>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <form method="POST" action="${pageContext.request.contextPath}/flights/delete/${flight.id}">
+                                <input value="OK" type="submit" class="btn btn-default" onclick="resoudre(this)"/>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </form>
                         </div>
                     </div>
 
