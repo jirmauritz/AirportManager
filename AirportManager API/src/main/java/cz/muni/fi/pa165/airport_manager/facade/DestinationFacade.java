@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airport_manager.facade;
 
 import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
+
 import java.util.Set;
 
 /**
@@ -56,4 +57,11 @@ public interface DestinationFacade {
      * @return set of destinations
      */
     Set<DestinationSimpleDTO> findAll();
+
+    /**
+     * Update destination.
+     *
+     * @param destination Destination to be updated.
+     */
+    void update(DestinationSimpleDTO destination);
 }

@@ -1,4 +1,7 @@
 Rest API for Flight entity can be tested:
+mvn clean install
+cd AirportManager\ Rest
+mvn tomcat7:run
 
 #GET ALL
 curl -i -X GET http://localhost:8080/pa165/rest/flights/flights

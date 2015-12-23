@@ -2,7 +2,9 @@ package cz.muni.fi.pa165.airport_manager.facade;
 
 import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
+import cz.muni.fi.pa165.airport_manager.dto.FlightSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
+import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.service.DestinationService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
 import java.util.Objects;
@@ -59,5 +61,14 @@ public class DestinationFacadeImpl implements DestinationFacade {
 	public Set<DestinationSimpleDTO> findAll() {
 		return mappingService.mapTo(destinationService.findAll(), DestinationSimpleDTO.class);
 	}
-	
+
+	@Override
+	public void update(DestinationSimpleDTO destination) {
+		Objects.requireNonNull(destination);
+
+		// map to destination entity
+		Destination destinationToUpdate = mappingService.mapTo(destination, Destination.class);
+
+		destinationService.update(destinationToUpdate);
+	}
 }
