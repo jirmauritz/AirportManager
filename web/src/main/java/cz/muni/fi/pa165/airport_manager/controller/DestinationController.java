@@ -80,7 +80,7 @@ public class DestinationController {
      * @return JSP page name
      */
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    @Secured(value = DataConfiguration.ROLE_FLIGHT)
+    @Secured(value = DataConfiguration.ROLE_AIRPORT)
     public String newDestination(Model model) {
         DestinationCreateDTO destinationDto = new DestinationCreateDTO();
         model.addAttribute("destinationToCreate", destinationDto);
@@ -96,7 +96,7 @@ public class DestinationController {
      * @return redirection according to action result
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    @Secured(value = DataConfiguration.ROLE_FLIGHT)
+    @Secured(value = DataConfiguration.ROLE_AIRPORT)
     public String create(@Valid @ModelAttribute("destinationToCreate") DestinationCreateDTO destination,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         //create product
@@ -114,7 +114,7 @@ public class DestinationController {
      * @return redirection according to action result
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @Secured(DataConfiguration.ROLE_FLIGHT)
+    @Secured(DataConfiguration.ROLE_AIRPORT)
     public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
                          UriComponentsBuilder uriBuilder) {
 
@@ -149,7 +149,7 @@ public class DestinationController {
      * @return JSP page name
      */
     @RequestMapping(value = "/updating/{id}", method = RequestMethod.GET)
-    @Secured(value = DataConfiguration.ROLE_FLIGHT)
+    @Secured(value = DataConfiguration.ROLE_AIRPORT)
     public String updatingDestination(@PathVariable long id, Model model) {
 
         // fetch flight from db for updating
@@ -169,7 +169,7 @@ public class DestinationController {
      * @return JSP page name
      */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    @Secured(value = DataConfiguration.ROLE_FLIGHT)
+    @Secured(value = DataConfiguration.ROLE_AIRPORT)
     public String updateDestination(@PathVariable long id, @ModelAttribute("destinationToUpdate") DestinationSimpleDTO destination,
                                Model model, RedirectAttributes redirectAttributes) {
 

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" session="false" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <tags:pagetemplate>
 
@@ -8,23 +9,25 @@
 
         <h1 class="page-header">
             Destination
+            <sec:authorize ifAllGranted="ROLE_airport">
             <a href="${pageContext.request.contextPath}/destinations/updating/${destination.id}"
                class="btn btn-primary btn-sm navbut" role="button">Edit</a>
             <a class="btn btn-primary btn-sm navbut" role="button"
                data-toggle="modal" data-target="#destinationDeleting">Delete</a>
+            </sec:authorize>
         </h1>
 
         <div class="row">
             <div class="col-sm-5">
-                <h4>First Name</h4>
+                <h4>Name</h4>
                 <div class="well">
                     <c:out value="${destination.name}"/>
                 </div>
-                <h4>Last Name</h4>
+                <h4>City</h4>
                 <div class="well">
                     <c:out value="${destination.city}"/>
                 </div>
-                <h4>Flights attending</h4>
+                <h4>Country</h4>
                 <div class="well">
                     <c:out value="${destination.country}"/>
                 </div>
