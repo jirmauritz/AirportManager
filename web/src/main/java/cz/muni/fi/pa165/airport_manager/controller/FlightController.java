@@ -76,7 +76,6 @@ public class FlightController {
 	 * @return JSP page name
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	@Secured(value = DataConfiguration.ROLE_FLIGHT)
 	public String list(Model model) {
 
 		// get all flights
@@ -96,7 +95,6 @@ public class FlightController {
 	 * @return JSP page name
 	 */
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-	@Secured(value = DataConfiguration.ROLE_FLIGHT)
 	public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
 
 		// get flight detail
