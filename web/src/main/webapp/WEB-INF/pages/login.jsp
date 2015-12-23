@@ -47,6 +47,8 @@
                 <input class="form-control" type="password" id="password" name="password" placeholder="Password">
                 <button type="submit" class="btn btn-md btn-primary btn-block">Log in</button>
             </form>
+            <p class="text-center">
+                For PA165 project needs, there are three users:admin/admin, flight/flight, airport/airport</p>
         </div> <!-- /container -->
 
     </body>

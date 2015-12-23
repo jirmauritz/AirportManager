@@ -53,10 +53,10 @@
                                             <p>Are you sure you want to delete this steward?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="${pageContext.request.contextPath}/stewards/delete/${steward.id}"
-                                               type="button" class="btn btn-default"
-                                               onclick="resoudre(this)"> OK</a>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <form method="POST" action="${pageContext.request.contextPath}/stewards/delete/${steward.id}">
+                                                <input value="OK" type="submit" class="btn btn-default" onclick="resoudre(this)"/>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </form>
                                         </div>
                                     </div>
 

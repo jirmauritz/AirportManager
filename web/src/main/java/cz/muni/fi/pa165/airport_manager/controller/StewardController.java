@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -58,6 +59,7 @@ public class StewardController {
      *
      * @param id of the steward
      * @param model data to display
+     * @param redirectAttributes redirected attributes
      * @return JSP page name
      */
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
@@ -124,8 +126,8 @@ public class StewardController {
             model.addAttribute("stewardDTO", stewardCreateDTO);
             return PATH_PREFIX + "/new";
         }
+
         final Long id = stewardFacade.createSteward(stewardCreateDTO);
-        // Report success
         redirectAttributes.addFlashAttribute("success", "Steward " +
                 stewardCreateDTO.getFirstName() + ' ' + stewardCreateDTO.getLastName() +
                 " successfully created with id " + id + ".");
@@ -143,8 +145,8 @@ public class StewardController {
      */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
-    public String update(@Valid @ModelAttribute("stewardDTO") StewardCreateDTO stewardCreateDTO, @PathVariable long id,
-                         Model model, RedirectAttributes redirectAttributes) {
+    public String update(@Valid @ModelAttribute("stewardDTO") StewardCreateDTO stewardCreateDTO,
+                         @PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
         if (!isValid(stewardCreateDTO)) {
             model.addAttribute("warning", "Steward names are not correct");
             model.addAttribute("stewardDTO", stewardCreateDTO);
@@ -152,7 +154,6 @@ public class StewardController {
             return PATH_PREFIX + "/new";
         }
         stewardFacade.updateNames(id, stewardCreateDTO.getFirstName(), stewardCreateDTO.getLastName());
-        // Report success
         redirectAttributes.addFlashAttribute("success", "Steward " +
                 stewardCreateDTO.getFirstName() + ' ' + stewardCreateDTO.getLastName() +
                 "with id " + id + " successfully updated.");
@@ -165,7 +166,7 @@ public class StewardController {
      * @param redirectAttributes redirected attributes
      * @return redirection according to action result
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @Secured(DataConfiguration.ROLE_AIRPORT)
     public String delete(@PathVariable long id, RedirectAttributes redirectAttributes) {
         final StewardDTO steward = stewardFacade.getSteward(id);
@@ -192,7 +193,7 @@ public class StewardController {
     private static boolean isValid(final StewardCreateDTO steward) {
         if (steward.getFirstName().isEmpty()) return false;
         if (steward.getLastName().isEmpty()) return false;
-        return steward.getFirstName().matches("(?:\\s*\\p{L})+") && steward.getLastName().matches("(?:\\s*\\p{L})+");
+        return steward.getFirstName().matches("(?:\\s+\\p{L})+") && steward.getLastName().matches("(?:\\s+\\p{L})+");
     }
 
 }

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" session="false" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <tags:pagetemplate>
 
@@ -8,10 +9,12 @@
 
         <h1 class="page-header">
             Steward
-            <a href="${pageContext.request.contextPath}/stewards/new/${steward.id}"
-               class="btn btn-primary btn-sm navbut" role="button">Edit</a>
-            <a class="btn btn-primary btn-sm navbut" role="button"
-               data-toggle="modal" data-target="#stewardDeleting">Delete</a>
+            <sec:authorize access="hasRole('ROLE_airport')">
+                <a href="${pageContext.request.contextPath}/stewards/new/${steward.id}"
+                   class="btn btn-primary btn-sm navbut" role="button">Edit</a>
+                <a class="btn btn-primary btn-sm navbut" role="button"
+                   data-toggle="modal" data-target="#stewardDeleting">Delete</a>
+            </sec:authorize>
         </h1>
 
 
@@ -73,10 +76,10 @@
                         <p>Are you sure you want to delete this steward?</p>
                     </div>
                     <div class="modal-footer">
-                        <a href="${pageContext.request.contextPath}/stewards/delete/${steward.id}"
-                           type="button" class="btn btn-default"
-                           onclick="resoudre(this)"> OK</a>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <form method="POST" action="${pageContext.request.contextPath}/stewards/delete/${steward.id}">
+                            <input value="OK" type="submit" class="btn btn-default" onclick="resoudre(this)"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </form>
                     </div>
                 </div>
 

@@ -10,7 +10,7 @@
 
         <form:form method="post" modelAttribute="stewardDTO"
                    action="${pageContext.request.contextPath}/stewards/${empty stewardId ? 'create' : 'update/'}${empty stewardId ? '' : stewardId}">
-            <h1 class="page-header">New steward</h1>
+            <h1 class="page-header">${empty stewardId ? 'New' : 'Edit'} steward ${stewardId}</h1>
 
             <div class="row">
                 <div class="col-sm-5">
