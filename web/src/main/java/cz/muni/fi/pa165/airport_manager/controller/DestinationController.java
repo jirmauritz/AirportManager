@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.Set;
@@ -91,15 +90,19 @@ public class DestinationController {
      * Create new destination from mapped form values
      *
      * @param destination to be created
-     * @param model data to display
      * @param redirectAttributes redirected attributes
      * @return redirection according to action result
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
-    public String create(@Valid @ModelAttribute("destinationToCreate") DestinationCreateDTO destination,
-                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
-        //create product
+    public String create(@Valid @ModelAttribute("destinationToCreate") DestinationCreateDTO destination, Model model, RedirectAttributes redirectAttributes) {
+
+        if (!isValid(destination)) {
+            model.addAttribute("warning", "Destination inputs are not correct");
+            model.addAttribute("destinationToCreate", destination);
+            return "destination/new";
+        }
+
         Long id = destinationFacade.create(destination);
         //report success
         redirectAttributes.addFlashAttribute("alert_success", "Destination " + destination.getName() + " was created");
@@ -113,10 +116,9 @@ public class DestinationController {
      * @param redirectAttributes redirected attributes
      * @return redirection according to action result
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @Secured(DataConfiguration.ROLE_AIRPORT)
-    public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
-                         UriComponentsBuilder uriBuilder) {
+    public String delete(@PathVariable long id, RedirectAttributes redirectAttributes) {
 
         DestinationSimpleDTO destination;
         try {
@@ -126,7 +128,6 @@ public class DestinationController {
                     + " does not exist.");
             return "redirect:/destinations/list";
         }
-
 
         try {
             destinationFacade.delete(id);
@@ -164,14 +165,12 @@ public class DestinationController {
      *
      * @param id of the destination
      * @param destination updated destination
-     * @param model data to display
      * @param redirectAttributes
      * @return JSP page name
      */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
-    public String updateDestination(@PathVariable long id, @ModelAttribute("destinationToUpdate") DestinationSimpleDTO destination,
-                               Model model, RedirectAttributes redirectAttributes) {
+    public String updateDestination(@PathVariable long id, @ModelAttribute("destinationToUpdate") DestinationSimpleDTO destination, RedirectAttributes redirectAttributes) {
 
         // update flight
         try {
@@ -183,6 +182,14 @@ public class DestinationController {
         //report success
         redirectAttributes.addFlashAttribute("success", "Destination " + id + " was successfuly updated.");
         return "redirect:/destinations/detail/" + id;
+    }
+
+    private static boolean isValid(final DestinationCreateDTO destination) {
+        if (destination.getCity().isEmpty()) return false;
+        if (destination.getCountry().isEmpty()) return false;
+        if (destination.getName().isEmpty()) return false;
+
+        return destination.getName().matches("(?:\\s*\\p{L})+") && destination.getCountry().matches("(?:\\s*\\p{L})+") && destination.getCity().matches("(?:\\s*\\p{L})+");
     }
 
 }
