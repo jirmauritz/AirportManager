@@ -31,7 +31,7 @@
                             <c:out value="${destination.city}"/></td>
                         <td onclick="location.href = '${pageContext.request.contextPath}/destinations/detail/${destination.id}';">
                             <c:out value="${destination.country}"/></td>
-                    <sec:authorize access="hasRole('ROLE_flight')">
+                        <sec:authorize ifAllGranted="ROLE_airport">
                         <td align="right">
                             <button type="button" class="btn btn-info btn-xs" data-toggle="modal"
                                     data-target="#myModal_${destination.id}">
