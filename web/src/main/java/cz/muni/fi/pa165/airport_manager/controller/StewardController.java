@@ -161,8 +161,9 @@ public class StewardController {
     }
 
     /**
-     * Create new airplane from mapped form values
-     * @param id airplane id
+     * Delete steward
+     *
+     * @param id steward id
      * @param redirectAttributes redirected attributes
      * @return redirection according to action result
      */
@@ -172,7 +173,7 @@ public class StewardController {
         final StewardDTO steward = stewardFacade.getSteward(id);
 
         if (steward == null) {
-            redirectAttributes.addFlashAttribute("warning", "No steward with id " + id + "exists.");
+            redirectAttributes.addFlashAttribute("warning", "No steward with id " + id + " exists.");
             return "redirect:/stewards/list";
         }
 
@@ -193,7 +194,8 @@ public class StewardController {
     private static boolean isValid(final StewardCreateDTO steward) {
         if (steward.getFirstName().isEmpty()) return false;
         if (steward.getLastName().isEmpty()) return false;
-        return steward.getFirstName().matches("(?:\\s+\\p{L})+") && steward.getLastName().matches("(?:\\s+\\p{L})+");
+        return  steward.getFirstName().matches("\\p{L}+(?:\\s\\p{L}+)*") &&
+                steward.getLastName() .matches("\\p{L}+(?:\\s\\p{L}+)*");
     }
 
 }
