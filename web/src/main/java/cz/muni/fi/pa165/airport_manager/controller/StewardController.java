@@ -51,7 +51,7 @@ public class StewardController {
     public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
         final StewardDTO stewardDTO = stewardFacade.getSteward(id);
         if (stewardDTO == null) {
-            redirectAttributes.addFlashAttribute("warning", "No steward with id " + id + "exists.");
+            redirectAttributes.addFlashAttribute("warning", "No steward with id " + id + " exists.");
             return "redirect:/stewards/list";
         }
 
@@ -86,12 +86,12 @@ public class StewardController {
     public String update(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
         final StewardDTO stewardDTO = stewardFacade.getSteward(id);
         if (stewardDTO == null) {
-            redirectAttributes.addFlashAttribute("warning", "No steward with id " + id + "exists.");
+            redirectAttributes.addFlashAttribute("warning", "No steward with id " + id + " exists.");
             return "redirect:/stewards/list";
         }
         model.addAttribute("stewardDTO", stewardDTO);
         model.addAttribute("stewardId", Long.toString(id));
-        return "redirect:/stewards/detail/" + Long.toString(id);
+        return VIEW_PREFIX + "/new";
     }
 
     /**
