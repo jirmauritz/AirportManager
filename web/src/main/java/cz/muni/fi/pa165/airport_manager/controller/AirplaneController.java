@@ -134,6 +134,13 @@ public class AirplaneController {
     public String update(@PathVariable long id, @ModelAttribute("airplaneToUpdate") AirplaneDTO airplane,
             RedirectAttributes redirectAttributes) {
 
+        //Test name
+        if (!isValid(airplane.getName())) {
+            redirectAttributes.addFlashAttribute("error", "Airplane was not updated. "
+                    + "Name " + airplane.getName() + " is invalid.");
+            return "redirect:/airplanes/new";
+        }
+
         // Update airplane
         try {
             airplaneFacade.update(airplane);
@@ -162,7 +169,14 @@ public class AirplaneController {
     public String create(@Valid @ModelAttribute("airplaneToCreate") AirplaneCreateDTO airplane,
             Model model, RedirectAttributes redirectAttributes) {
 
-        // Try to create airplane
+        //Test name
+        if (!isValid(airplane.getName())) {
+            redirectAttributes.addFlashAttribute("error", "Airplane was not created. "
+                    + "Name " + airplane.getName() + " is invalid.");
+            return "redirect:/airplanes/new";
+        }
+
+        // Try to create airplane      
         Long id;
         try {
             id = airplaneFacade.createAirplane(airplane);
@@ -210,5 +224,12 @@ public class AirplaneController {
         redirectAttributes.addFlashAttribute("success", "Airplane " + airplane.getName()
                 + " with id " + id + " successfully deleted.");
         return "redirect:/airplanes/list";
+    }
+
+    private static boolean isValid(final String name) {
+        if (name.isEmpty()) {
+            return false;
+        }
+        return name.matches("(?:\\s+\\p{L})+");
     }
 }
