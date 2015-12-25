@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author 422718@mail.muni.cz
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping(value = {"/", ""})
 public class DefaultController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)

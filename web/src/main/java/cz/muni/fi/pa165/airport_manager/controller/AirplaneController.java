@@ -34,10 +34,6 @@ public class AirplaneController {
     @Autowired
     private AirplaneFacade airplaneFacade;
 
-    public void setCategoryFacade(AirplaneFacade categoryFacade) {
-        this.airplaneFacade = categoryFacade;
-    }
-
     /**
      * Show all airplanes.
      *

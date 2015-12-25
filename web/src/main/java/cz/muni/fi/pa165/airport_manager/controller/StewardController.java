@@ -2,30 +2,15 @@ package cz.muni.fi.pa165.airport_manager.controller;
 
 import cz.muni.fi.pa165.airport_manager.config.DataConfiguration;
 import cz.muni.fi.pa165.airport_manager.dto.*;
-import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
-import cz.muni.fi.pa165.airport_manager.exception.AirportManagerDataAccessException;
-import cz.muni.fi.pa165.airport_manager.facade.AirplaneFacade;
-import cz.muni.fi.pa165.airport_manager.facade.DestinationFacade;
-import cz.muni.fi.pa165.airport_manager.facade.FlightFacade;
 import cz.muni.fi.pa165.airport_manager.facade.StewardFacade;
-import org.dozer.MappingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
-import java.util.regex.Pattern;
 
 /**
  * Provides the main steward manager interface.
@@ -37,7 +22,7 @@ import java.util.regex.Pattern;
 @RequestMapping("/stewards")
 public class StewardController {
 
-    private static final String PATH_PREFIX = "/steward";
+    private static final String VIEW_PREFIX = "/steward";
 
 	@Autowired
 	private StewardFacade stewardFacade;
@@ -51,7 +36,7 @@ public class StewardController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) throws Exception {
         model.addAttribute("stewards", stewardFacade.getAllStewards());
-        return PATH_PREFIX + "/list";
+        return VIEW_PREFIX + "/list";
     }
 
     /**
@@ -71,7 +56,7 @@ public class StewardController {
         }
 
         model.addAttribute("steward", stewardDTO);
-        return PATH_PREFIX + "/detail";
+        return VIEW_PREFIX + "/detail";
     }
 
     /**
@@ -85,7 +70,7 @@ public class StewardController {
     public String newSteward(Model model) {
         final StewardCreateDTO stewardCreateDTO = new StewardCreateDTO();
         model.addAttribute("stewardDTO", stewardCreateDTO);
-        return PATH_PREFIX + "/new";
+        return VIEW_PREFIX + "/new";
     }
 
     /**
@@ -106,7 +91,7 @@ public class StewardController {
         }
         model.addAttribute("stewardDTO", stewardDTO);
         model.addAttribute("stewardId", Long.toString(id));
-        return "redirect:" + PATH_PREFIX + "/detail/" + Long.toString(id);
+        return "redirect:/stewards/detail/" + Long.toString(id);
     }
 
     /**
@@ -124,14 +109,14 @@ public class StewardController {
         if (!isValid(stewardCreateDTO)) {
             model.addAttribute("warning", "Steward names are not correct");
             model.addAttribute("stewardDTO", stewardCreateDTO);
-            return PATH_PREFIX + "/new";
+            return VIEW_PREFIX + "/new";
         }
 
         final Long id = stewardFacade.createSteward(stewardCreateDTO);
         redirectAttributes.addFlashAttribute("success", "Steward " +
                 stewardCreateDTO.getFirstName() + ' ' + stewardCreateDTO.getLastName() +
                 " successfully created with id " + id + ".");
-        return "redirect:" + PATH_PREFIX + "/detail/" + Long.toString(id);
+        return "redirect:/stewards/detail/" + Long.toString(id);
     }
 
     /**
@@ -151,7 +136,7 @@ public class StewardController {
             model.addAttribute("warning", "Steward names are not correct");
             model.addAttribute("stewardDTO", stewardCreateDTO);
             model.addAttribute("stewardId", Long.toString(id));
-            return PATH_PREFIX + "/new";
+            return VIEW_PREFIX + "/new";
         }
         stewardFacade.updateNames(id, stewardCreateDTO.getFirstName(), stewardCreateDTO.getLastName());
         redirectAttributes.addFlashAttribute("success", "Steward " +
