@@ -25,11 +25,19 @@
                 <tbody>
                     <!-- Output all airplanes -->
                     <c:forEach items="${airplanes}" var="airplane">
-                        <tr>
-                            <td><c:out value="${airplane.id}"/></td>
-                            <td><c:out value="${airplane.name}"/></td>
-                            <td><c:out value="${airplane.type}"/></td>
-                            <td><c:out value="${airplane.capacity}"/></td>
+                        <tr class="listTable">
+                            <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${airplane.id}';">
+                                <c:out value="${airplane.id}"/>
+                            </td>
+                            <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${airplane.id}';">
+                                <c:out value="${airplane.name}"/>
+                            </td>
+                            <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${airplane.id}';">
+                                <c:out value="${airplane.type}"/>
+                            </td>
+                            <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${airplane.id}';">
+                                <c:out value="${airplane.capacity}"/>
+                            </td>
                             <sec:authorize ifAllGranted="ROLE_airport">
                                 <td align="right"><button type="button" class="btn btn-info btn-xs" data-toggle="modal"
                                                           data-target="#myModal_${airplane.id}">
@@ -51,10 +59,10 @@
                                             <p>Are you sure you want to delete this airplane?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="${pageContext.request.contextPath}/airplanes/delete/${airplane.id}"
-                                               type="button" class="btn btn-default"
-                                               onclick="resoudre(this)"> OK</a>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <form method="POST" action="${pageContext.request.contextPath}/airplanes/delete/${airplane.id}">
+                                                <input value="OK" type="submit" class="btn btn-default" onclick="resoudre(this)"/>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </form>
                                         </div>
                                     </div>
 

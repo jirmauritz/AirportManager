@@ -31,13 +31,13 @@ public class AirplaneFacadeImpl implements AirplaneFacade {
         Objects.requireNonNull(airplane);
         return airplaneService.create(mappingService.mapTo(airplane, Airplane.class));
     }
-    
+
     @Override
     public AirplaneDTO getAirplane(Long id) {
         Objects.requireNonNull(id);
         return mappingService.mapTo(airplaneService.findById(id), AirplaneDTO.class);
     }
-    
+
     @Override
     public void deleteAirplaneById(Long id) {
         Objects.requireNonNull(id);
@@ -48,7 +48,7 @@ public class AirplaneFacadeImpl implements AirplaneFacade {
     public Set<AirplaneDTO> findAll() {
         return new HashSet<>(mappingService.mapTo(airplaneService.findAll(), AirplaneDTO.class));
     }
-    
+
     @Override
     public Set<AirplaneDTO> findByType(AirplaneType type) {
         Objects.requireNonNull(type);
@@ -64,5 +64,12 @@ public class AirplaneFacadeImpl implements AirplaneFacade {
     public Set<AirplaneDTO> getAllAvailable(Date from, Date to) {
         return new HashSet<>(mappingService.mapTo(airplaneService.getAllAvailable(from, to), AirplaneDTO.class));
     }
-}
 
+    @Override
+    public void update(AirplaneDTO airplane) {
+        Objects.requireNonNull(airplane);
+
+        Airplane airplaneToUpdate = mappingService.mapTo(airplane, Airplane.class);
+        airplaneService.update(airplaneToUpdate);
+    }
+}

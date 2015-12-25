@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
-import org.dozer.MappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.annotation.Secured;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Controller for the airplane page
@@ -47,7 +45,6 @@ public class AirplaneController {
      * @return JSP page name
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @Secured(value = {DataConfiguration.ROLE_FLIGHT, DataConfiguration.ROLE_AIRPORT})
     public String list(Model model) {
 
         // get all airplanes
@@ -59,15 +56,22 @@ public class AirplaneController {
     }
 
     /**
-     * Show blank page with action results
+     * Show airplanes detail.
      *
+     * @param id airplane id
      * @param model data to display
      * @return JSP page name
      */
-    @RequestMapping(value = "/action", method = RequestMethod.GET)
-    @Secured(value = {DataConfiguration.ROLE_FLIGHT, DataConfiguration.ROLE_AIRPORT})
-    public String action(Model model) {
-        return "action";
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+    public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
+        final AirplaneDTO airplaneDTO = airplaneFacade.getAirplane(id);
+        if (airplaneDTO == null) {
+            redirectAttributes.addFlashAttribute("warning", "No airplane with id " + id + "exists.");
+            return "redirect:/airplanes/list";
+        }
+
+        model.addAttribute("airplane", airplaneDTO);
+        return "airplane/detail";
     }
 
     /**
@@ -93,55 +97,105 @@ public class AirplaneController {
     }
 
     /**
+     * Load airplane and prefill form
+     *
+     * @param id airplanes id
+     * @param model data to display
+     * @return JSP page name
+     */
+    @RequestMapping(value = "/updating/{id}", method = RequestMethod.GET)
+    @Secured(value = DataConfiguration.ROLE_AIRPORT)
+    public String updating(@PathVariable long id, Model model) {
+
+        // Load airplane
+        AirplaneDTO airplane = airplaneFacade.getAirplane(id);
+
+        List<String> types = new ArrayList<>();
+        for (AirplaneType t : AirplaneType.values()) {
+            types.add(t.toString().toUpperCase());
+        }
+
+        model.addAttribute("airplaneTypes", types);
+        model.addAttribute("airplaneToUpdate", airplane);
+
+        return "airplane/updating";
+    }
+
+    /**
+     * Update airplane
+     *
+     * @param id airplanes id
+     * @param airplane updated airplane
+     * @param redirectAttributes
+     * @return JSP page name
+     */
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @Secured(value = DataConfiguration.ROLE_AIRPORT)
+    public String update(@PathVariable long id, @ModelAttribute("airplaneToUpdate") AirplaneDTO airplane,
+            RedirectAttributes redirectAttributes) {
+
+        // Update airplane
+        try {
+            airplaneFacade.update(airplane);
+        } catch (IllegalArgumentException ex) {
+            // Report error
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            return "redirect:/airplanes/list";
+        }
+
+        // Report success
+        redirectAttributes.addFlashAttribute("success", "Airplane with " + id
+                + " successfuly updated.");
+        return "redirect:/airplanes/detail/" + id;
+    }
+
+    /**
      * Create new airplane from mapped form values
+     *
      * @param airplane to be created
      * @param model to be displayed
      * @param redirectAttributes redirected attributes
-     * @param uriBuilder url builder
      * @return redirection according to action result
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
     public String create(@Valid @ModelAttribute("airplaneToCreate") AirplaneCreateDTO airplane,
-            Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+            Model model, RedirectAttributes redirectAttributes) {
 
         // Try to create airplane
         Long id;
         try {
             id = airplaneFacade.createAirplane(airplane);
         } catch (AirportManagerDataAccessException e) {
-            redirectAttributes.addFlashAttribute("error", "Airplane with name " + airplane.getName()
-                    + " already exists.");
-            return "redirect:" + uriBuilder.path("/airplanes/action").toUriString();
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/airplanes/list";
         }
 
         // Report success
         redirectAttributes.addFlashAttribute("success", "Airplane " + airplane.getName()
                 + " successfully created with id " + id + ".");
-        return "redirect:" + uriBuilder.path("/airplanes/action").toUriString();
+        return "redirect:/airplanes/detail/" + id;
     }
 
     /**
      * Delete airplane by id
+     *
      * @param id airplane id
      * @param model displayed data
      * @param redirectAttributes redirected attributes
-     * @param uriBuilder url builder
      * @return redirection according to action result
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
-    public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
-            UriComponentsBuilder uriBuilder) {
+    public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
 
-        // First check, if airplane exists
-        AirplaneDTO airplane;
-        try {
-            airplane = airplaneFacade.getAirplane(id);
-        } catch (MappingException e) {
+        // Check, if airplane exists
+        AirplaneDTO airplane = airplaneFacade.getAirplane(id);;
+
+        if (airplane == null) {
             redirectAttributes.addFlashAttribute("error", "Airplane with id " + id
                     + " does not exist.");
-            return "redirect:/action";
+            return "redirect:/airplanes/list";
         }
 
         // Try to delete airplane
@@ -150,12 +204,11 @@ public class AirplaneController {
         } catch (JpaSystemException e) {
             redirectAttributes.addFlashAttribute("warning", "Cannot remove airplane with id " + id
                     + ". It is still used by some flight.");
-            return "redirect:/action";
+            return "redirect:/airplanes/list";
         }
-
         // Report success
         redirectAttributes.addFlashAttribute("success", "Airplane " + airplane.getName()
                 + " with id " + id + " successfully deleted.");
-        return "redirect:/action";
+        return "redirect:/airplanes/list";
     }
 }

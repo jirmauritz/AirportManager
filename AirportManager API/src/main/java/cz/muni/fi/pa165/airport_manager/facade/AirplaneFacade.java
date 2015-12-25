@@ -70,4 +70,10 @@ public interface AirplaneFacade {
      */
     Set<AirplaneDTO> getAllAvailable(Date from, Date to);
 
+    /**
+     * Update airplane
+     * 
+     * @param airplane to be updated
+     */
+    void update(AirplaneDTO airplane);
 }
