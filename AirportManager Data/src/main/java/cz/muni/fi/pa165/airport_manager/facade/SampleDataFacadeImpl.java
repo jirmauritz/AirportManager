@@ -103,13 +103,13 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         FlightDTO f1 = createFlight(true, new Date(1451664000000L), new Date(1451757600000L), null, jumbo, SHA430, KAR735);
         FlightDTO f2 = createFlight(false, new Date(1451736000000L), new Date(1451777400000L), crew2, cardinal, SHA430, GUA103);
         FlightDTO f3 = createFlight(true, new Date(1451734200000L), new Date(1451755800000L), crew3, jay, MOS673, SEO471);
-        FlightDTO f4 = createFlight(true, new Date(1451896200000L), new Date(1451911500000L), crew1, vulture, LIM467, SAP339);
-        FlightDTO f5 = createFlight(true, new Date(1451997900000L), new Date(1452037500000L), crew2, jay, KIN411, MUM180);
-        FlightDTO f6 = createFlight(true, new Date(1452145500000L), new Date(1452169200000L), crew3, wren, SEO471, SHE785);
-        FlightDTO f7 = createFlight(true, new Date(1452164400000L), new Date(1452189600000L), crew1, jumbo, IST676, LAG255);
-        FlightDTO f8 = createFlight(true, new Date(1452168000000L), new Date(1452182400000L), crew2, cardinal, NEW828, MEX134);
-        FlightDTO f9 = createFlight(true, new Date(1452312000000L), new Date(1452394800000L), crew3, vulture, DEL532, TOK639);
-        FlightDTO f10 = createFlight(true, new Date(1452668400000L), new Date(1452715200000L), crew1, jay, BEI973, JAK487);
+        FlightDTO f4 = createFlight(true, new Date(1454398200000L), new Date(1454453100000L), crew1, vulture, LIM467, SAP339);
+        FlightDTO f5 = createFlight(true, new Date(1454661900000L), new Date(1454690700000L), crew2, jay, KIN411, MUM180);
+        FlightDTO f6 = createFlight(true, new Date(1455012000000L), new Date(1455015600000L), crew3, wren, SEO471, SHE785);
+        FlightDTO f7 = createFlight(true, new Date(1458630000000L), new Date(1458676800000L), crew1, jumbo, IST676, LAG255);
+        FlightDTO f8 = createFlight(true, new Date(1458820800000L), new Date(1458828000000L), crew2, cardinal, NEW828, MEX134);
+        FlightDTO f9 = createFlight(true, new Date(1459332000000L), new Date(1459350900000L), crew3, vulture, DEL532, TOK639);
+        FlightDTO f10 = createFlight(true, new Date(1459473000000L), new Date(1459598400000L), crew1, jay, BEI973, JAK487);
     }
 
     @Override
