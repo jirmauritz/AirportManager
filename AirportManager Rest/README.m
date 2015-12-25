@@ -1,3 +1,5 @@
+!!! PLEASE TEST IN ORDER
+
 Rest API for Flight entity can be tested:
 mvn clean install
 cd AirportManager\ Rest

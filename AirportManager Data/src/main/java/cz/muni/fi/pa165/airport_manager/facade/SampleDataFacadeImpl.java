@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.airport_manager.enums.AirplaneType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -68,6 +69,7 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         AirplaneDTO swallow = createAirplane("Airbus A320 Swallow", AirplaneType.ECONOMY, 100);
 
         // stewards
+        StewardDTO notassigned = createSteward("Not", "Assigned");
         StewardDTO carman = createSteward("Carman", "Parlier");
         StewardDTO rose = createSteward("Rose", "Fosdick");
         StewardDTO keisha = createSteward("Keisha", "Mak");
@@ -79,7 +81,6 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         StewardDTO ema = createSteward("Ema", "Holder");
         StewardDTO lavette = createSteward("Lavette", "Gully");
         StewardDTO aracely = createSteward("Aracely", "Dimas");
-        StewardDTO notassigned = createSteward("Not", "Assigned");
 
         // crews
         Set<StewardSimpleDTO> crew1 = new HashSet<>();
@@ -100,7 +101,7 @@ public class SampleDataFacadeImpl implements SampleDataFacade {
         crew3.add(aracely);
 
         // flights
-        FlightDTO f1 = createFlight(true, new Date(1451664000000L), new Date(1451757600000L), null, jumbo, SHA430, KAR735);
+        FlightDTO f1 = createFlight(true, new Date(1451664000000L), new Date(1451757600000L), Collections.<StewardSimpleDTO>emptySet(), jumbo, SHA430, KAR735);
         FlightDTO f2 = createFlight(false, new Date(1451736000000L), new Date(1451777400000L), crew2, cardinal, SHA430, GUA103);
         FlightDTO f3 = createFlight(true, new Date(1451734200000L), new Date(1451755800000L), crew3, jay, MOS673, SEO471);
         FlightDTO f4 = createFlight(true, new Date(1454398200000L), new Date(1454453100000L), crew1, vulture, LIM467, SAP339);
