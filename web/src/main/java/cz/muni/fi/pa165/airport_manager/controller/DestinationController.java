@@ -95,7 +95,8 @@ public class DestinationController {
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
-    public String create(@Valid @ModelAttribute("destinationToCreate") DestinationCreateDTO destination, Model model, RedirectAttributes redirectAttributes) {
+    public String create(@Valid @ModelAttribute("destinationToCreate") DestinationCreateDTO destination,
+                         Model model, RedirectAttributes redirectAttributes) {
 
         if (!isValid(destination)) {
             model.addAttribute("warning", "Destination inputs are not correct");
@@ -170,15 +171,17 @@ public class DestinationController {
      */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
-    public String updateDestination(@PathVariable long id, @ModelAttribute("destinationToUpdate") DestinationSimpleDTO destination, RedirectAttributes redirectAttributes) {
-
-        // update flight
-        try {
-            destinationFacade.update(destination);
-        } catch (IllegalArgumentException ex) {
-            // report error
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+    public String updateDestination(@PathVariable long id, Model model,
+                                    @ModelAttribute("destinationToUpdate") DestinationSimpleDTO destination,
+                                    RedirectAttributes redirectAttributes) {
+        if (!isValid(destination)) {
+            model.addAttribute("warning", "Destination inputs are not correct");
+            model.addAttribute("destinationToCreate", destination);
+            return "destination/new";
         }
+
+        destinationFacade.update(destination);
+
         //report success
         redirectAttributes.addFlashAttribute("success", "Destination " + id + " was successfuly updated.");
         return "redirect:/destinations/detail/" + id;
@@ -189,7 +192,9 @@ public class DestinationController {
         if (destination.getCountry().isEmpty()) return false;
         if (destination.getName().isEmpty()) return false;
 
-        return destination.getName().matches("(?:\\s*\\p{L})+") && destination.getCountry().matches("(?:\\s*\\p{L})+") && destination.getCity().matches("(?:\\s*\\p{L})+");
+        return  destination.getName()   .matches("\\p{L}+(?:\\s\\p{L}+)*") &&
+                destination.getCountry().matches("\\p{L}+(?:\\s\\p{L}+)*") &&
+                destination.getCity()   .matches("\\p{L}+(?:\\s\\p{L}+)*");
     }
 
 }
