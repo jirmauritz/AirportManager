@@ -45,7 +45,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="">Airport Manager</a>
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/flights/list">Airport Manager</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse navbar-right">
                     <a href="${pageContext.request.contextPath}/logout" class="btn btn-primary btn-sm navbut" role="button">Log Out</a>
@@ -56,10 +56,6 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-
-                        <li class="${fn:contains(pageContext.request.requestURI, 'home') ? ' active' : ''}">
-                            <a href="${pageContext.request.contextPath}">Overview</a>
-                        </li>
 
                         <li><a href="${pageContext.request.contextPath}/flights/list">Flights</a></li>
                         <c:if test="${fn:contains(pageContext.request.requestURI, 'flight')}">

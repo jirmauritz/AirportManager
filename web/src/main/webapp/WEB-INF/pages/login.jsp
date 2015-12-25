@@ -35,7 +35,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}">Airport Manager</a>
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/flights/list">Airport Manager</a>
                 </div>
             </div>
         </nav>

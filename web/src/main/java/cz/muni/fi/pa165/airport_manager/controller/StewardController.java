@@ -106,7 +106,7 @@ public class StewardController {
         }
         model.addAttribute("stewardDTO", stewardDTO);
         model.addAttribute("stewardId", Long.toString(id));
-        return PATH_PREFIX + "/new";
+        return "redirect:" + PATH_PREFIX + "/detail/" + Long.toString(id);
     }
 
     /**
@@ -131,7 +131,7 @@ public class StewardController {
         redirectAttributes.addFlashAttribute("success", "Steward " +
                 stewardCreateDTO.getFirstName() + ' ' + stewardCreateDTO.getLastName() +
                 " successfully created with id " + id + ".");
-        return "redirect:/stewards/detail/" + id;
+        return "redirect:" + PATH_PREFIX + "/detail/" + Long.toString(id);
     }
 
     /**

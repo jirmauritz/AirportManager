@@ -163,7 +163,7 @@ public class FlightController {
 		// check destinations
 		if (flight.getFrom().equals(flight.getTo())) {
 			redirectAttributes.addFlashAttribute("error", "Departure of the flight must be from different destination than arrival.");
-			return "redirect:/flights/updating/" + id;
+			return "redirect:/flights/new";
 		}
 		//create flight
 		Long id = null;
