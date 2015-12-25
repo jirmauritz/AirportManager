@@ -160,6 +160,11 @@ public class FlightController {
 			redirectAttributes.addFlashAttribute("error", "Departure of the flight must be before the arrival.");
 			return "redirect:/flights/new";
 		}
+		// check destinations
+		if (flight.getFrom().equals(flight.getTo())) {
+			redirectAttributes.addFlashAttribute("error", "Departure of the flight must be from different destination than arrival.");
+			return "redirect:/flights/updating/" + id;
+		}
 		//create flight
 		Long id = null;
 		try {
@@ -214,6 +219,11 @@ public class FlightController {
 			redirectAttributes.addFlashAttribute("error", "Departure of the flight must be before the arrival.");
 			return "redirect:/flights/updating/" + id;
 		}
+		// check destinations
+		if (flight.getFrom().equals(flight.getTo())) {
+			redirectAttributes.addFlashAttribute("error", "Departure of the flight must be from different destination than arrival.");
+			return "redirect:/flights/updating/" + id;
+		}
 		// update flight
 		try {
 			// keep airplane of the flight
@@ -223,6 +233,7 @@ public class FlightController {
 		} catch (IllegalArgumentException ex) {
 			// report error
 			redirectAttributes.addFlashAttribute("error", ex.getMessage());
+			return "redirect:/flights/updating/" + id;
 		}
 		//report success
 		redirectAttributes.addFlashAttribute("success", "Flight " + id + " was successfuly updated.");
