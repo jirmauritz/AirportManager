@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
+import cz.muni.fi.pa165.airport_manager.entity.Flight;
+
 import java.util.Set;
 
 /**
@@ -62,5 +64,13 @@ public interface DestinationService {
      * @return set of destinations
      */
     Set<Destination> findAll();
+
+
+    /**
+     * Find all flights assign to any destination
+     *
+     * @return set of destinations
+     */
+    Set<Flight> getFlightsByDestinations (Long destinationId);
     
 }

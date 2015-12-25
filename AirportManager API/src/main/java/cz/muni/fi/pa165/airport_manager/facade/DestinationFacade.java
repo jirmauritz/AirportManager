@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.airport_manager.facade;
 
 import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
+import cz.muni.fi.pa165.airport_manager.dto.FlightSimpleDTO;
 
 import java.util.Set;
 
@@ -64,4 +65,11 @@ public interface DestinationFacade {
      * @param destination Destination to be updated.
      */
     void update(DestinationSimpleDTO destination);
+
+    /**
+     * Find all flights assign to any destination.
+     *
+     * @return set of destinations
+     */
+    Set<FlightSimpleDTO> getFlightsByDestinations (Long destinationId);
 }

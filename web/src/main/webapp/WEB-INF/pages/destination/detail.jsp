@@ -34,6 +34,39 @@
             </div>
         </div>
 
+         <h4> Flights assigned</h4>
+                <div class="well">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover listTable">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>International</th>
+                                <th>Airplane</th>
+                                <th>Departure</th>
+                                <th>Arrival</th>
+                                <th>From</th>
+                                <th>To</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Output every flight in flights variable -->
+                            <c:forEach items="${flights}" var="flight">
+                                <tr class="listTable" onclick="location.href = '${pageContext.request.contextPath}/flights/detail/${flight.id}';">
+                                    <td><c:out value="${flight.id}"/></td>
+                                    <td><c:out value="${flight.international ? 'Yes' : 'No'}"/></td>
+                                    <td><c:out value="${flight.airplane.name}"/></td>
+                                    <td><c:out value="${flight.departure}"/></td>
+                                    <td><c:out value="${flight.arrival}"/></td>
+                                    <td><c:out value="${flight.from.name}"/></td>
+                                    <td><c:out value="${flight.to.name}"/></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
         <div id="destinationDeleting" class="modal fade" role="dialog">
             <div class="modal-dialog">
 

@@ -4,9 +4,7 @@ import cz.muni.fi.pa165.airport_manager.config.DataConfiguration;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.facade.DestinationFacade;
-import org.dozer.MappingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,6 +65,7 @@ public class DestinationController {
         // get destination detail
         DestinationSimpleDTO destination = destinationFacade.findById(id);
         model.addAttribute("destination", destination);
+        model.addAttribute("flights", destinationFacade.getFlightsByDestinations(id));
 
         // forward to jsp
         return "destination/detail";
@@ -97,16 +96,16 @@ public class DestinationController {
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
     public String create(@Valid @ModelAttribute("destinationToCreate") DestinationCreateDTO destination, Model model, RedirectAttributes redirectAttributes) {
 
-        if (!isValid(destination)) {
+        if (isValid(destination)) {
+            Long id = destinationFacade.create(destination);
+            //report success
+            redirectAttributes.addFlashAttribute("alert_success", "Destination " + destination.getName() + " was created");
+            return "redirect:/destinations/detail/" + id;
+        } else {
             model.addAttribute("warning", "Destination inputs are not correct");
             model.addAttribute("destinationToCreate", destination);
             return "destination/new";
         }
-
-        Long id = destinationFacade.create(destination);
-        //report success
-        redirectAttributes.addFlashAttribute("alert_success", "Destination " + destination.getName() + " was created");
-        return "redirect:/destinations/detail/" + id;
     }
 
     /**
@@ -120,23 +119,13 @@ public class DestinationController {
     @Secured(DataConfiguration.ROLE_AIRPORT)
     public String delete(@PathVariable long id, RedirectAttributes redirectAttributes) {
 
-        DestinationSimpleDTO destination;
-        try {
-            destination = destinationFacade.findById(id);
-        } catch (MappingException e) {
-            redirectAttributes.addFlashAttribute("error", "Destination with id " + id
-                    + " does not exist.");
-            return "redirect:/destinations/list";
-        }
+       if (!destinationFacade.getFlightsByDestinations(id).isEmpty()){
+           redirectAttributes.addFlashAttribute("error", "There is flight assign to destination "
+                   + "with id " + id + ".");
+           return "redirect:/destinations/list";
+       }
 
-        try {
-            destinationFacade.delete(id);
-        } catch (JpaSystemException e) {
-            redirectAttributes.addFlashAttribute("error", "There is flight assign to destination "
-                    + "with id " + id + ".");
-            return "redirect:/destinations/list";
-        }
-
+        destinationFacade.delete(id);
         redirectAttributes.addFlashAttribute("success", "Destination with id " + id
                 + " successfully deleted.");
         return "redirect:/destinations/list";
@@ -170,16 +159,15 @@ public class DestinationController {
      */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
-    public String updateDestination(@PathVariable long id, @ModelAttribute("destinationToUpdate") DestinationSimpleDTO destination, RedirectAttributes redirectAttributes) {
+    public String updateDestination(@PathVariable long id, @ModelAttribute("destinationToUpdate") DestinationSimpleDTO destination, RedirectAttributes redirectAttributes, Model model) {
 
-        // update flight
-        try {
-            destinationFacade.update(destination);
-        } catch (IllegalArgumentException ex) {
-            // report error
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        if (!isValid(destination)) {
+            model.addAttribute("warning", "Destination inputs are not correct");
+            model.addAttribute("destinationToUpdate", destination);
+            return "destination/updating";
         }
-        //report success
+
+        destinationFacade.update(destination);
         redirectAttributes.addFlashAttribute("success", "Destination " + id + " was successfuly updated.");
         return "redirect:/destinations/detail/" + id;
     }
@@ -189,7 +177,7 @@ public class DestinationController {
         if (destination.getCountry().isEmpty()) return false;
         if (destination.getName().isEmpty()) return false;
 
-        return destination.getName().matches("(?:\\s*\\p{L})+") && destination.getCountry().matches("(?:\\s*\\p{L})+") && destination.getCity().matches("(?:\\s*\\p{L})+");
+        return destination.getName().matches("\\p{L}+(?:\\s\\p{L}+)*") && destination.getCountry().matches("\\p{L}+(?:\\s\\p{L}+)*") && destination.getCity().matches("\\p{L}+(?:\\s\\p{L}+)*");
     }
 
 }

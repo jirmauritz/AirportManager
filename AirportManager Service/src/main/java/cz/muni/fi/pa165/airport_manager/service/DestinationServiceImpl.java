@@ -2,12 +2,12 @@ package cz.muni.fi.pa165.airport_manager.service;
 
 import cz.muni.fi.pa165.airport_manager.dao.DestinationDao;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
+import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.exception.AirportManagerDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Implementation of the (@link DestinationService}. This class uses
@@ -21,6 +21,10 @@ public class DestinationServiceImpl implements DestinationService {
 
 	@Autowired
 	private DestinationDao destinationDao;
+
+	@Autowired
+	private FlightService  flightService;
+
 
 	@Override
 	public Long create(Destination destination) {
@@ -41,7 +45,7 @@ public class DestinationServiceImpl implements DestinationService {
 	@Override
 	public void update(Destination destination) {
 		verifyDestinationObject(destination);
-		
+
 		if (destination.getId() == null) {
 			throw new IllegalArgumentException("Destination must have id set.");
 		}
@@ -116,6 +120,17 @@ public class DestinationServiceImpl implements DestinationService {
 		if ((destination.getCountry() == null) || (destination.getCountry().isEmpty())) {
 			throw new IllegalArgumentException("Destination country cannot be empty.");
 		}
+	}
+
+	@Override
+	public Set<Flight> getFlightsByDestinations (Long destinationId){
+		Set<Flight> wantedFlights = new HashSet<>();
+		for (Flight flight : flightService.findAll()){
+			if (flight.getFrom().getId().equals(destinationId) || flight.getTo().getId().equals(destinationId)){
+				wantedFlights.add(flight);
+			}
+		}
+		return wantedFlights;
 	}
 
 }

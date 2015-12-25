@@ -4,12 +4,12 @@ import cz.muni.fi.pa165.airport_manager.dto.DestinationCreateDTO;
 import cz.muni.fi.pa165.airport_manager.dto.DestinationSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.dto.FlightSimpleDTO;
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
-import cz.muni.fi.pa165.airport_manager.entity.Flight;
 import cz.muni.fi.pa165.airport_manager.service.DestinationService;
 import cz.muni.fi.pa165.airport_manager.service.MappingService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Objects;
 import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Implementation of the DestinationFacade.
@@ -70,5 +70,10 @@ public class DestinationFacadeImpl implements DestinationFacade {
 		Destination destinationToUpdate = mappingService.mapTo(destination, Destination.class);
 
 		destinationService.update(destinationToUpdate);
+	}
+
+	@Override
+	public Set<FlightSimpleDTO> getFlightsByDestinations (Long destinationId){
+		return  mappingService.mapTo(destinationService.getFlightsByDestinations(destinationId),FlightSimpleDTO.class);
 	}
 }
