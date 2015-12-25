@@ -230,6 +230,6 @@ public class AirplaneController {
         if (name.isEmpty()) {
             return false;
         }
-        return name.matches("\\p{L}+(?:\\s\\p{L}+)*");
+        return name.matches("(?:\\s+\\p{L})+");
     }
 }
