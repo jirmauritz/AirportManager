@@ -131,9 +131,9 @@ public class AirplaneController {
             RedirectAttributes redirectAttributes) {
 
         //Test name
-        if (!isValid(airplane.getName())) {
+        if (airplane.getName().isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Airplane was not updated. "
-                    + "Name " + airplane.getName() + " is invalid.");
+                    + "Name is invalid.");
             return "redirect:/airplanes/new";
         }
 
@@ -166,9 +166,9 @@ public class AirplaneController {
             Model model, RedirectAttributes redirectAttributes) {
 
         //Test name
-        if (!isValid(airplane.getName())) {
+        if (airplane.getName().isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Airplane was not created. "
-                    + "Name " + airplane.getName() + " is invalid.");
+                    + "Name is invalid.");
             return "redirect:/airplanes/new";
         }
 
@@ -220,12 +220,5 @@ public class AirplaneController {
         redirectAttributes.addFlashAttribute("success", "Airplane " + airplane.getName()
                 + " with id " + id + " successfully deleted.");
         return "redirect:/airplanes/list";
-    }
-
-    private static boolean isValid(final String name) {
-        if (name.isEmpty()) {
-            return false;
-        }
-        return name.matches("\\p{L}+(?:\\s\\p{L}+)*");
     }
 }

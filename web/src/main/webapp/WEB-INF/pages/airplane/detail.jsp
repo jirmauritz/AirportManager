@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" session="false" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <tags:pagetemplate>
 
@@ -8,7 +9,7 @@
 
         <h1 class="page-header">
             Airplane
-            <sec:authorize access="hasRole('ROLE_airport')">
+            <sec:authorize ifAllGranted="ROLE_airport">
                 <a href="${pageContext.request.contextPath}/airplanes/updating/${airplane.id}"
                    class="btn btn-primary btn-sm navbut" role="button">Edit</a>
                 <a class="btn btn-primary btn-sm navbut" role="button"
@@ -34,7 +35,7 @@
             </div>
         </div>
 
-        <sec:authorize access="hasRole('ROLE_airport')">
+        <sec:authorize ifAllGranted="ROLE_airport">
             <div id="airplaneToDelete" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
