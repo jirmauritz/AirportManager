@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.airport_manager.dao;
 
 import cz.muni.fi.pa165.airport_manager.entity.Destination;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +15,6 @@ import java.util.Set;
  * @author Tomas Valka
  * @author 422718@mail.muni.cz
  */
-@Transactional
 @Repository
 public class DestinationDaoImpl implements DestinationDao {
 

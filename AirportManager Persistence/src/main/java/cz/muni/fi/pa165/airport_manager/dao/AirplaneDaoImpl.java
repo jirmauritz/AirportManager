@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import cz.muni.fi.pa165.airport_manager.entity.Airplane;
 
@@ -19,7 +18,6 @@ import cz.muni.fi.pa165.airport_manager.entity.Airplane;
  * @author 422578@mail.muni.cz
  */
 @Repository
-@Transactional
 public class AirplaneDaoImpl implements  AirplaneDao {
 
 	

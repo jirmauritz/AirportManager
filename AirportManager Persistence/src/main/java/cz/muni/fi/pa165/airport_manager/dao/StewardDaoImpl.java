@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository for Steward entities for communication with the database.
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author 4099972@mail.muni.cz
  */
 @Repository
-@Transactional
 public class StewardDaoImpl implements StewardDao{
 
 	@PersistenceContext
