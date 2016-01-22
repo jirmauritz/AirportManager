@@ -66,7 +66,7 @@ public class StewardServiceImpl implements StewardService {
     }
 
     @Override
-    public void updateSteward(Steward steward) throws IllegalArgumentException {
+    public void updateSteward(Steward steward) {
         Objects.requireNonNull(steward);
 		
 		if (steward.getId() == null) {

@@ -20,6 +20,8 @@ public interface AirplaneService {
      * Create new created id of persisted entity.
      *
      * @param airplane id of airplane entity
+	 * @throws IllegalArgumentException when the airplane is not valid input
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return id of newly created airplane
      */
     Long create(Airplane airplane);
@@ -28,6 +30,8 @@ public interface AirplaneService {
      * Updates entity.
      *
      * @param airplane updated airplane
+	 * @throws IllegalArgumentException when the airplane is not valid input
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      */
     void update(Airplane airplane);
 
@@ -35,6 +39,7 @@ public interface AirplaneService {
      * Delete entity by id.
      *
      * @param id database id
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      */
     void delete(Long id);
 
@@ -42,6 +47,7 @@ public interface AirplaneService {
      * Finds by id. 
      *
      * @param id database id
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return Airplane or null
      */
     Airplane findById(Long id);
@@ -49,6 +55,7 @@ public interface AirplaneService {
     /**
      * Find and return all airplanes.
      *
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return set of all Airplanes
      */
     Set<Airplane> findAll();
@@ -57,6 +64,7 @@ public interface AirplaneService {
      * Find all by airplane type
      *
      * @param type airplane type
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return set of Airplanes
      */
     Set<Airplane> findByType(AirplaneType type);
@@ -65,6 +73,8 @@ public interface AirplaneService {
      * Find all airplanes with minimal capacity or higher.
      *
      * @param minCapacity minimal legal value
+	 * @throws AirportManagerDataAccessException when a database failure occurs
+	 * @throws IllegalArgumentException when capacity is negative
      * @return set of Airplanes
      */
     Set<Airplane> findByMinCapacity(int minCapacity);
@@ -75,6 +85,7 @@ public interface AirplaneService {
      * @param id airplanes id
      * @param from start of the time range
      * @param to end of the time range
+	 * @throws IllegalArgumentException when time range is invalid
      * @return true if available, false if not
      */
     boolean isAvailable(Long id, final Date from, final Date to);
@@ -84,6 +95,8 @@ public interface AirplaneService {
      *
      * @param from start of the time range
      * @param to end of the time range
+	 * @throws IllegalArgumentException when time range is invalid
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return set of Airplanes
      */
     Set<Airplane> getAllAvailable(final Date from, final Date to);

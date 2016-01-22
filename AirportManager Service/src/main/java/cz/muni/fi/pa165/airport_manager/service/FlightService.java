@@ -19,6 +19,8 @@ public interface FlightService {
      * Creates new entity.
      *
      * @param flight entity
+	 * @throws IllegalArgumentException when the flight has id set
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return id
      */
     Long create(Flight flight);
@@ -27,6 +29,8 @@ public interface FlightService {
      * Updates existed entity.
      *
      * @param flight entity to update
+	 * @throws IllegalArgumentException when the flight has id set
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      */
     void update(Flight flight);
 
@@ -34,6 +38,7 @@ public interface FlightService {
      * Deletes the entity identified by id.
      *
      * @param id of entity to delete
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      */
     void delete(Long id);
 
@@ -41,6 +46,7 @@ public interface FlightService {
      * Finds and returns entity by the specified id. 
      *
      * @param id
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return Flight with specified id or null
      */
     Flight findById(Long id);
@@ -48,6 +54,7 @@ public interface FlightService {
     /**
      * Finds and returns all flights.
      *
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return Set containing all flights or empty Set
      */
     Set<Flight> findAll();
@@ -56,6 +63,7 @@ public interface FlightService {
      * Finds and returns all flights that departure from specified destination.
      *
      * @param dest destination
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return set of all flights departing from dest
      */
     Set<Flight> findByFromDestination(Destination dest);
@@ -64,6 +72,7 @@ public interface FlightService {
      * Finds and returns all flights that arrive to specified destination.
      *
      * @param dest destination
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return set of all flights arriving to dest
      */
     Set<Flight> findByToDestination(Destination dest);
@@ -73,6 +82,8 @@ public interface FlightService {
      *
      * @param from starting date of the interval.
      * @param to   ending date of the interval.
+	 * @throws IllegalArgumentException when the time range is invalid
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return set of flight.
      */
     Set<Flight> findFlightsInInterval (Date from, Date to);

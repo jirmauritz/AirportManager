@@ -19,6 +19,8 @@ public interface StewardService {
      * first and last name set.
      *
      * @param steward steward to be created
+	 * @throws IllegalArgumentException when the steward is not valid input
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return newly created steward with id and business id set
      */
     Long createSteward(Steward steward);
@@ -28,6 +30,7 @@ public interface StewardService {
      * with specified id does not exist, null is returned.
      *
      * @param id id of the steward
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return steward with specified id or null
      */
     Steward findSteward(Long id);
@@ -35,6 +38,7 @@ public interface StewardService {
     /**
      * Find and returns all stewards.
      *
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @return set of stewards
      */
     Set<Steward> findAllStewards();
@@ -44,13 +48,15 @@ public interface StewardService {
      * is allowed, otherwise, throws IllegalArgumentException.
      *
      * @param steward steward with changed first or last name
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @throws IllegalArgumentException if anything else, than names or flights, has changed
      */
-    void updateSteward(Steward steward) throws IllegalArgumentException;
+    void updateSteward(Steward steward);
 
     /**
      * Deletes the steward from database.
      *
+	 * @throws AirportManagerDataAccessException when a database failure occurs
      * @param id id of steward to be deleted
      */
     void deleteSteward(Long id);
@@ -68,6 +74,7 @@ public interface StewardService {
      * @param id id of the steward steward to check availability for
      * @param from start of the interval
      * @param to end of the interval
+	 * @throws IllegalArgumentException when the time range is invalid
      * @return true if available, false if not
      */
     boolean isAvailable(
@@ -82,6 +89,7 @@ public interface StewardService {
      *
      * @param from start of the interval
      * @param to end of the interval
+	 * @throws IllegalArgumentException when the time range is invalid
      * @return collection of all available stewards
      */
     Set<Steward> getAllAvailable(Date from, Date to);
