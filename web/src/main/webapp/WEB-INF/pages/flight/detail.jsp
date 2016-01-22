@@ -111,16 +111,16 @@
                                             <tbody>
                                                 <c:forEach items="${availableAirplanes}" var="airplane">
                                                     <tr class="listTable">
-                                                        <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${aiplane.id}';">
+                                                        <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${airplane.id}';">
                                                             <c:out value="${airplane.id}"/>
                                                         </td>
-                                                        <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${aiplane.id}';">
+                                                        <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${airplane.id}';">
                                                             <c:out value="${airplane.name}"/>
                                                         </td>
-                                                        <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${aiplane.id}';">
+                                                        <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${airplane.id}';">
                                                             <c:out value="${airplane.type}"/>
                                                         </td>
-                                                        <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${aiplane.id}';">
+                                                        <td onclick="location.href = '${pageContext.request.contextPath}/airplanes/detail/${airplane.id}';">
                                                             <c:out value="${airplane.capacity}"/>
                                                         </td>
                                                         <td>
@@ -240,13 +240,13 @@
                                 <tbody>
                                     <c:forEach items="${availableStewards}" var="steward">
                                         <tr class="listTable">
-                                            <td onclick="location.href = '${pageContext.request.contextPath}/steward/detail/${steward.id}';">
+                                            <td onclick="location.href = '${pageContext.request.contextPath}/stewards/detail/${steward.id}';">
                                                 <c:out value="${steward.id}"/>
                                             </td>
-                                            <td onclick="location.href = '${pageContext.request.contextPath}/steward/detail/${steward.id}';">
+                                            <td onclick="location.href = '${pageContext.request.contextPath}/stewards/detail/${steward.id}';">
                                                 <c:out value="${steward.firstName}"/>
                                             </td>
-                                            <td onclick="location.href = '${pageContext.request.contextPath}/steward/detail/${steward.id}';">
+                                            <td onclick="location.href = '${pageContext.request.contextPath}/stewards/detail/${steward.id}';">
                                                 <c:out value="${steward.lastName}"/>
                                             </td>
                                             <td>
