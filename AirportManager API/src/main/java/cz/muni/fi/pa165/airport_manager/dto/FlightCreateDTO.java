@@ -50,7 +50,7 @@ public class FlightCreateDTO {
      * @return the departure date
      */
     public Date getDeparture() {
-        return new Date(departure.getTime());
+        return (departure == null) ? null : new Date(departure.getTime());
     }
 
     /**
@@ -68,7 +68,7 @@ public class FlightCreateDTO {
      * @return the arrival date
      */
     public Date getArrival() {
-        return new Date(arrival.getTime());
+        return (arrival == null) ? null : new Date(arrival.getTime());
     }
 
     /**
