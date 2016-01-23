@@ -42,10 +42,21 @@
 
         <div class="container">
             <img class="img-responsive center-block img-airplane" src="${pageContext.request.contextPath}/resources/images/airplane.gif" />
+            <c:if test="${param.error != null}">
+                <div class="alert alert-danger">
+                    Bad credentials.
+                </div>
+            </c:if>
+            <c:if test="${param.logout != null}">
+                <div class="alert alert-success">
+                    You have been logged out.
+                </div>
+            </c:if>
             <form name="f" class="form-signin" action="login" method="post">
                 <input class="form-control" type="text" id="username" name="username" placeholder="Username"/>
                 <input class="form-control" type="password" id="password" name="password" placeholder="Password">
                 <button type="submit" class="btn btn-md btn-primary btn-block">Log in</button>
+                <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
             </form>
             <p class="text-center">
                 For PA165 project needs, there are three users:admin/admin, flight/flight, airport/airport</p>

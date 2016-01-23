@@ -122,18 +122,18 @@ public class AirplaneController {
      *
      * @param id airplanes id
      * @param airplane updated airplane
-     * @param redirectAttributes
+     * @param redirectAttributes redirect attributes
      * @return JSP page name
      */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
     public String update(@PathVariable long id, @ModelAttribute("airplaneToUpdate") AirplaneDTO airplane,
-            RedirectAttributes redirectAttributes) {
+                         RedirectAttributes redirectAttributes) {
 
         //Test name
-        if (airplane.getName().isEmpty()) {
+        if (!isValid(airplane.getName())) {
             redirectAttributes.addFlashAttribute("error", "Airplane was not updated. "
-                    + "Name is invalid.");
+                    + "Name " + airplane.getName() + " is invalid.");
             return "redirect:/airplanes/new";
         }
 
@@ -163,16 +163,16 @@ public class AirplaneController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @Secured(value = DataConfiguration.ROLE_AIRPORT)
     public String create(@Valid @ModelAttribute("airplaneToCreate") AirplaneCreateDTO airplane,
-            Model model, RedirectAttributes redirectAttributes) {
+                         Model model, RedirectAttributes redirectAttributes) {
 
         //Test name
-        if (airplane.getName().isEmpty()) {
+        if (!isValid(airplane.getName())) {
             redirectAttributes.addFlashAttribute("error", "Airplane was not created. "
-                    + "Name is invalid.");
+                    + "Name " + airplane.getName() + " is invalid.");
             return "redirect:/airplanes/new";
         }
 
-        // Try to create airplane      
+        // Try to create airplane
         Long id;
         try {
             id = airplaneFacade.createAirplane(airplane);
@@ -200,7 +200,7 @@ public class AirplaneController {
     public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
 
         // Check, if airplane exists
-        AirplaneDTO airplane = airplaneFacade.getAirplane(id);;
+        AirplaneDTO airplane = airplaneFacade.getAirplane(id);
 
         if (airplane == null) {
             redirectAttributes.addFlashAttribute("error", "Airplane with id " + id
@@ -220,5 +220,12 @@ public class AirplaneController {
         redirectAttributes.addFlashAttribute("success", "Airplane " + airplane.getName()
                 + " with id " + id + " successfully deleted.");
         return "redirect:/airplanes/list";
+    }
+
+    private static boolean isValid(final String name) {
+        if (name.isEmpty()) {
+            return false;
+        }
+        return name.matches("\\w+(?:\\s\\w+)*");
     }
 }
