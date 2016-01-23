@@ -36,6 +36,7 @@
         <maven-surefire.version>2.19</maven-surefire.version>
         <maven-war.version>2.5</maven-war.version>
         <tomcat7-maven.version>2.2</tomcat7-maven.version>
+        <jsp-api.version>2.1</jsp-api.version>
 
         <!-- spring bom -->
         <spring.platform-bom.version>1.1.4.RELEASE</spring.platform-bom.version>
@@ -140,6 +141,12 @@
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>tomcat-api</artifactId>
                 <version>${tomcat-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>${jsp-api.version}</version>
                 <scope>provided</scope>
             </dependency>
 
